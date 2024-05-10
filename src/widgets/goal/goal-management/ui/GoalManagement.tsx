@@ -59,7 +59,7 @@ export function GoalManagement() {
 				))}
 			</Card>
 
-			<Drawer isFullScreen>
+			<Drawer>
 				<Transfer />
 			</Drawer>
 		</>
