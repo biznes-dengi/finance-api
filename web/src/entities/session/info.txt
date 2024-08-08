@@ -1,0 +1,12 @@
+sessionModel
+    useAuth
+        isAuth
+        authUser
+            permissions
+            featureAccess
+            preferences
+                ui-main-color
+                language
+                currency
+        logout()
+        logout
