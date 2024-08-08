@@ -9,6 +9,6 @@ public record TransactionResponse(
         int id,
         TransactionType type,
         String description,
-        LocalDateTime fundingDate,
+        LocalDateTime dealDate,
         BigDecimal amount
 ) { }

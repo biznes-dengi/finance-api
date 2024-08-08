@@ -8,6 +8,8 @@ import com.maksyank.finance.user.domain.UserAccount;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -27,9 +29,11 @@ public class Saving {
     private String title;
     @Column(name = "state")
     @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private SavingState state;
     @Column(name = "currency")
     @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private CurrencyCode currency;
     @Column(name = "description")
     private String description;
@@ -41,6 +45,7 @@ public class Saving {
     private LocalDate deadline;
     @Column(name = "risk_profile")
     @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private RiskProfileType riskProfile;
     @Embedded
     private ImageSaving image;

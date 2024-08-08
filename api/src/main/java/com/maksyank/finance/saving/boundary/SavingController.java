@@ -56,7 +56,7 @@ public class SavingController {
         this.checkIfUserExists(userId);
         try {
             final var user = this.userAccountService.getById(userId);
-            this.savingProcess.processSave(SavingMapper.mapToDto(toSaveRequest), user);
+            this.savingProcess.processSave(toSaveRequest, user);
             return new ResponseEntity<>(HttpStatus.CREATED);
         } catch (DbOperationException ex) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage(), ex);
@@ -82,12 +82,12 @@ public class SavingController {
     public ResponseEntity update(
             @PathVariable("savingId") int savingId,
             @RequestParam("userId") int userId,
-            @RequestBody SavingRequest toUpdateRequest
+            @RequestBody SavingRequest savingDtoToSave
     ) {
         this.checkIfUserExists(userId);
         try {
             final var user = userAccountService.getById(userId);
-            this.savingProcess.processUpdate(savingId, SavingMapper.mapToDto(toUpdateRequest), user);
+            this.savingProcess.processUpdate(savingId, savingDtoToSave, user);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);

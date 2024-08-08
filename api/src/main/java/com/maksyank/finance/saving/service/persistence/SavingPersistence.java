@@ -27,7 +27,7 @@ public class SavingPersistence {
                 .orElseThrow(() -> new NotFoundException("Entity 'Finance Goal' not found by attribute 'id' = " + id));
     }
 
-    public Collection<Saving> findByStateAndUserId(SavingState state, int userId) throws NotFoundException {
+    public List<Saving> findByStateAndUserId(SavingState state, int userId) throws NotFoundException {
         return this.savingRepository
                 .findByStateAndUserAccount_Id(state, userId)
                 .orElseThrow(

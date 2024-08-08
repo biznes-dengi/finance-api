@@ -12,7 +12,7 @@ public record TransactionDto(
         TransactionType type,
         @Size(max = 100)
         String description,
-        LocalDateTime fundingDate,
+        LocalDateTime dealDate,
         @NotNull
         BigDecimal amount
 ) { }

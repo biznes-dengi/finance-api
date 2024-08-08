@@ -7,6 +7,8 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.util.Base64;
 
@@ -16,6 +18,7 @@ import java.util.Base64;
 public class ImageSaving {
     @Column(name = "type_image")
     @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private ImageType type;
     @Column(name = "image")
     private byte[] value;

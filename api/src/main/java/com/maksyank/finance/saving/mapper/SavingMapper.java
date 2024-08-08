@@ -1,73 +1,51 @@
 package com.maksyank.finance.saving.mapper;
 
-import com.maksyank.finance.saving.boundary.response.StateOfSavingResponse;
+import com.maksyank.finance.saving.domain.ImageSaving;
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.boundary.request.SavingRequest;
 import com.maksyank.finance.saving.boundary.response.SavingResponse;
 import com.maksyank.finance.saving.boundary.response.SavingViewResponse;
-import com.maksyank.finance.saving.domain.ImageSaving;
-import com.maksyank.finance.saving.domain.businessrules.InitRulesSaving;
 import com.maksyank.finance.saving.dto.SavingDto;
-import com.maksyank.finance.user.domain.UserAccount;
+import org.mapstruct.*;
 
-import java.util.Collection;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
-public class SavingMapper {
+@Mapper(
+        componentModel = MappingConstants.ComponentModel.SPRING,
+        injectionStrategy = InjectionStrategy.CONSTRUCTOR,
+        unmappedSourcePolicy = ReportingPolicy.IGNORE,
+        unmappedTargetPolicy = ReportingPolicy.ERROR,
+        nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS,
+        imports = {
+                ImageSaving.class
+        }
+)
+public interface SavingMapper {
 
-    public static List<SavingResponse> entityToResponse(Collection<Saving> finGoals) {
-        return finGoals.stream().map(SavingMapper::entityToResponse).collect(Collectors.toList());
+//    @Mapping(target = "image", expression = "java(source.getImage().getValue())")
+    @Mapping(source = "balance", target = "amount")
+    SavingResponse savingToSavingResponse(Saving source);
+
+    @Mapping(source = "balance", target = "amount")
+    List<SavingViewResponse> savingListToSavingViewResponseList(List<Saving> source);
+
+    @Mapping(source = "balance", target = "amount")
+    SavingViewResponse savingToSavingViewResponse(Saving source);
+
+    SavingDto savingRequestToSavingDto(SavingRequest source);
+
+    @Mapping(target = "image", expression = "java(new ImageSaving(source.imageType(), source.image()))")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "state", ignore = true)
+    @Mapping(target = "balance", ignore = true)
+    @Mapping(target = "createdOn", ignore = true)
+    @Mapping(target = "lastChange", ignore = true)
+    @Mapping(target = "userAccount", ignore = true)
+    @Mapping(target = "transactions", ignore = true)
+    Saving updateSavingDtoToSaving(SavingDto source, @MappingTarget Saving target);
+
+    default String mapImage(ImageSaving image) {
+        return image != null ? image.getValue() : null;
     }
-
-    public static SavingResponse entityToResponse(Saving source) {
-        return new SavingResponse(source.getId(), source.getTitle(), source.getState(),
-                source.getDescription(), source.getBalance(), source.getTargetAmount(),
-                source.getDeadline(), source.getRiskProfile(), source.getImage().getValue()
-        );
-    }
-
-    public static List<SavingViewResponse> sourceToViewResponse(Collection<Saving> finGoals) {
-        return finGoals.stream().map(SavingMapper::sourceToViewResponse).toList();
-    }
-
-    public static SavingViewResponse sourceToViewResponse(Saving source) {
-        return new SavingViewResponse(source.getId(), source.getTitle(),
-                source.getBalance(), source.getTargetAmount(), source.getImage().getValue()
-        );
-    }
-
-    public static SavingDto mapToDto(SavingRequest source) {
-        return new SavingDto(
-                source.title(), source.currency(), source.description(), source.targetAmount(),
-                source.deadline(), source.riskProfile(), source.image(), source.imageType()
-        );
-    }
-
-    public static Saving mapToNewEntity(
-            SavingDto source,
-            InitRulesSaving rulesFinanceGoal,
-            UserAccount user
-    ) {
-        return new Saving(
-                rulesFinanceGoal, source.title(), source.currency(), source.description(), source.targetAmount(),
-                source.deadline(), source.riskProfile(), new ImageSaving(source.imageType(), source.image()), user
-        );
-    }
-
-    public static Saving mapToEntity(SavingDto source, Saving destination) {
-        destination.setTitle(source.title());
-        destination.setCurrency(source.currency());
-        destination.setDescription(source.description());
-        destination.setTargetAmount(source.targetAmount());
-        destination.setDeadline(source.deadline());
-        destination.setRiskProfile(source.riskProfile());
-        destination.setImage(new ImageSaving(source.imageType(), source.image()));
-        return destination;
-    }
-
-    public static StateOfSavingResponse mapToStateResponse(Saving source) {
-        return new StateOfSavingResponse(source.getBalance(), source.getState());
-    }
-
 }

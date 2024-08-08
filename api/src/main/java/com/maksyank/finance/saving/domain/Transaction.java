@@ -5,6 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.JdbcType;
+import org.hibernate.dialect.PostgreSQLEnumJdbcType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -21,11 +23,12 @@ public class Transaction {
     private int id;
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
+    @JdbcType(PostgreSQLEnumJdbcType.class)
     private TransactionType type;
     @Column(name = "description")
     private String description;
     @Column(name = "deal_date")
-    private LocalDateTime deal_date;
+    private LocalDateTime dealDate;
     @Column(name = "amount")
     private BigDecimal amount;
 
@@ -33,10 +36,10 @@ public class Transaction {
     @JoinColumn(name = "id_saving")
     private Saving saving;
 
-    public Transaction(TransactionType type, String description, LocalDateTime deal_date, BigDecimal amount, Saving saving) {
+    public Transaction(TransactionType type, String description, LocalDateTime dealDate, BigDecimal amount, Saving saving) {
         this.type = type;
         this.description = description;
-        this.deal_date = deal_date;
+        this.dealDate = dealDate;
         this.amount = amount;
         this.saving = saving;
     }
@@ -44,7 +47,7 @@ public class Transaction {
     @Override
     public String toString() {
         return "Transaction(id=" + this.getId() + ", type=" + this.getType() + ", description=" +
-                this.getDescription() + ", dealDate=" + this.getDeal_date() + ", amount=" +
+                this.getDescription() + ", dealDate=" + this.getDealDate() + ", amount=" +
                 this.getAmount() + ", savingId=" + this.getSaving().getId() + ")";
     }
 }

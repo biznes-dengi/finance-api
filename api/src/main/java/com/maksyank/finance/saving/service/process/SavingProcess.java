@@ -1,7 +1,9 @@
 package com.maksyank.finance.saving.service.process;
 
+import com.maksyank.finance.saving.boundary.request.SavingRequest;
 import com.maksyank.finance.saving.boundary.response.SavingResponse;
 import com.maksyank.finance.saving.boundary.response.SavingViewResponse;
+import com.maksyank.finance.saving.domain.ImageSaving;
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.businessrules.InitRulesSaving;
 import com.maksyank.finance.saving.domain.enums.SavingState;
@@ -28,56 +30,61 @@ import java.util.List;
 @Service
 @EnableAsync
 public class SavingProcess {
-    private SavingPersistence savingPersistence;
-    private TransactionPersistence transactionPersistence;
-    private SavingValidationService savingValidationService;
-    private UserAccountService userAccountService;
-    @Autowired
+    private final SavingPersistence savingPersistence;
+    private final TransactionPersistence transactionPersistence;
+    private final SavingValidationService savingValidationService;
+    private final UserAccountService userAccountService;
+    private final SavingMapper savingMapper;
     SavingProcess(
             UserAccountService userAccountService,
             SavingPersistence savingPersistence,
             TransactionPersistence transactionPersistence,
-            SavingValidationService savingValidationService
+            SavingValidationService savingValidationService,
+            SavingMapper savingMapper
     ) {
         this.userAccountService = userAccountService;
         this.savingPersistence = savingPersistence;
         this.transactionPersistence = transactionPersistence;
         this.savingValidationService = savingValidationService;
+        this.savingMapper = savingMapper;
     }
 
     public SavingResponse processGetById(int id, int userId) throws NotFoundException {
         final var foundSaving = this.savingPersistence.findByIdAndUserId(id, userId);
-        return SavingMapper.entityToResponse(foundSaving);
+        return savingMapper.savingToSavingResponse(foundSaving);
     }
 
     public List<SavingViewResponse> processGetByState(SavingState state, int userId) throws NotFoundException {
         final var foundSavings = this.savingPersistence.findByStateAndUserId(state, userId);
-        return SavingMapper.sourceToViewResponse(foundSavings);
+        return savingMapper.savingListToSavingViewResponseList(foundSavings);
     }
 
-    public void processSave(SavingDto savingDto, UserAccount user) throws DbOperationException, ValidationException {
+    public void processSave(SavingRequest savingRequest, UserAccount user) throws DbOperationException, ValidationException {
+        final var savingDto = savingMapper.savingRequestToSavingDto(savingRequest);
+
         final var resultOfValidation = this.savingValidationService.validate(savingDto);
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var rulesSaving = new InitRulesSaving(SavingState.ACTIVE, BigDecimal.ZERO);
-        final var newSaving = SavingMapper.mapToNewEntity(savingDto, rulesSaving, user);
+        final var newSaving = createNewSaving(savingDto, user);
         this.savingPersistence.save(newSaving);
     }
 
-    public void processUpdate(int id, SavingDto finGoalToSaveDto, UserAccount user) throws NotFoundException, DbOperationException, ValidationException {
-        final var resultOfValidation = this.savingValidationService.validate(finGoalToSaveDto);
+    public void processUpdate(int id, SavingRequest savingRequest, UserAccount user)
+            throws NotFoundException, DbOperationException, ValidationException {
+        final var savingDtoToSave = savingMapper.savingRequestToSavingDto(savingRequest);
+        final var resultOfValidation = savingValidationService.validate(savingDtoToSave);
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var oldSaving = this.savingPersistence.findByIdAndUserId(id, user.getId());
-        final var updatedSaving = SavingMapper.mapToEntity(finGoalToSaveDto, oldSaving);
-        this.savingPersistence.save(updatedSaving);
+        final var oldSaving = savingPersistence.findByIdAndUserId(id, user.getId());
+        final var updatedSaving = savingMapper.updateSavingDtoToSaving(savingDtoToSave, oldSaving);
+        savingPersistence.save(updatedSaving);
     }
 
     public void processDelete(int id) throws DbOperationException {
-        this.transactionPersistence.removeAllBySavingId(id);
-        this.savingPersistence.deleteById(id);
+        transactionPersistence.removeAllBySavingId(id);
+        savingPersistence.deleteById(id);
     }
 
     public Saving updateBalance(BigDecimal amountNewDeposit, int financeGoalId, int userId) throws NotFoundException, DbOperationException {
@@ -100,6 +107,14 @@ public class SavingProcess {
         } else {
             saving.setState(SavingState.ACTIVE);
         }
+    }
+
+    public Saving createNewSaving(SavingDto source, UserAccount user) {
+        final var rulesForSaving = new InitRulesSaving(SavingState.ACTIVE, BigDecimal.ZERO);
+        return new Saving(
+                rulesForSaving, source.title(), source.currency(), source.description(), source.targetAmount(),
+                source.deadline(), source.riskProfile(), new ImageSaving(source.imageType(), source.image()), user
+        );
     }
 
     // TODO it's temporary impl, task in Notion

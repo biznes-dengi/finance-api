@@ -36,8 +36,8 @@ public class TransactionDepositProcess {
     private List<Transaction> findDepositTransactionsByMonth(Saving source, int year, int month) {
         return source.getTransactions().stream()
                 .filter(deposit -> deposit.getType() == TransactionType.DEPOSIT)
-                .filter(deposit -> deposit.getDeal_date().getYear() == year)
-                .filter(deposit -> deposit.getDeal_date().getMonthValue() == month)
+                .filter(deposit -> deposit.getDealDate().getYear() == year)
+                .filter(deposit -> deposit.getDealDate().getMonthValue() == month)
                 .toList();
     }
 

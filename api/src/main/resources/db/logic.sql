@@ -1,4 +1,4 @@
--- last_change
+-- LAST_CHANGE
 CREATE FUNCTION saving_update_last_change()
     RETURNS TRIGGER
     LANGUAGE PLPGSQL AS
@@ -14,7 +14,7 @@ BEFORE UPDATE ON saving
 FOR EACH ROW
 EXECUTE PROCEDURE saving_update_last_change();
 
--- created_on
+-- CREATED_ON
 CREATE FUNCTION saving_init_created_on()
     RETURNS TRIGGER
     LANGUAGE PLPGSQL AS

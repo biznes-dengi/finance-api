@@ -26,8 +26,8 @@ public class TransactionPersistence {
                 this.transactionRepository.findAllBySaving_Id(savingId, PageRequest.of(pageNumber, 5));
 
         if (response.getNumberOfElements() == 0) {
-            throw new NotFoundException("Entities 'Deposit' not found by attribute " +
-                    "'financeGoalId' = " + savingId + ", and by 'pageNumber' = " + pageNumber);
+            throw new NotFoundException("Entities 'Transaction' not found by attribute " +
+                    "'savingId' = " + savingId + ", and by 'pageNumber' = " + pageNumber);
         }
         return response.getContent();
     }

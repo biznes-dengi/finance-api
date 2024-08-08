@@ -8,7 +8,6 @@ import com.maksyank.finance.saving.boundary.response.StateOfSavingResponse;
 import com.maksyank.finance.saving.exception.DbOperationException;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ValidationException;
-import com.maksyank.finance.saving.mapper.TransactionMapper;
 import com.maksyank.finance.saving.service.process.TransactionProcess;
 import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +55,7 @@ public class TransactionController {
     ) {
         this.checkIfUserExists(userId);
         try {
-            return this.transactionProcess.processSave(TransactionMapper.mapToDto(requestToSave), savingId, userId);
+            return transactionProcess.processSave(requestToSave, savingId, userId);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);
         } catch (DbOperationException ex) {
@@ -90,7 +89,7 @@ public class TransactionController {
     ) {
         this.checkIfUserExists(userId);
         try {
-            this.transactionProcess.processUpdate(depositId, savingId, TransactionMapper.mapToUpdateDto(requestToUpdate), userId);
+            this.transactionProcess.processUpdate(depositId, savingId, requestToUpdate, userId);
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (NotFoundException ex) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, ex.getMessage(), ex);

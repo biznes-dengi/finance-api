@@ -8,6 +8,6 @@ import java.time.LocalDateTime;
 public record TransactionViewResponse(
         int id,
         TransactionType type,
-        LocalDateTime fundingDate,
+        LocalDateTime dealDate,
         BigDecimal amount
 ) { }
