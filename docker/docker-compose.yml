@@ -1,0 +1,25 @@
+services:
+  finance_database:
+    container_name: finance_database
+    image: postgres:14-alpine
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+
+  finance_service:
+    container_name: finance_service
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    environment:
+      _JAVA_OPTIONS: >
+        -Xdebug
+        -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+    ports:
+      - "8080:8080"
+    depends_on:
+      - finance_database
