@@ -32,7 +32,6 @@ import java.util.List;
 // TODO refactor error handling
 // TODO refactor user error handling
 // TODO A check user isn't necessary because you can just get that user and will see if it exists
-// TODO validation if need
 @RestController
 @RequestMapping("/saving")
 public class SavingController {

@@ -108,7 +108,6 @@ public class Saving {
         this.userAccount = userAccount;
     }
 
-    // TODO will think if there is need add image to toString
     @Override
     public String toString() {
         return "Saving(id=" + this.getId() + ", title=" + this.getTitle() +
