@@ -24,9 +24,6 @@ public class TransactionDepositController {
         this.userAccountService = userAccountService;
     }
 
-    // TODO add validation for month / year
-    // TODO month = 1 to 12
-    // TODO year from 1970 to current
     @GetMapping("/month")
     public BigDecimal getDepositAmountByMonth(
             @PathVariable("savingId") int savingId,

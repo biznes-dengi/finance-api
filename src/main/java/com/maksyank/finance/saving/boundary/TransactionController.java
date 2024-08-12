@@ -27,7 +27,6 @@ import java.util.List;
 
 // TODO maybe refactor checkIfExists finGoal, probably move to service, think about it
 // TODO A check user isn't necessary because you can just get that user and will see if it exists
-// TODO validation if need
 @RestController
 @RequestMapping("/saving/{savingId}/transaction")
 public class TransactionController {
@@ -86,7 +85,6 @@ public class TransactionController {
         }
     }
 
-    // TODO add validation to description
     @PatchMapping("/{transactionId}")
     public ResponseEntity update(
             @PathVariable("savingId") int savingId,
