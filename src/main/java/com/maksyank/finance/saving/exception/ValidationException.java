@@ -1,7 +1,10 @@
 package com.maksyank.finance.saving.exception;
 
-public class ValidationException extends Exception {
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
+
+public class ValidationException extends ParentException {
+
     public ValidationException(String message) {
-        super(message);
+        super(BAD_REQUEST, message);
     }
 }

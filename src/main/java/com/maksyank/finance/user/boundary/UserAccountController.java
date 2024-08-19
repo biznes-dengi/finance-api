@@ -1,16 +1,12 @@
 package com.maksyank.finance.user.boundary;
 
 import com.maksyank.finance.user.service.UserAccountService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 public class UserAccountController {
 
     private final UserAccountService userAccountService;
-
-    @Autowired
-    UserAccountController(UserAccountService userAccountService) {
-        this.userAccountService = userAccountService;
-    }
 }
