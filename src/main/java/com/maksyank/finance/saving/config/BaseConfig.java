@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @Configuration
 @EnableScheduling
 public class BaseConfig {
+
     @Bean
     public ValidatorFactory validatorFactory() {
         return Validation.buildDefaultValidatorFactory();

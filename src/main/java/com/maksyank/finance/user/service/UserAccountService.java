@@ -4,6 +4,7 @@ import com.maksyank.finance.user.domain.UserAccount;
 import com.maksyank.finance.user.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,8 +41,9 @@ public class UserAccountService {
         return null;
     }
 
-    public boolean checkIfExists(int id) {
-        return this.userAccountRepository.existsById(id);
+    @Transactional(readOnly = true)
+    public boolean checkIfNotExists(int id) {
+        return !this.userAccountRepository.existsById(id);
     }
 
     public List<Integer> getListIdsOfUsers() {
