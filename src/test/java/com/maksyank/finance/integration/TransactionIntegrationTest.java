@@ -14,6 +14,7 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.patch;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -43,8 +44,18 @@ public class TransactionIntegrationTest {
     @Nested
     class Error {
 
+        private static String getPostOperationBody() {
+            return """
+                    {
+                       "type":"DEPOSIT",
+                       "description":"DESCRIPTION",
+                       "dealDate":"2050-10-24T14:21:15",
+                       "amount":"123.2322"
+                    }""";
+        }
+
         @Test
-        void checkValidationWhilePathOperation() throws Exception {
+        void checkValidationWhilePatchOperation() throws Exception {
             mvc.perform(patch("/saving/%s/transaction/%s".formatted("1", "1"))
                             .queryParam("userId", "1")
                             .contentType(MediaType.APPLICATION_JSON)
@@ -55,6 +66,17 @@ public class TransactionIntegrationTest {
                     .andDo(print())
                     .andExpect(status().isBadRequest())
                     .andExpect(jsonPath("$.message").value("The 'description' field must contain less than [100] symbols."));
+        }
+
+        @Test
+        void checkValidationWhilePostOperation() throws Exception {
+            mvc.perform(post("/saving/%s/transaction".formatted("1"))
+                            .queryParam("userId", "1")
+                            .contentType(MediaType.APPLICATION_JSON)
+                            .content(getPostOperationBody()))
+                    .andDo(print())
+                    .andExpect(status().isBadRequest())
+                    .andExpect(jsonPath("$.message").value("The 'amount' field must contain at least [2] digits after a decimal point."));
         }
     }
 }

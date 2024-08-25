@@ -13,8 +13,7 @@ public class TransactionValidationService extends ValidationService {
 
     TransactionValidationService(Validator validator) {
         super(validator);
-        this.validationPath = new AmountValidation.StepValidIfScaleOneOrTwo()
-                .linkWith(new AmountValidation.StepValidIfWithdrawHasAmountLessThenZero());
+        this.validationPath = new AmountValidation.StepValidIfWithdrawHasAmountLessThenZero();
     }
 
     public ValidationResult validate(TransactionDto toValidate) {
