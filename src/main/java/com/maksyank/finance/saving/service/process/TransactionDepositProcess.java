@@ -1,31 +1,36 @@
 package com.maksyank.finance.saving.service.process;
 
+import com.maksyank.finance.saving.boundary.request.DepositAmountRequest;
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.domain.enums.TransactionType;
 import com.maksyank.finance.saving.exception.NotFoundException;
+import com.maksyank.finance.saving.exception.ValidationException;
 import com.maksyank.finance.saving.service.persistence.SavingPersistence;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.maksyank.finance.saving.service.validation.TransactionDepositValidator;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TransactionDepositProcess {
+
+    private final TransactionDepositValidator validator;
     private final SavingPersistence savingPersistence;
 
-    @Autowired
-    TransactionDepositProcess(SavingPersistence savingPersistence) {
-        this.savingPersistence = savingPersistence;
-    }
+    public BigDecimal processGetFundAmountByMonth(final DepositAmountRequest request) throws NotFoundException, ValidationException {
+        final var savingForCalculateAmount = this.savingPersistence.findByIdAndUserId(request.savingId(), request.userId());
 
-    public BigDecimal processGetFundAmountByMonth(int savingId, int year, int month, int userId) throws NotFoundException {
-        final var savingForCalculateAmount = this.savingPersistence.findByIdAndUserId(savingId, userId);
+        final var resultOfValidation = validator.validate(request);
+        if (resultOfValidation.notValid())
+            throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var foundDepositsByMonth = this.findDepositTransactionsByMonth(savingForCalculateAmount, year, month);
-        if (foundDepositsByMonth.size() == 0) {
-            throw new NotFoundException("Entities 'Deposit' were not found in " + year + "/" + month);
+        final var foundDepositsByMonth = this.findDepositTransactionsByMonth(savingForCalculateAmount, request.year(), request.month());
+        if (foundDepositsByMonth.isEmpty()) {
+            throw new NotFoundException("Entities 'Deposit' were not found in " + request.year() + "/" + request.month());
         }
         return this.computeSumAmount(foundDepositsByMonth);
     }
