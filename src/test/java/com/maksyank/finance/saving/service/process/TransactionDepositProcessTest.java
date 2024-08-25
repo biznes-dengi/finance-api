@@ -1,6 +1,8 @@
 package com.maksyank.finance.saving.service.process;
 
+import com.maksyank.finance.saving.boundary.request.DepositAmountRequest;
 import com.maksyank.finance.saving.exception.NotFoundException;
+import com.maksyank.finance.saving.exception.ValidationException;
 import com.maksyank.finance.saving.service.GeneratorDataTransaction;
 import com.maksyank.finance.saving.service.persistence.SavingPersistence;
 import org.junit.jupiter.api.DisplayName;
@@ -26,7 +28,7 @@ public class TransactionDepositProcessTest {
 
     @Test
     @DisplayName("Check if fund deposits will be summed correctly")
-    void testProcessGetDepositAmountByMonth_01() throws NotFoundException {
+    void testProcessGetDepositAmountByMonth_01() throws NotFoundException, ValidationException {
         // Given
         final int year = 2023;
         final int month = 3;
@@ -34,7 +36,7 @@ public class TransactionDepositProcessTest {
 
         // When
         when(savingPersistence.findByIdAndUserId(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
-        final var result = transactionDepositProcess.processGetFundAmountByMonth(1, year, month,1);
+        final var result = transactionDepositProcess.processGetFundAmountByMonth(new DepositAmountRequest(1, year, month, 1));
 
         // Then
         assertEquals(BigDecimal.valueOf(3447.22), result);
@@ -53,6 +55,6 @@ public class TransactionDepositProcessTest {
 
         // Then
         assertThrows(NotFoundException.class,
-                () -> transactionDepositProcess.processGetFundAmountByMonth(1, year, month,1));
+                () -> transactionDepositProcess.processGetFundAmountByMonth(new DepositAmountRequest(1, year, month, 1)));
     }
 }

@@ -1,5 +1,6 @@
 package com.maksyank.finance.saving.boundary;
 
+import com.maksyank.finance.saving.boundary.request.DepositAmountRequest;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ParentException;
 import com.maksyank.finance.saving.service.process.TransactionDepositProcess;
@@ -22,12 +23,12 @@ public class TransactionDepositController {
     private final TransactionDepositProcess transactionDepositProcess;
 
     @GetMapping("/month")
-    public BigDecimal getDepositAmountByMonth(@PathVariable("savingId") int savingId,
-                                              @RequestParam("month") int month,
-                                              @RequestParam("year") int year,
-                                              @RequestParam("userId") int userId) throws ParentException {
+    public BigDecimal getDepositAmountByMonth(@PathVariable("savingId") final int savingId,
+                                              @RequestParam("month") final int month,
+                                              @RequestParam("year") final int year,
+                                              @RequestParam("userId") final int userId) throws ParentException {
         this.checkIfUserExists(userId);
-        return this.transactionDepositProcess.processGetFundAmountByMonth(savingId, year, month, userId);
+        return this.transactionDepositProcess.processGetFundAmountByMonth(new DepositAmountRequest(savingId, year, month, userId));
     }
 
     private void checkIfUserExists(int userId) throws NotFoundException {
