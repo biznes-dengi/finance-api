@@ -7,7 +7,7 @@ import com.maksyank.finance.saving.domain.enums.TransactionType;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ValidationException;
 import com.maksyank.finance.saving.service.persistence.SavingPersistence;
-import com.maksyank.finance.saving.service.validation.TransactionDepositValidator;
+import com.maksyank.finance.saving.service.validation.service.TransactionDepositValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransactionDepositProcess {
 
-    private final TransactionDepositValidator validator;
+    private final TransactionDepositValidationService validator;
     private final SavingPersistence savingPersistence;
 
     public BigDecimal processGetFundAmountByMonth(final DepositAmountRequest request) throws NotFoundException, ValidationException {

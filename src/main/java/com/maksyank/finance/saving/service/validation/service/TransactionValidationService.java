@@ -1,7 +1,8 @@
-package com.maksyank.finance.saving.service.validation;
+package com.maksyank.finance.saving.service.validation.service;
 
 import com.maksyank.finance.saving.dto.TransactionDto;
 import com.maksyank.finance.saving.dto.TransactionUpdateDto;
+import com.maksyank.finance.saving.service.validation.ValidationResult;
 import com.maksyank.finance.saving.service.validation.step.ValidationStep;
 import com.maksyank.finance.saving.service.validation.step.transaction.AmountValidation;
 import jakarta.validation.Validator;

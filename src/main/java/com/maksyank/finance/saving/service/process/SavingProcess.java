@@ -14,7 +14,7 @@ import com.maksyank.finance.saving.exception.ValidationException;
 import com.maksyank.finance.saving.mapper.SavingMapper;
 import com.maksyank.finance.saving.service.persistence.SavingPersistence;
 import com.maksyank.finance.saving.service.persistence.TransactionPersistence;
-import com.maksyank.finance.saving.service.validation.SavingValidationService;
+import com.maksyank.finance.saving.service.validation.service.SavingValidationService;
 import com.maksyank.finance.user.domain.UserAccount;
 import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.scheduling.annotation.Async;

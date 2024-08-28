@@ -15,7 +15,7 @@ import com.maksyank.finance.saving.mapper.StateOfSavingResponseMapper;
 import com.maksyank.finance.saving.mapper.TransactionMapper;
 import com.maksyank.finance.saving.service.persistence.SavingPersistence;
 import com.maksyank.finance.saving.service.persistence.TransactionPersistence;
-import com.maksyank.finance.saving.service.validation.TransactionValidationService;
+import com.maksyank.finance.saving.service.validation.service.TransactionValidationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

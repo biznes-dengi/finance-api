@@ -1,6 +1,7 @@
-package com.maksyank.finance.saving.service.validation;
+package com.maksyank.finance.saving.service.validation.service;
 
 import com.maksyank.finance.saving.dto.SavingDto;
+import com.maksyank.finance.saving.service.validation.ValidationResult;
 import com.maksyank.finance.saving.service.validation.step.ValidationStep;
 import com.maksyank.finance.saving.service.validation.step.saving.DeadlineValidation;
 import com.maksyank.finance.saving.service.validation.step.saving.ImageTypeValidation;

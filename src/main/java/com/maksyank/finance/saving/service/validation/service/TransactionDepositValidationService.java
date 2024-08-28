@@ -1,13 +1,14 @@
-package com.maksyank.finance.saving.service.validation;
+package com.maksyank.finance.saving.service.validation.service;
 
 import com.maksyank.finance.saving.boundary.request.DepositAmountRequest;
+import com.maksyank.finance.saving.service.validation.ValidationResult;
 import jakarta.validation.Validator;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TransactionDepositValidator extends ValidationService {
+public class TransactionDepositValidationService extends ValidationService {
 
-    public TransactionDepositValidator(final Validator validator) {
+    public TransactionDepositValidationService(final Validator validator) {
         super(validator);
     }
 
