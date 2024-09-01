@@ -1,6 +1,6 @@
 package com.maksyank.finance.user.service;
 
-import com.maksyank.finance.user.domain.UserAccount;
+import com.maksyank.finance.user.domain.Account;
 import com.maksyank.finance.user.repository.UserAccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +19,7 @@ public class UserAccountService {
         this.userAccountRepository = userAccountRepository;
     }
 
-    public UserAccount getByEmailAndPassword(String email, String password) {
+    public Account getByEmailAndPassword(String email, String password) {
         final var foundUser = userAccountRepository.findByEmailAndPassword(email, password);
 
         if (foundUser.isPresent()) {
@@ -30,7 +30,7 @@ public class UserAccountService {
         return null;
     }
 
-    public UserAccount getById(int id) {
+    public Account getById(int id) {
         final var foundUser = userAccountRepository.findById(id);
 
         if (foundUser.isPresent()) {
@@ -47,6 +47,6 @@ public class UserAccountService {
     }
 
     public List<Integer> getListIdsOfUsers() {
-        return this.userAccountRepository.findAll().stream().map(UserAccount::getId).toList();
+        return this.userAccountRepository.findAll().stream().map(Account::getId).toList();
     }
 }

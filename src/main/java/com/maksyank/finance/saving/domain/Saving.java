@@ -4,7 +4,7 @@ import com.maksyank.finance.saving.domain.businessrules.InitRulesSaving;
 import com.maksyank.finance.saving.domain.enums.CurrencyCode;
 import com.maksyank.finance.saving.domain.enums.RiskProfileType;
 import com.maksyank.finance.saving.domain.enums.SavingState;
-import com.maksyank.finance.user.domain.UserAccount;
+import com.maksyank.finance.user.domain.Account;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -35,7 +35,7 @@ import java.util.Collection;
 public class Saving {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_saving")
+    @Column(name = "saving_id")
     private int id;
     @Column(name = "title")
     private String title;
@@ -67,15 +67,15 @@ public class Saving {
     private LocalDateTime lastChange;
 
     @ManyToOne
-    @JoinColumn(name = "id_user_account")
-    private UserAccount userAccount;
+    @JoinColumn(name = "account_id")
+    private Account account;
 
     @OneToMany(mappedBy = "saving", fetch = FetchType.LAZY)
     private Collection<Transaction> transactions;
 
     public Saving(InitRulesSaving initRulesSaving, String title, CurrencyCode currency, String description,
                   BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
-                  ImageSaving image, UserAccount userAccount
+                  ImageSaving image, Account account
     ) {
         this.title = title;
         this.state = initRulesSaving.state();
@@ -86,12 +86,12 @@ public class Saving {
         this.deadline = deadline;
         this.riskProfile = riskProfile;
         this.image = image;
-        this.userAccount = userAccount;
+        this.account = account;
     }
 
     public Saving(int id, String title, SavingState state, CurrencyCode currency, String description, BigDecimal balance,
                   BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
-                  ImageSaving image, LocalDateTime createdOn, LocalDateTime lastChange, UserAccount userAccount
+                  ImageSaving image, LocalDateTime createdOn, LocalDateTime lastChange, Account account
     ) {
         this.id = id;
         this.title = title;
@@ -105,7 +105,7 @@ public class Saving {
         this.image = image;
         this.createdOn = createdOn;
         this.lastChange = lastChange;
-        this.userAccount = userAccount;
+        this.account = account;
     }
 
     @Override
@@ -115,6 +115,6 @@ public class Saving {
                 ", description=" + this.getDescription() + ", amount=" + this.getBalance() +
                 ", targetAmount=" + this.getTargetAmount() + ", deadline=" + this.getDeadline() +
                 ", riskProfile=" + this.getRiskProfile() + ", createdOn=" + this.getCreatedOn() +
-                ", lastChange=" + this.getLastChange() + ", userAccountId=" + this.getUserAccount().getId() + ")";
+                ", lastChange=" + this.getLastChange() + ", accountId=" + this.getAccount().getId() + ")";
     }
 }

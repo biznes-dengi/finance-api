@@ -28,7 +28,7 @@ import java.time.LocalDateTime;
 public class Transaction {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_transaction")
+    @Column(name = "transaction_id")
     private int id;
     @Column(name = "type")
     @Enumerated(EnumType.STRING)
@@ -42,7 +42,7 @@ public class Transaction {
     private BigDecimal amount;
 
     @ManyToOne
-    @JoinColumn(name = "id_saving")
+    @JoinColumn(name = "saving_id")
     private Saving saving;
 
     public Transaction(TransactionType type, String description, LocalDateTime dealDate, BigDecimal amount, Saving saving) {

@@ -15,7 +15,7 @@ import com.maksyank.finance.saving.mapper.SavingMapper;
 import com.maksyank.finance.saving.service.persistence.SavingPersistence;
 import com.maksyank.finance.saving.service.persistence.TransactionPersistence;
 import com.maksyank.finance.saving.service.validation.service.SavingValidationService;
-import com.maksyank.finance.user.domain.UserAccount;
+import com.maksyank.finance.user.domain.Account;
 import com.maksyank.finance.user.service.UserAccountService;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -58,7 +58,7 @@ public class SavingProcess {
         return savingMapper.savingListToSavingViewResponseList(foundSavings);
     }
 
-    public void processSave(SavingRequest savingRequest, UserAccount user) throws DbOperationException, ValidationException {
+    public void processSave(SavingRequest savingRequest, Account user) throws DbOperationException, ValidationException {
         final var savingDto = savingMapper.savingRequestToSavingDto(savingRequest);
 
         final var resultOfValidation = this.savingValidationService.validate(savingDto);
@@ -69,7 +69,7 @@ public class SavingProcess {
         this.savingPersistence.save(newSaving);
     }
 
-    public void processUpdate(int id, SavingRequest savingRequest, UserAccount user)
+    public void processUpdate(int id, SavingRequest savingRequest, Account user)
             throws NotFoundException, DbOperationException, ValidationException {
         final var savingDtoToSave = savingMapper.savingRequestToSavingDto(savingRequest);
         final var resultOfValidation = savingValidationService.validate(savingDtoToSave);
@@ -108,7 +108,7 @@ public class SavingProcess {
         }
     }
 
-    public Saving createNewSaving(SavingDto source, UserAccount user) {
+    public Saving createNewSaving(SavingDto source, Account user) {
         final var rulesForSaving = new InitRulesSaving(SavingState.ACTIVE, BigDecimal.ZERO);
         return new Saving(
                 rulesForSaving, source.title(), source.currency(), source.description(), source.targetAmount(),
