@@ -11,48 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AmountValidationTest {
-    @Test
-    @DisplayName(value = "Test Amount step, check if the amount has no digits after comma")
-    public void testAmountValidationStep_01() {
-        // Given
-        ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfScaleOneOrTwo();
-        final var transactionDtoToValid = GeneratorDataTransaction.getTestData_testAmountValidationStep_01();
-
-        // When
-        final var response = stepAmount.validate(transactionDtoToValid);
-
-        // Then
-        assertTrue(response.isValid());
-    }
-
-    @Test
-    @DisplayName(value = "Test Amount step, check if the amount has three digits after comma")
-    public void testAmountValidationStep_02() {
-        // Given
-        ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfScaleOneOrTwo();
-        final var transactionDtoToValid = GeneratorDataTransaction.getTestData_testAmountValidationStep_02();
-
-        // When
-        final var response = stepAmount.validate(transactionDtoToValid);
-
-        // Then
-        assertFalse(response.isValid());
-        assertEquals("The 'amount' field must contain one or two digits after a decimal point.", response.errorMsg());
-    }
-
-    @Test
-    @DisplayName(value = "Test Amount step, check if the amount has two digits after comma")
-    public void testAmountValidationStep_03() {
-        // Given
-        ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfScaleOneOrTwo();
-        final var transactionDtoToValid = GeneratorDataTransaction.getTestData_testAmountValidationStep_03();
-
-        // When
-        final var response = stepAmount.validate(transactionDtoToValid);
-
-        // Then
-        assertTrue(response.isValid());
-    }
 
     @Test
     @DisplayName(value = "Test Amount step, " +

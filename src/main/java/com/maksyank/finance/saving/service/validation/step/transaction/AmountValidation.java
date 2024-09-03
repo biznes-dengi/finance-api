@@ -8,15 +8,7 @@ import com.maksyank.finance.saving.service.validation.step.ValidationStep;
 import java.math.BigDecimal;
 
 public class AmountValidation {
-    public static class StepValidIfScaleOneOrTwo extends ValidationStep<TransactionDto> {
-        @Override
-        public ValidationResult validate(TransactionDto toValidate) {
-            if (0 <= toValidate.amount().scale() && toValidate.amount().scale() <= 2)
-                return this.checkNext(toValidate);
 
-            return ValidationResult.invalid("The 'amount' field must contain one or two digits after a decimal point.");
-        }
-    }
     public static class StepValidIfDepositHasAmountMoreThenZero extends ValidationStep<TransactionDto> {
         @Override
         public ValidationResult validate(TransactionDto toValidate) {
