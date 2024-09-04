@@ -3,6 +3,9 @@ package com.maksyank.finance.saving.service.process;
 import com.maksyank.finance.saving.boundary.request.SavingRequest;
 import com.maksyank.finance.saving.boundary.response.SavingResponse;
 import com.maksyank.finance.saving.boundary.response.SavingViewResponse;
+import com.maksyank.finance.saving.dao.BoardSavingDao;
+import com.maksyank.finance.saving.dao.SavingDao;
+import com.maksyank.finance.saving.domain.BoardSaving;
 import com.maksyank.finance.saving.domain.ImageSaving;
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.businessrules.InitRulesSaving;
@@ -12,89 +15,75 @@ import com.maksyank.finance.saving.exception.DbOperationException;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ValidationException;
 import com.maksyank.finance.saving.mapper.SavingMapper;
-import com.maksyank.finance.saving.service.persistence.SavingPersistence;
 import com.maksyank.finance.saving.service.persistence.TransactionPersistence;
 import com.maksyank.finance.saving.service.validation.service.SavingValidationService;
-import com.maksyank.finance.user.domain.Account;
-import com.maksyank.finance.user.service.UserAccountService;
-import org.springframework.scheduling.annotation.Async;
+import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 @Service
 @EnableAsync
+@RequiredArgsConstructor
 public class SavingProcess {
-    private final SavingPersistence savingPersistence;
+    private final SavingDao savingDao;
+    private final BoardSavingDao boardSavingDao;
     private final TransactionPersistence transactionPersistence;
     private final SavingValidationService savingValidationService;
-    private final UserAccountService userAccountService;
     private final SavingMapper savingMapper;
-    SavingProcess(
-            UserAccountService userAccountService,
-            SavingPersistence savingPersistence,
-            TransactionPersistence transactionPersistence,
-            SavingValidationService savingValidationService,
-            SavingMapper savingMapper
-    ) {
-        this.userAccountService = userAccountService;
-        this.savingPersistence = savingPersistence;
-        this.transactionPersistence = transactionPersistence;
-        this.savingValidationService = savingValidationService;
-        this.savingMapper = savingMapper;
-    }
 
-    public SavingResponse processGetById(int id, int userId) throws NotFoundException {
-        final var foundSaving = this.savingPersistence.findByIdAndUserId(id, userId);
+    public SavingResponse processGetById(int savingId, int boardSavingId) throws NotFoundException {
+        final var foundSaving = savingDao.fetchSavingById(savingId, boardSavingId);
         return savingMapper.savingToSavingResponse(foundSaving);
     }
 
-    public List<SavingViewResponse> processGetByState(SavingState state, int userId) throws NotFoundException {
-        final var foundSavings = this.savingPersistence.findByStateAndUserId(state, userId);
+    public List<SavingViewResponse> processGetByState(SavingState state, int boardSavingId) throws NotFoundException {
+        final var foundSavings = savingDao.fetchSavingByState(state, boardSavingId);
         return savingMapper.savingListToSavingViewResponseList(foundSavings);
     }
 
-    public void processSave(SavingRequest savingRequest, Account user) throws DbOperationException, ValidationException {
+    public SavingResponse processSave(SavingRequest savingRequest, int boardSavingId) throws ValidationException, NotFoundException {
         final var savingDto = savingMapper.savingRequestToSavingDto(savingRequest);
 
         final var resultOfValidation = this.savingValidationService.validate(savingDto);
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var newSaving = createNewSaving(savingDto, user);
-        this.savingPersistence.save(newSaving);
+        final var foundBoardSaving = boardSavingDao.fetchBoardSavingById(boardSavingId);
+        final var newSavingToSave = attachInitRulesToNewSaving(savingDto, foundBoardSaving);
+        final var response = savingDao.createSaving(newSavingToSave);
+
+        return savingMapper.savingToSavingResponse(response);
     }
 
-    public void processUpdate(int id, SavingRequest savingRequest, Account user)
-            throws NotFoundException, DbOperationException, ValidationException {
+    public SavingResponse processUpdate(int savingId, SavingRequest savingRequest, int boardSavingId)
+            throws NotFoundException, ValidationException {
         final var savingDtoToSave = savingMapper.savingRequestToSavingDto(savingRequest);
         final var resultOfValidation = savingValidationService.validate(savingDtoToSave);
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var oldSaving = savingPersistence.findByIdAndUserId(id, user.getId());
+        final var oldSaving = savingDao.fetchSavingById(savingId, boardSavingId);
         final var updatedSaving = savingMapper.updateSavingDtoToSaving(savingDtoToSave, oldSaving);
-        savingPersistence.save(updatedSaving);
+        final var response = savingDao.createSaving(updatedSaving);
+
+        return savingMapper.savingToSavingResponse(response);
     }
 
-    public void processDelete(int id) throws DbOperationException {
-        transactionPersistence.removeAllBySavingId(id);
-        savingPersistence.deleteById(id);
+    public void processDelete(int savingId) throws DbOperationException {
+        transactionPersistence.removeAllBySavingId(savingId);
+        savingDao.deleteSaving(savingId);
     }
 
-    public Saving updateBalance(BigDecimal amountNewDeposit, int financeGoalId, int userId) throws NotFoundException, DbOperationException {
-        final var savingForUpdateBalance = this.savingPersistence.findByIdAndUserId(financeGoalId, userId);
+    public Saving updateBalance(BigDecimal amountNewDeposit, int savingId, int boardSavingId) throws NotFoundException {
+        final var savingForUpdateBalance = savingDao.fetchSavingById(savingId, boardSavingId);
         final var newBalance = savingForUpdateBalance.getBalance().add(amountNewDeposit);
         savingForUpdateBalance.setBalance(newBalance);
 
         this.updateState(savingForUpdateBalance);
-        this.savingPersistence.save(savingForUpdateBalance);
-        
-        return savingForUpdateBalance;
+        return savingDao.createSaving(savingForUpdateBalance);
     }
 
     private void updateState(Saving saving) {
@@ -108,34 +97,11 @@ public class SavingProcess {
         }
     }
 
-    public Saving createNewSaving(SavingDto source, Account user) {
+    public Saving attachInitRulesToNewSaving(SavingDto source, BoardSaving boardSaving) {
         final var rulesForSaving = new InitRulesSaving(SavingState.ACTIVE, BigDecimal.ZERO);
         return new Saving(
                 rulesForSaving, source.title(), source.currency(), source.description(), source.targetAmount(),
-                source.deadline(), source.riskProfile(), new ImageSaving(source.imageType(), source.image()), user
+                source.deadline(), source.riskProfile(), new ImageSaving(source.imageType(), source.image()), boardSaving
         );
-    }
-
-    // TODO it's temporary impl, task in Notion
-    // TODO there's bug with time zone, right now the impl only for one time zone
-    @Async
-    @Scheduled(cron = "0 0 * * * *")
-    public void scheduledCheckSavingsIfOverdue() {
-        this.userAccountService.getListIdsOfUsers().stream()
-                .map(userId -> this.savingPersistence.findByUserIdAndStateAndIfDeadlineIsNotNull(SavingState.ACTIVE, userId))
-                .filter(listSaving -> !listSaving.isEmpty())
-                .forEach(listSaving ->
-                    listSaving.stream()
-                            .filter(saving -> saving.getDeadline().isBefore(LocalDate.now()) ||
-                                    saving.getDeadline().isEqual(LocalDate.now()))
-                            .forEach(saving -> {
-                                saving.setState(SavingState.OVERDUE);
-                                try {
-                                    this.savingPersistence.save(saving);
-                                } catch (DbOperationException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            })
-                );
     }
 }

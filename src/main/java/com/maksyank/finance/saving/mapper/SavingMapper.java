@@ -27,8 +27,6 @@ import java.util.List;
         }
 )
 public interface SavingMapper {
-
-//    @Mapping(target = "image", expression = "java(source.getImage().getValue())")
     @Mapping(source = "balance", target = "amount")
     SavingResponse savingToSavingResponse(Saving source);
 
@@ -46,7 +44,7 @@ public interface SavingMapper {
     @Mapping(target = "balance", ignore = true)
     @Mapping(target = "createdOn", ignore = true)
     @Mapping(target = "lastChange", ignore = true)
-    @Mapping(target = "userAccount", ignore = true)
+    @Mapping(target = "boardSaving", ignore = true)
     @Mapping(target = "transactions", ignore = true)
     Saving updateSavingDtoToSaving(SavingDto source, @MappingTarget Saving target);
 

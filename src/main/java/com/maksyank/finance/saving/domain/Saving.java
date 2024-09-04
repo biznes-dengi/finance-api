@@ -4,7 +4,6 @@ import com.maksyank.finance.saving.domain.businessrules.InitRulesSaving;
 import com.maksyank.finance.saving.domain.enums.CurrencyCode;
 import com.maksyank.finance.saving.domain.enums.RiskProfileType;
 import com.maksyank.finance.saving.domain.enums.SavingState;
-import com.maksyank.finance.user.domain.Account;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;
@@ -67,15 +66,15 @@ public class Saving {
     private LocalDateTime lastChange;
 
     @ManyToOne
-    @JoinColumn(name = "account_id")
-    private Account account;
+    @JoinColumn(name = "board_saving_id")
+    private BoardSaving boardSaving;
 
     @OneToMany(mappedBy = "saving", fetch = FetchType.LAZY)
     private Collection<Transaction> transactions;
 
     public Saving(InitRulesSaving initRulesSaving, String title, CurrencyCode currency, String description,
                   BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
-                  ImageSaving image, Account account
+                  ImageSaving image, BoardSaving boardSaving
     ) {
         this.title = title;
         this.state = initRulesSaving.state();
@@ -86,12 +85,12 @@ public class Saving {
         this.deadline = deadline;
         this.riskProfile = riskProfile;
         this.image = image;
-        this.account = account;
+        this.boardSaving = boardSaving;
     }
 
     public Saving(int id, String title, SavingState state, CurrencyCode currency, String description, BigDecimal balance,
                   BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
-                  ImageSaving image, LocalDateTime createdOn, LocalDateTime lastChange, Account account
+                  ImageSaving image, LocalDateTime createdOn, LocalDateTime lastChange, BoardSaving boardSaving
     ) {
         this.id = id;
         this.title = title;
@@ -105,7 +104,7 @@ public class Saving {
         this.image = image;
         this.createdOn = createdOn;
         this.lastChange = lastChange;
-        this.account = account;
+        this.boardSaving = boardSaving;
     }
 
     @Override
@@ -115,6 +114,6 @@ public class Saving {
                 ", description=" + this.getDescription() + ", amount=" + this.getBalance() +
                 ", targetAmount=" + this.getTargetAmount() + ", deadline=" + this.getDeadline() +
                 ", riskProfile=" + this.getRiskProfile() + ", createdOn=" + this.getCreatedOn() +
-                ", lastChange=" + this.getLastChange() + ", accountId=" + this.getAccount().getId() + ")";
+                ", lastChange=" + this.getLastChange() + ", boardSavingId=" + this.getBoardSaving().getId() + ")";
     }
 }

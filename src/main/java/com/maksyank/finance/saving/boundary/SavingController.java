@@ -4,10 +4,8 @@ import com.maksyank.finance.saving.boundary.request.SavingRequest;
 import com.maksyank.finance.saving.boundary.response.SavingResponse;
 import com.maksyank.finance.saving.boundary.response.SavingViewResponse;
 import com.maksyank.finance.saving.domain.enums.SavingState;
-import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ParentException;
 import com.maksyank.finance.saving.service.process.SavingProcess;
-import com.maksyank.finance.user.service.UserAccountService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -30,55 +28,39 @@ import static org.springframework.http.HttpStatus.CREATED;
 // TODO think about toSave \ toUpdate (refactor) (naming)
 // TODO A check user isn't necessary because you can just get that user and will see if it exists
 @RestController
-@RequestMapping("/saving")
+@RequestMapping("board-saving/{boardSavingId}/saving")
 @RequiredArgsConstructor
 public class SavingController {
-
     private final SavingProcess savingProcess;
-    private final UserAccountService userAccountService;
 
     @GetMapping
     public List<SavingViewResponse> getByState(@RequestParam("state") SavingState state,
-                                               @RequestParam("userId") int userId) throws ParentException {
-        this.checkIfUserExists(userId);
-        return this.savingProcess.processGetByState(state, userId);
+                                               @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
+        return savingProcess.processGetByState(state, boardSavingId);
     }
 
     @GetMapping("/{savingId}")
     public SavingResponse getById(@PathVariable("savingId") int savingId,
-                                  @RequestParam("userId") int userId) throws ParentException {
-        this.checkIfUserExists(userId);
-        return this.savingProcess.processGetById(savingId, userId);
+                                  @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
+        return savingProcess.processGetById(savingId, boardSavingId);
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public void save(@RequestParam("userId") int userId,
+    public SavingResponse save(@PathVariable("boardSavingId") int boardSavingId,
                      @RequestBody SavingRequest toSaveRequest) throws ParentException {
-        this.checkIfUserExists(userId);
-        final var user = this.userAccountService.getById(userId);
-        this.savingProcess.processSave(toSaveRequest, user);
+        return savingProcess.processSave(toSaveRequest, boardSavingId);
     }
 
     @PutMapping("/{savingId}")
-    public void update(@PathVariable("savingId") int savingId,
-                       @RequestParam("userId") int userId,
+    public SavingResponse update(@PathVariable("savingId") int savingId,
+                       @PathVariable("boardSavingId") int boardSavingId,
                        @RequestBody SavingRequest savingDtoToSave) throws ParentException {
-        this.checkIfUserExists(userId);
-        final var user = userAccountService.getById(userId);
-        this.savingProcess.processUpdate(savingId, savingDtoToSave, user);
+        return savingProcess.processUpdate(savingId, savingDtoToSave, boardSavingId);
     }
 
     @DeleteMapping("/{savingId}")
-    public void delete(@PathVariable("savingId") int financeGoalId,
-                       @RequestParam("userId") int userId) throws ParentException {
-        this.checkIfUserExists(userId);
-        this.savingProcess.processDelete(financeGoalId);
-    }
-
-    private void checkIfUserExists(int userId) throws NotFoundException {
-        if (this.userAccountService.checkIfNotExists(userId)) {
-            throw new NotFoundException("Entity 'User' not found by attribute 'id' = %s".formatted(userId));
-        }
+    public void delete(@PathVariable("savingId") int savingId) throws ParentException {
+        savingProcess.processDelete(savingId);
     }
 }
