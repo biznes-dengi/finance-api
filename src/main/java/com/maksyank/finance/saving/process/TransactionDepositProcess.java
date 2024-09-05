@@ -1,12 +1,12 @@
-package com.maksyank.finance.saving.service.process;
+package com.maksyank.finance.saving.process;
 
 import com.maksyank.finance.saving.boundary.request.DepositAmountRequest;
+import com.maksyank.finance.saving.dao.SavingDao;
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.domain.enums.TransactionType;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ValidationException;
-import com.maksyank.finance.saving.service.persistence.SavingPersistence;
 import com.maksyank.finance.saving.service.validation.service.TransactionDepositValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -19,10 +19,10 @@ import java.util.List;
 public class TransactionDepositProcess {
 
     private final TransactionDepositValidationService validator;
-    private final SavingPersistence savingPersistence;
+    private final SavingDao savingDao;
 
     public BigDecimal processGetFundAmountByMonth(final DepositAmountRequest request) throws NotFoundException, ValidationException {
-        final var savingForCalculateAmount = this.savingPersistence.findByIdAndUserId(request.savingId(), request.userId());
+        final var savingForCalculateAmount = savingDao.fetchSavingById(request.savingId(), request.userId());
 
         final var resultOfValidation = validator.validate(request);
         if (resultOfValidation.notValid())

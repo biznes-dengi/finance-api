@@ -1,4 +1,4 @@
-package com.maksyank.finance.saving.service.process;
+package com.maksyank.finance.saving.process;
 
 import com.maksyank.finance.saving.boundary.response.BoardSavingResponse;
 import com.maksyank.finance.saving.dao.BoardSavingDao;
@@ -19,7 +19,7 @@ public class BoardSavingProcess {
     public BoardSavingResponse processGetByAccountId(final int accountId) throws NotFoundException {
         checkIfUserExists(accountId);
         try {
-            final var response =  boardSavingDao.fetchBoardSaving(accountId);
+            final var response =  boardSavingDao.fetchBoardSavingByAccountId(accountId);
             return boardSavingMapper.boardSavingToBoardSavingResponse(response);
         } catch (NotFoundException e) {
             final var currentUser = accountProcess.getById(accountId);

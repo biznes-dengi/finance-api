@@ -1,4 +1,4 @@
-package com.maksyank.finance.saving.service.process;
+package com.maksyank.finance.saving.process;
 
 import com.maksyank.finance.saving.boundary.request.TransactionRequest;
 import com.maksyank.finance.saving.boundary.request.TransactionUpdateRequest;
