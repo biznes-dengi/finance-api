@@ -1,4 +1,4 @@
-package com.maksyank.finance.saving.service.validation;
+package com.maksyank.finance.saving.validation;
 
 public record ValidationResult(boolean isValid, String errorMsg) {
     public static ValidationResult valid() {

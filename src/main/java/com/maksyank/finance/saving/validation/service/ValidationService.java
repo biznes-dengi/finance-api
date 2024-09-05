@@ -1,6 +1,6 @@
-package com.maksyank.finance.saving.service.validation.service;
+package com.maksyank.finance.saving.validation.service;
 
-import com.maksyank.finance.saving.service.validation.ValidationResult;
+import com.maksyank.finance.saving.validation.ValidationResult;
 import jakarta.validation.Validator;
 
 public abstract class ValidationService {

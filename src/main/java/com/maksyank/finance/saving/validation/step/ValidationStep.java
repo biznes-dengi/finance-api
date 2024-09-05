@@ -1,6 +1,6 @@
-package com.maksyank.finance.saving.service.validation.step;
+package com.maksyank.finance.saving.validation.step;
 
-import com.maksyank.finance.saving.service.validation.ValidationResult;
+import com.maksyank.finance.saving.validation.ValidationResult;
 
 public abstract class ValidationStep<T> {
     private ValidationStep<T> next;

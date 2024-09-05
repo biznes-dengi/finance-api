@@ -1,10 +1,10 @@
-package com.maksyank.finance.saving.service.validation.service;
+package com.maksyank.finance.saving.validation.service;
 
-import com.maksyank.finance.saving.dto.TransactionDto;
-import com.maksyank.finance.saving.dto.TransactionUpdateDto;
-import com.maksyank.finance.saving.service.validation.ValidationResult;
-import com.maksyank.finance.saving.service.validation.step.ValidationStep;
-import com.maksyank.finance.saving.service.validation.step.transaction.AmountValidation;
+import com.maksyank.finance.saving.domain.dto.TransactionDto;
+import com.maksyank.finance.saving.domain.dto.TransactionUpdateDto;
+import com.maksyank.finance.saving.validation.ValidationResult;
+import com.maksyank.finance.saving.validation.step.ValidationStep;
+import com.maksyank.finance.saving.validation.step.transaction.AmountValidation;
 import jakarta.validation.Validator;
 import org.springframework.stereotype.Service;
 

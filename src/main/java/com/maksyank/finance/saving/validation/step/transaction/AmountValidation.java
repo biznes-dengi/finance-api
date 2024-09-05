@@ -1,9 +1,9 @@
-package com.maksyank.finance.saving.service.validation.step.transaction;
+package com.maksyank.finance.saving.validation.step.transaction;
 
 import com.maksyank.finance.saving.domain.enums.TransactionType;
-import com.maksyank.finance.saving.dto.TransactionDto;
-import com.maksyank.finance.saving.service.validation.ValidationResult;
-import com.maksyank.finance.saving.service.validation.step.ValidationStep;
+import com.maksyank.finance.saving.domain.dto.TransactionDto;
+import com.maksyank.finance.saving.validation.ValidationResult;
+import com.maksyank.finance.saving.validation.step.ValidationStep;
 
 import java.math.BigDecimal;
 
