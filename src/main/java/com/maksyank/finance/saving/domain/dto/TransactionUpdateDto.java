@@ -1,4 +1,4 @@
-package com.maksyank.finance.saving.dto;
+package com.maksyank.finance.saving.domain.dto;
 
 import jakarta.validation.constraints.Size;
 

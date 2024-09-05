@@ -1,4 +1,4 @@
-package com.maksyank.finance.saving.dto;
+package com.maksyank.finance.saving.domain.dto;
 
 import com.maksyank.finance.saving.domain.enums.CurrencyCode;
 import com.maksyank.finance.saving.domain.enums.ImageType;
