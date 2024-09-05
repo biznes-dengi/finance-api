@@ -5,84 +5,67 @@ import com.maksyank.finance.saving.boundary.request.TransactionUpdateRequest;
 import com.maksyank.finance.saving.boundary.response.StateOfSavingResponse;
 import com.maksyank.finance.saving.boundary.response.TransactionResponse;
 import com.maksyank.finance.saving.boundary.response.TransactionViewResponse;
+import com.maksyank.finance.saving.dao.SavingDao;
+import com.maksyank.finance.saving.dao.TransactionDao;
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.Transaction;
-import com.maksyank.finance.saving.dto.TransactionDto;
-import com.maksyank.finance.saving.exception.DbOperationException;
+import com.maksyank.finance.saving.domain.dto.TransactionDto;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ValidationException;
 import com.maksyank.finance.saving.mapper.StateOfSavingResponseMapper;
 import com.maksyank.finance.saving.mapper.TransactionMapper;
-import com.maksyank.finance.saving.service.persistence.SavingPersistence;
-import com.maksyank.finance.saving.service.persistence.TransactionPersistence;
 import com.maksyank.finance.saving.service.validation.service.TransactionValidationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class TransactionProcess {
-    private final TransactionPersistence transactionPersistence;
-    private final SavingPersistence savingPersistence;
+    private final TransactionDao transactionDao;
+    private final SavingDao savingDao;
     private final SavingProcess savingProcess;
     private final TransactionValidationService transactionValidationService;
     private final StateOfSavingResponseMapper stateOfSavingResponseMapper;
     private final TransactionMapper transactionMapper;
 
-    @Autowired
-    TransactionProcess(
-            TransactionPersistence transactionPersistence,
-            SavingPersistence savingPersistence,
-            SavingProcess savingProcess,
-            TransactionValidationService transactionValidationService,
-            StateOfSavingResponseMapper stateOfSavingResponseMapper,
-            TransactionMapper transactionMapper
-    ) {
-        this.transactionPersistence = transactionPersistence;
-        this.savingPersistence = savingPersistence;
-        this.savingProcess = savingProcess;
-        this.transactionValidationService = transactionValidationService;
-        this.stateOfSavingResponseMapper = stateOfSavingResponseMapper;
-        this.transactionMapper = transactionMapper;
-    }
-
-    public List<TransactionViewResponse> processGetByPage(int savingId, int pageNumber, int userId) throws NotFoundException {
-        boolean ifExists = this.savingPersistence.ifExistsByIdAndUserId(savingId, userId);
+    public List<TransactionViewResponse> processGetByPage(int savingId, int pageNumber, int boardSavingId) throws NotFoundException {
+        boolean ifExists = savingDao.existsSaving(savingId, boardSavingId);
         if (!ifExists) {
             throw new NotFoundException("Entity 'Saving' not found by attribute 'savingId' = " + savingId);
         }
 
         final var foundTransactions =
-                this.transactionPersistence.findAllBySavingIdPageable(savingId, pageNumber);
+                this.transactionDao.fetchTransactionsBySavingIdPageable(savingId, pageNumber);
         return transactionMapper.transactionListToTransactionViewResponseList(foundTransactions);
     }
 
     // TODO add validation to dealDate
-    public StateOfSavingResponse processSave(TransactionRequest requestToSave, int savingId, int userId)
-            throws NotFoundException, DbOperationException, ValidationException {
+    public StateOfSavingResponse processSave(TransactionRequest requestToSave, int savingId, int boardSavingId)
+            throws NotFoundException, ValidationException {
         final var transactionDtoToSave = transactionMapper.transactionRequestToTransactionDto(requestToSave);
 
         final var resultOfValidation = transactionValidationService.validate(transactionDtoToSave);
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var linkedSaving = savingProcess.updateBalance(transactionDtoToSave.amount(), savingId, userId);
+        final var linkedSaving = savingProcess.updateBalance(transactionDtoToSave.amount(), savingId, boardSavingId);
 
         final var newTransaction = createNewTransaction(transactionDtoToSave, linkedSaving);
-        this.transactionPersistence.save(newTransaction);
+        this.transactionDao.createTransaction(newTransaction);
 
         return stateOfSavingResponseMapper.savingToStateOfSavingResponse(linkedSaving);
     }
 
-    public TransactionResponse processGetById(int depositId, int savingId, int userId) throws NotFoundException {
-        final var saving = this.savingPersistence.findByIdAndUserId(savingId, userId);
-        final var foundTransaction = this.findTransaction(saving, depositId);
+    public TransactionResponse processGetById(int depositId, int savingId, int boardSavingId) throws NotFoundException {
+        final var foundSaving = this.savingDao.fetchSavingById(savingId, boardSavingId);
+        final var foundTransaction = this.findTransaction(foundSaving, depositId);
         return transactionMapper.transactionToTransactionResponse(foundTransaction);
     }
 
-    public boolean processUpdate(int depositId, int financeGoalId, TransactionUpdateRequest requestToUpdate, int userId)
-            throws NotFoundException, DbOperationException, ValidationException {
+    public TransactionResponse processUpdate(int depositId, int savingId, TransactionUpdateRequest requestToUpdate, int boardSavingId)
+            throws NotFoundException, ValidationException {
         final var transactionUpdateDto =
                 transactionMapper.transactionUpdateRequestToTransactionUpdateDto(requestToUpdate);
 
@@ -90,10 +73,11 @@ public class TransactionProcess {
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var saving = this.savingPersistence.findByIdAndUserId(financeGoalId, userId);
-        final var transactionToUpdate = this.findTransaction(saving, depositId);
+        final var foundSaving = this.savingDao.fetchSavingById(savingId, boardSavingId);
+        final var transactionToUpdate = this.findTransaction(foundSaving, depositId);
         transactionToUpdate.setDescription(transactionUpdateDto.description());
-        return this.transactionPersistence.save(transactionToUpdate);
+        final var response = this.transactionDao.createTransaction(transactionToUpdate);
+        return transactionMapper.transactionToTransactionResponse(response);
     }
 
     private Transaction createNewTransaction(TransactionDto transactionDtoToSave, Saving linkedSaving) {
