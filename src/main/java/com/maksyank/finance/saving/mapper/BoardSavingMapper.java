@@ -2,10 +2,7 @@ package com.maksyank.finance.saving.mapper;
 
 import com.maksyank.finance.saving.boundary.response.BoardSavingResponse;
 import com.maksyank.finance.saving.domain.BoardSaving;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 @Mapper(
         componentModel = MappingConstants.ComponentModel.SPRING,
@@ -15,5 +12,6 @@ import org.mapstruct.ReportingPolicy;
 )
 public interface BoardSavingMapper {
 
+    @Mapping(source = "id", target = "boardSavingId")
     BoardSavingResponse boardSavingToBoardSavingResponse(BoardSaving source);
 }

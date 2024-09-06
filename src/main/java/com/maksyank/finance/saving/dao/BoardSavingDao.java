@@ -17,9 +17,17 @@ public interface BoardSavingDao {
      * Fetch BoardSaving record by given accountId
      *
      * @param accountId unique identifier of Account entity
-     * @return found BoardSaving record by given accountId
+     * @return found BoardSaving record
      */
-    BoardSaving fetchBoardSaving(int accountId) throws NotFoundException;
+    BoardSaving fetchBoardSavingByAccountId(int accountId) throws NotFoundException;
+
+    /**
+     * Fetch BoardSaving record by given boardSavingId
+     *
+     * @param boardSavingId unique identifier of BoardSaving entity
+     * @return found BoardSaving record
+     */
+    BoardSaving fetchBoardSavingById(int boardSavingId) throws NotFoundException;
 
     /**
      * Checks If the BoardSaving record exists for the given accountId

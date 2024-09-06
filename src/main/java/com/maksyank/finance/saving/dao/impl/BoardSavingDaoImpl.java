@@ -19,9 +19,15 @@ public class BoardSavingDaoImpl implements BoardSavingDao {
     }
 
     @Override
-    public BoardSaving fetchBoardSaving(int accountId) throws NotFoundException {
+    public BoardSaving fetchBoardSavingByAccountId(int accountId) throws NotFoundException {
        return savingBoardRepository.findByAccount_Id(accountId)
                .orElseThrow(() -> new NotFoundException("Entity 'BoardSaving' not found by attribute 'accountId' = " + accountId));
+    }
+
+    @Override
+    public BoardSaving fetchBoardSavingById(int boardSavingId) throws NotFoundException {
+        return savingBoardRepository.findById(boardSavingId)
+                .orElseThrow(() -> new NotFoundException("Entity 'BoardSaving' not found by attribute 'boardSavingId' = " + boardSavingId));
     }
 
     @Override

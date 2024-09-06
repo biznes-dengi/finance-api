@@ -2,7 +2,7 @@ package com.maksyank.finance.saving.boundary;
 
 import com.maksyank.finance.saving.boundary.response.BoardSavingResponse;
 import com.maksyank.finance.saving.exception.NotFoundException;
-import com.maksyank.finance.saving.service.process.BoardSavingProcess;
+import com.maksyank.finance.saving.process.BoardSavingProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
