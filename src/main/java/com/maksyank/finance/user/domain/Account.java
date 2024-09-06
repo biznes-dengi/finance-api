@@ -1,6 +1,5 @@
 package com.maksyank.finance.user.domain;
 
-import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.user.domain.base.BaseUser;
 import com.maksyank.finance.user.domain.enums.AppRole;
 import com.maksyank.finance.user.domain.enums.UserGender;
@@ -8,17 +7,14 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
-import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Collection;
 
 @Data
 @Entity
@@ -60,7 +56,4 @@ public class Account extends BaseUser {
 
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
-
-    @OneToMany(mappedBy = "userAccount", fetch = FetchType.LAZY)
-    private Collection<Saving> savings;
 }

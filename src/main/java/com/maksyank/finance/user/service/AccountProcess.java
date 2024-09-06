@@ -1,7 +1,7 @@
 package com.maksyank.finance.user.service;
 
 import com.maksyank.finance.user.domain.Account;
-import com.maksyank.finance.user.repository.UserAccountRepository;
+import com.maksyank.finance.user.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,17 +10,17 @@ import java.util.List;
 
 // TO DO refactor userAccount vs user (additionally task in notion 'refactor entity UserAccount')
 @Service
-public class UserAccountService {
+public class AccountProcess {
 
-    private final UserAccountRepository userAccountRepository;
+    private final AccountRepository accountRepository;
 
     @Autowired
-    UserAccountService(UserAccountRepository userAccountRepository) {
-        this.userAccountRepository = userAccountRepository;
+    AccountProcess(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
     public Account getByEmailAndPassword(String email, String password) {
-        final var foundUser = userAccountRepository.findByEmailAndPassword(email, password);
+        final var foundUser = accountRepository.findByEmailAndPassword(email, password);
 
         if (foundUser.isPresent()) {
             return foundUser.get();
@@ -31,7 +31,7 @@ public class UserAccountService {
     }
 
     public Account getById(int id) {
-        final var foundUser = userAccountRepository.findById(id);
+        final var foundUser = accountRepository.findById(id);
 
         if (foundUser.isPresent()) {
             return foundUser.get();
@@ -43,10 +43,10 @@ public class UserAccountService {
 
     @Transactional(readOnly = true)
     public boolean checkIfNotExists(int id) {
-        return !this.userAccountRepository.existsById(id);
+        return !this.accountRepository.existsById(id);
     }
 
     public List<Integer> getListIdsOfUsers() {
-        return this.userAccountRepository.findAll().stream().map(Account::getId).toList();
+        return this.accountRepository.findAll().stream().map(Account::getId).toList();
     }
 }
