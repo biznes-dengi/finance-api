@@ -6,7 +6,7 @@ import com.maksyank.finance.saving.domain.enums.CurrencyCode;
 import com.maksyank.finance.saving.domain.enums.ImageType;
 import com.maksyank.finance.saving.domain.enums.RiskProfileType;
 import com.maksyank.finance.saving.domain.enums.SavingState;
-import com.maksyank.finance.saving.dto.SavingDto;
+import com.maksyank.finance.saving.domain.dto.SavingDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

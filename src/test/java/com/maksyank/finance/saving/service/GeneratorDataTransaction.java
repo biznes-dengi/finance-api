@@ -3,7 +3,7 @@ package com.maksyank.finance.saving.service;
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.domain.enums.TransactionType;
-import com.maksyank.finance.saving.dto.TransactionDto;
+import com.maksyank.finance.saving.domain.dto.TransactionDto;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

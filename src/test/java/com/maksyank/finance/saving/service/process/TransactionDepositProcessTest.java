@@ -1,10 +1,13 @@
 package com.maksyank.finance.saving.service.process;
 
 import com.maksyank.finance.saving.boundary.request.DepositAmountRequest;
+import com.maksyank.finance.saving.dao.SavingDao;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ValidationException;
+import com.maksyank.finance.saving.process.TransactionDepositProcess;
 import com.maksyank.finance.saving.service.GeneratorDataTransaction;
-import com.maksyank.finance.saving.service.persistence.SavingPersistence;
+import com.maksyank.finance.saving.validation.ValidationResult;
+import com.maksyank.finance.saving.validation.service.TransactionDepositValidationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -17,12 +20,15 @@ import java.math.BigDecimal;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionDepositProcessTest {
     @Mock
-    private SavingPersistence savingPersistence;
+    private SavingDao savingDao;
+    @Mock
+    private TransactionDepositValidationService validator;
     @InjectMocks
     private TransactionDepositProcess transactionDepositProcess;
 
@@ -35,7 +41,8 @@ public class TransactionDepositProcessTest {
         final var saving = GeneratorDataTransaction.getTestData_testProcessGetDepositAmountByMonth_01();
 
         // When
-        when(savingPersistence.findByIdAndUserId(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
+        when(savingDao.fetchSavingById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
+        when(validator.validate(any())).thenReturn(ValidationResult.valid());
         final var result = transactionDepositProcess.processGetFundAmountByMonth(new DepositAmountRequest(1, year, month, 1));
 
         // Then
@@ -51,7 +58,8 @@ public class TransactionDepositProcessTest {
         final var saving = GeneratorDataTransaction.getTestData_testProcessGetDepositAmountByMonth_02();
 
         // When
-        when(savingPersistence.findByIdAndUserId(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
+        when(savingDao.fetchSavingById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
+        when(validator.validate(any())).thenReturn(ValidationResult.valid());
 
         // Then
         assertThrows(NotFoundException.class,

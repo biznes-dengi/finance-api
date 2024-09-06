@@ -1,10 +1,12 @@
 package com.maksyank.finance.saving.service.process;
 
+import com.maksyank.finance.saving.boundary.response.TransactionResponse;
+import com.maksyank.finance.saving.dao.SavingDao;
+import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.exception.NotFoundException;
+import com.maksyank.finance.saving.mapper.TransactionMapper;
+import com.maksyank.finance.saving.process.TransactionProcess;
 import com.maksyank.finance.saving.service.GeneratorDataTransaction;
-import com.maksyank.finance.saving.service.persistence.SavingPersistence;
-import com.maksyank.finance.saving.service.persistence.TransactionPersistence;
-import com.maksyank.finance.saving.service.validation.service.TransactionValidationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -15,20 +17,18 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TransactionProcessTest {
     @Mock
-    private TransactionPersistence transactionPersistence;
-    @Mock
-    private SavingPersistence savingPersistence;
-    @Mock
-    private SavingProcess savingProcess;
-    @Mock
-    private TransactionValidationService transactionValidationService;
+    private SavingDao savingDao;
     @InjectMocks
     private TransactionProcess transactionProcess;
+
+    @Mock
+    private TransactionMapper transactionMapper;
 
     @Test
     @DisplayName("Check if it will be found transaction by id")
@@ -40,8 +40,13 @@ public class TransactionProcessTest {
         final var saving = GeneratorDataTransaction.getTestData_testFindTransactions_01();
 
         // When
-        when(savingPersistence.findByIdAndUserId(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
-        final var result = this.transactionProcess.processGetById(expectedId, mockedSavingId, mockerUserId);
+        when(savingDao.fetchSavingById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
+        when(transactionMapper.transactionToTransactionResponse(any())).thenAnswer((invocationOnMock) -> {
+            final var responseTransaction = (Transaction) invocationOnMock.getArguments()[0];
+            return new TransactionResponse(responseTransaction.getId(), responseTransaction.getType(),
+                    responseTransaction.getDescription() , responseTransaction.getDealDate(), responseTransaction.getAmount());
+        });
+        final var result = transactionProcess.processGetById(expectedId, mockedSavingId, mockerUserId);
 
         // Then
         assertEquals(expectedId, result.id());
@@ -57,7 +62,7 @@ public class TransactionProcessTest {
         final var saving = GeneratorDataTransaction.getTestData_testFindTransactions_02();
 
         // When
-        when(savingPersistence.findByIdAndUserId(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
+        when(savingDao.fetchSavingById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
 
         // Then
         assertThrows(NotFoundException.class,
