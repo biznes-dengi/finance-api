@@ -5,7 +5,7 @@ import com.maksyank.finance.saving.boundary.response.SavingResponse;
 import com.maksyank.finance.saving.boundary.response.SavingViewResponse;
 import com.maksyank.finance.saving.domain.enums.SavingState;
 import com.maksyank.finance.saving.exception.ParentException;
-import com.maksyank.finance.saving.service.process.SavingProcess;
+import com.maksyank.finance.saving.process.SavingProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +22,9 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
-// TODO remove bullshit impl as getting all time users (will fix when will realize security model)
 // TODO delete end-point must have id user maybe (check when realize security)
 // TODO for update & save will be better use not check  just get\find
 // TODO think about toSave \ toUpdate (refactor) (naming)
-// TODO A check user isn't necessary because you can just get that user and will see if it exists
 @RestController
 @RequestMapping("board-saving/{boardSavingId}/saving")
 @RequiredArgsConstructor
@@ -60,7 +58,7 @@ public class SavingController {
     }
 
     @DeleteMapping("/{savingId}")
-    public void delete(@PathVariable("savingId") int savingId) throws ParentException {
+    public void delete(@PathVariable("savingId") int savingId) {
         savingProcess.processDelete(savingId);
     }
 }

@@ -5,6 +5,7 @@ import com.maksyank.finance.saving.boundary.response.SavingResponse;
 import com.maksyank.finance.saving.boundary.response.SavingViewResponse;
 import com.maksyank.finance.saving.dao.BoardSavingDao;
 import com.maksyank.finance.saving.dao.SavingDao;
+import com.maksyank.finance.saving.dao.TransactionDao;
 import com.maksyank.finance.saving.domain.BoardSaving;
 import com.maksyank.finance.saving.domain.ImageSaving;
 import com.maksyank.finance.saving.domain.Saving;
@@ -14,8 +15,7 @@ import com.maksyank.finance.saving.domain.dto.SavingDto;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ValidationException;
 import com.maksyank.finance.saving.mapper.SavingMapper;
-import com.maksyank.finance.saving.service.persistence.TransactionPersistence;
-import com.maksyank.finance.saving.service.validation.service.SavingValidationService;
+import com.maksyank.finance.saving.validation.service.SavingValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ import java.util.List;
 public class SavingProcess {
     private final SavingDao savingDao;
     private final BoardSavingDao boardSavingDao;
-    private final TransactionPersistence transactionPersistence;
+    private final TransactionDao transactionDao;
     private final SavingValidationService savingValidationService;
     private final SavingMapper savingMapper;
 
@@ -71,8 +71,8 @@ public class SavingProcess {
         return savingMapper.savingToSavingResponse(response);
     }
 
-    public void processDelete(int savingId) throws DbOperationException {
-        transactionPersistence.removeAllBySavingId(savingId);
+    public void processDelete(int savingId) {
+        transactionDao.removeAllTransactionsBySavingId(savingId);
         savingDao.deleteSaving(savingId);
     }
 
