@@ -7,7 +7,7 @@ import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.domain.enums.TransactionType;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ValidationException;
-import com.maksyank.finance.saving.service.validation.service.TransactionDepositValidationService;
+import com.maksyank.finance.saving.validation.service.TransactionDepositValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -17,12 +17,11 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class TransactionDepositProcess {
-
     private final TransactionDepositValidationService validator;
     private final SavingDao savingDao;
 
     public BigDecimal processGetFundAmountByMonth(final DepositAmountRequest request) throws NotFoundException, ValidationException {
-        final var savingForCalculateAmount = savingDao.fetchSavingById(request.savingId(), request.userId());
+        final var savingForCalculateAmount = savingDao.fetchSavingById(request.savingId(), request.boardSavingId());
 
         final var resultOfValidation = validator.validate(request);
         if (resultOfValidation.notValid())
@@ -36,7 +35,6 @@ public class TransactionDepositProcess {
     }
 
     // TODO critical point. For big data troubles with time of response (maybe move logic to SQL query)
-    // TODO change filter fund to enum
     // TODO maybe split logic into methods by filters. It relates from if there's a need for it
     private List<Transaction> findDepositTransactionsByMonth(Saving source, int year, int month) {
         return source.getTransactions().stream()

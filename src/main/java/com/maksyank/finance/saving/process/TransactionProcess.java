@@ -14,7 +14,7 @@ import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ValidationException;
 import com.maksyank.finance.saving.mapper.StateOfSavingResponseMapper;
 import com.maksyank.finance.saving.mapper.TransactionMapper;
-import com.maksyank.finance.saving.service.validation.service.TransactionValidationService;
+import com.maksyank.finance.saving.validation.service.TransactionValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -59,8 +59,8 @@ public class TransactionProcess {
     }
 
     public TransactionResponse processGetById(int depositId, int savingId, int boardSavingId) throws NotFoundException {
-        final var foundSaving = this.savingDao.fetchSavingById(savingId, boardSavingId);
-        final var foundTransaction = this.findTransaction(foundSaving, depositId);
+        final var foundSaving = savingDao.fetchSavingById(savingId, boardSavingId);
+        final var foundTransaction = findTransaction(foundSaving, depositId);
         return transactionMapper.transactionToTransactionResponse(foundTransaction);
     }
 

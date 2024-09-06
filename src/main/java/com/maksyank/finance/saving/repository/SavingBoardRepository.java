@@ -11,5 +11,7 @@ public interface SavingBoardRepository extends JpaRepository<BoardSaving, Intege
 
     Optional<BoardSaving> findByAccount_Id(int accountId);
 
+    Optional<BoardSaving> findById(int boardSavingId);
+
     boolean existsByAccount_Id(int accountId);
 }

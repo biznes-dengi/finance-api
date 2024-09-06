@@ -6,7 +6,7 @@ import com.maksyank.finance.saving.boundary.response.StateOfSavingResponse;
 import com.maksyank.finance.saving.boundary.response.TransactionResponse;
 import com.maksyank.finance.saving.boundary.response.TransactionViewResponse;
 import com.maksyank.finance.saving.exception.ParentException;
-import com.maksyank.finance.saving.service.process.TransactionProcess;
+import com.maksyank.finance.saving.process.TransactionProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -22,8 +22,6 @@ import java.util.List;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
-// TODO maybe refactor checkIfNotExists finGoal, probably move to service, think about it
-// TODO A check user isn't necessary because you can just get that user and will see if it exists
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("board-saving/{boardSavingId}/saving/{savingId}/transaction")
