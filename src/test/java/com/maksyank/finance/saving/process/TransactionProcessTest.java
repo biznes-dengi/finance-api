@@ -1,12 +1,11 @@
-package com.maksyank.finance.saving.service.process;
+package com.maksyank.finance.saving.process;
 
 import com.maksyank.finance.saving.boundary.response.TransactionResponse;
 import com.maksyank.finance.saving.dao.SavingDao;
 import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.mapper.TransactionMapper;
-import com.maksyank.finance.saving.process.TransactionProcess;
-import com.maksyank.finance.saving.service.GeneratorDataTransaction;
+import com.maksyank.finance.saving.GeneratorDataTransaction;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

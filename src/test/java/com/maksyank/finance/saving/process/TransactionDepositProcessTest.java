@@ -1,11 +1,10 @@
-package com.maksyank.finance.saving.service.process;
+package com.maksyank.finance.saving.process;
 
 import com.maksyank.finance.saving.boundary.request.DepositAmountRequest;
 import com.maksyank.finance.saving.dao.SavingDao;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ValidationException;
-import com.maksyank.finance.saving.process.TransactionDepositProcess;
-import com.maksyank.finance.saving.service.GeneratorDataTransaction;
+import com.maksyank.finance.saving.GeneratorDataTransaction;
 import com.maksyank.finance.saving.validation.ValidationResult;
 import com.maksyank.finance.saving.validation.service.TransactionDepositValidationService;
 import org.junit.jupiter.api.DisplayName;

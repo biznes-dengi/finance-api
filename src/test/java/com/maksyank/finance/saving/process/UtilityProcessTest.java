@@ -1,9 +1,8 @@
-package com.maksyank.finance.saving.service.process;
+package com.maksyank.finance.saving.process;
 
 import com.maksyank.finance.saving.dao.SavingDao;
 import com.maksyank.finance.saving.domain.enums.SavingState;
-import com.maksyank.finance.saving.process.UtilityProcess;
-import com.maksyank.finance.saving.service.GeneratorDataSaving;
+import com.maksyank.finance.saving.GeneratorDataSaving;
 import com.maksyank.finance.user.service.AccountProcess;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

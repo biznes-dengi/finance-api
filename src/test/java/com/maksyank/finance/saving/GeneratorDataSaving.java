@@ -1,4 +1,4 @@
-package com.maksyank.finance.saving.service;
+package com.maksyank.finance.saving;
 
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.Transaction;
