@@ -1,5 +1,6 @@
 package com.maksyank.finance.saving;
 
+import com.maksyank.finance.saving.domain.BoardSaving;
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.domain.enums.CurrencyCode;
@@ -7,6 +8,7 @@ import com.maksyank.finance.saving.domain.enums.ImageType;
 import com.maksyank.finance.saving.domain.enums.RiskProfileType;
 import com.maksyank.finance.saving.domain.enums.SavingState;
 import com.maksyank.finance.saving.domain.dto.SavingDto;
+import com.maksyank.finance.user.domain.Account;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -268,5 +270,13 @@ public class GeneratorDataSaving {
         saving.setState(SavingState.ACTIVE);
         saving.setDeadline(LocalDate.of(2100, 1, 23));
         return List.of(saving);
+    }
+
+    public static BoardSaving getTestData_testUpdateBoardBalance_01() {
+        var account = new Account();
+        account.setId(1);
+        var boardSaving = new BoardSaving(account);
+        boardSaving.setBoardBalance(BigDecimal.ZERO);
+        return boardSaving;
     }
 }

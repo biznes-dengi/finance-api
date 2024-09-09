@@ -25,8 +25,8 @@ public class SavingProcessTest {
     private SavingProcess savingProcess;
 
     @Test
-    @DisplayName("Test updateBalance. If a new transaction arrived but state of saving already is OVERDUE")
-    void testUpdateState_01() throws NotFoundException {
+    @DisplayName("Test updateSavingBalance. If a new transaction arrived but state of saving already is OVERDUE")
+    void testUpdateSavingBalance_01() throws NotFoundException {
         // Given
         final var saving = GeneratorDataSaving.getTestData_testUpdateState_01();
 
@@ -41,8 +41,8 @@ public class SavingProcessTest {
     }
 
     @Test
-    @DisplayName("Test updateBalance. If balance will be more that target amount")
-    void testUpdateState_02() throws NotFoundException {
+    @DisplayName("Test updateSavingBalance. If balance will be more that target amount")
+    void testUpdateSavingBalance_02() throws NotFoundException {
         // Given
         final var saving = GeneratorDataSaving.getTestData_testUpdateState_02();
 
@@ -57,8 +57,8 @@ public class SavingProcessTest {
     }
 
     @Test
-    @DisplayName("Test updateBalance. If a new withdraw arrived but state of saving already is ACHIEVED")
-    void testUpdateState_03() throws NotFoundException {
+    @DisplayName("Test updateSavingBalance. If a new withdraw arrived but state of saving already is ACHIEVED")
+    void testUpdateSavingBalance_03() throws NotFoundException {
         // Given
         final var saving = GeneratorDataSaving.getTestData_testUpdateState_03();
 
@@ -74,7 +74,7 @@ public class SavingProcessTest {
 
     @Test
     @DisplayName("Test updateBalance. If a new transaction arrived but state of saving already is OVERDUE")
-    void testUpdateBalance_01() throws NotFoundException {
+    void testUpdateSavingBalance_04() throws NotFoundException {
         // Given
         final var saving = GeneratorDataSaving.getTestData_testUpdateBalance_01();
 

@@ -25,7 +25,6 @@ public class TransactionProcessTest {
     private SavingDao savingDao;
     @InjectMocks
     private TransactionProcess transactionProcess;
-
     @Mock
     private TransactionMapper transactionMapper;
 
