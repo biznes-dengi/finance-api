@@ -16,4 +16,11 @@ public class BoardSavingController {
     public BoardSavingResponse getByAccountId(@RequestParam("accountId") int accountId) throws NotFoundException {
         return boardSavingProcess.processGetByAccountId(accountId);
     }
+    @GetMapping("/{boardSavingId}")
+    public BoardSavingResponse getGetByBoardSavingId(
+            @PathVariable("boardSavingId") int boardSavingId,
+            @RequestParam("accountId") int accountId
+    ) throws NotFoundException {
+        return boardSavingProcess.processGetByBoardSavingId(boardSavingId, accountId);
+    }
 }

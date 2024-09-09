@@ -17,8 +17,8 @@ public class BoardSaving {
     @Column(name = "board_saving_id")
     private int id;
 
-    @Column(name = "balance_savings")
-    private BigDecimal balanceSavings;
+    @Column(name = "board_balance")
+    private BigDecimal boardBalance;
 
     @OneToOne
     @JoinColumn(name = "account_id")

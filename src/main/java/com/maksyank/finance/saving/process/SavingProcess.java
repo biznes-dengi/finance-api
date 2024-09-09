@@ -76,16 +76,16 @@ public class SavingProcess {
         savingDao.deleteSaving(savingId);
     }
 
-    public Saving updateBalance(BigDecimal amountNewDeposit, int savingId, int boardSavingId) throws NotFoundException {
+    public Saving updateSavingBalance(BigDecimal amountNewDeposit, int savingId, int boardSavingId) throws NotFoundException {
         final var savingForUpdateBalance = savingDao.fetchSavingById(savingId, boardSavingId);
         final var newBalance = savingForUpdateBalance.getBalance().add(amountNewDeposit);
         savingForUpdateBalance.setBalance(newBalance);
 
-        this.updateState(savingForUpdateBalance);
+        this.updateSavingState(savingForUpdateBalance);
         return savingDao.createSaving(savingForUpdateBalance);
     }
 
-    private void updateState(Saving saving) {
+    private void updateSavingState(Saving saving) {
         if (saving.getState() == SavingState.OVERDUE || saving.getTargetAmount() == null)
             return;
 

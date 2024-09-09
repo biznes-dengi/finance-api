@@ -25,7 +25,7 @@ import java.util.List;
 public class TransactionProcess {
     private final TransactionDao transactionDao;
     private final SavingDao savingDao;
-    private final SavingProcess savingProcess;
+    private final ProxyProcess proxyProcess;
     private final TransactionValidationService transactionValidationService;
     private final StateOfSavingResponseMapper stateOfSavingResponseMapper;
     private final TransactionMapper transactionMapper;
@@ -42,7 +42,7 @@ public class TransactionProcess {
     }
 
     // TODO add validation to dealDate
-    public StateOfSavingResponse processSave(TransactionRequest requestToSave, int savingId, int boardSavingId)
+    public StateOfSavingResponse processSave(final TransactionRequest requestToSave, final int savingId, final int boardSavingId)
             throws NotFoundException, ValidationException {
         final var transactionDtoToSave = transactionMapper.transactionRequestToTransactionDto(requestToSave);
 
@@ -50,7 +50,8 @@ public class TransactionProcess {
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var linkedSaving = savingProcess.updateBalance(transactionDtoToSave.amount(), savingId, boardSavingId);
+        final var linkedSaving = proxyProcess.proxyToUpdateSavingBalance(transactionDtoToSave.amount(), savingId, boardSavingId);
+        proxyProcess.proxyToUpdateBoardBalance(boardSavingId, transactionDtoToSave.amount());
 
         final var newTransaction = createNewTransaction(transactionDtoToSave, linkedSaving);
         this.transactionDao.createTransaction(newTransaction);

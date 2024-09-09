@@ -33,7 +33,7 @@ public class SavingProcessTest {
         // When
         when(savingDao.fetchSavingById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
         when(savingDao.createSaving(Mockito.any())).thenReturn(saving);
-        final var response = this.savingProcess.updateBalance(BigDecimal.TEN, Mockito.anyInt(), Mockito.anyInt());
+        final var response = this.savingProcess.updateSavingBalance(BigDecimal.TEN, Mockito.anyInt(), Mockito.anyInt());
 
         // Then
         assertEquals(SavingState.OVERDUE, response.getState());
@@ -49,7 +49,7 @@ public class SavingProcessTest {
         // When
         when(savingDao.fetchSavingById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
         when(savingDao.createSaving(Mockito.any())).thenReturn(saving);
-        final var response = this.savingProcess.updateBalance(BigDecimal.valueOf(100.6), Mockito.anyInt(), Mockito.anyInt());
+        final var response = this.savingProcess.updateSavingBalance(BigDecimal.valueOf(100.6), Mockito.anyInt(), Mockito.anyInt());
 
         // Then
         assertEquals(SavingState.ACHIEVED, response.getState());
@@ -65,7 +65,7 @@ public class SavingProcessTest {
         // When
         when(savingDao.fetchSavingById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
         when(savingDao.createSaving(Mockito.any())).thenReturn(saving);
-        final var response = this.savingProcess.updateBalance(BigDecimal.valueOf(-100.6), Mockito.anyInt(), Mockito.anyInt());
+        final var response = this.savingProcess.updateSavingBalance(BigDecimal.valueOf(-100.6), Mockito.anyInt(), Mockito.anyInt());
 
         // Then
         assertEquals(SavingState.ACTIVE, response.getState());
@@ -84,19 +84,19 @@ public class SavingProcessTest {
 
         // Then
         var response = this.savingProcess
-                .updateBalance(BigDecimal.valueOf(932.02), Mockito.anyInt(), Mockito.anyInt());
+                .updateSavingBalance(BigDecimal.valueOf(932.02), Mockito.anyInt(), Mockito.anyInt());
         assertEquals(BigDecimal.valueOf(932.02), response.getBalance());
 
-        this.savingProcess.updateBalance(BigDecimal.valueOf(-150.22), Mockito.anyInt(), Mockito.anyInt());
+        this.savingProcess.updateSavingBalance(BigDecimal.valueOf(-150.22), Mockito.anyInt(), Mockito.anyInt());
         assertEquals(0, BigDecimal.valueOf(781.8).compareTo(response.getBalance()));
 
-        this.savingProcess.updateBalance(BigDecimal.valueOf(-1150), Mockito.anyInt(), Mockito.anyInt());
+        this.savingProcess.updateSavingBalance(BigDecimal.valueOf(-1150), Mockito.anyInt(), Mockito.anyInt());
         assertEquals(0, BigDecimal.valueOf(-368.2).compareTo(response.getBalance()));
 
-        this.savingProcess.updateBalance(BigDecimal.valueOf(1930.1), Mockito.anyInt(), Mockito.anyInt());
+        this.savingProcess.updateSavingBalance(BigDecimal.valueOf(1930.1), Mockito.anyInt(), Mockito.anyInt());
         assertEquals(0, BigDecimal.valueOf(1561.9).compareTo(response.getBalance()));
 
-        this.savingProcess.updateBalance(BigDecimal.valueOf(-1561.91), Mockito.anyInt(), Mockito.anyInt());
+        this.savingProcess.updateSavingBalance(BigDecimal.valueOf(-1561.91), Mockito.anyInt(), Mockito.anyInt());
         assertEquals(0, BigDecimal.valueOf(-0.01).compareTo(response.getBalance()));
     }
 }

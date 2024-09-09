@@ -1,5 +1,8 @@
 package com.maksyank.finance.saving.boundary.response;
 
+import java.math.BigDecimal;
+
 public record BoardSavingResponse(
-        int boardSavingId
+        int boardSavingId,
+        BigDecimal boardBalance
 ) {}
