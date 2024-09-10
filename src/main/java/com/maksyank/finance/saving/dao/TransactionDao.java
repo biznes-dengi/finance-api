@@ -2,6 +2,7 @@ package com.maksyank.finance.saving.dao;
 
 import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.exception.NotFoundException;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
@@ -16,13 +17,13 @@ public interface TransactionDao {
     Transaction createTransaction(Transaction transactionToSave);
 
     /**
-     * Fetch page of transactions by given savingId.
+     * Fetch Slice of transactions by given savingId.
      *
      * @param savingId unique identifier of Saving entity which must find
      * @param pageNumber number of page with Transactions
-     * @return
+     * @return batch of Transactions
      */
-    List<Transaction> fetchTransactionsBySavingIdPageable(int savingId, int pageNumber) throws NotFoundException;
+    Slice<Transaction> fetchAllTransactions(int savingId, int pageNumber) throws NotFoundException;
 
     /**
      * Remove all transaction records by given savingId

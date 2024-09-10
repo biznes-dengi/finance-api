@@ -3,8 +3,8 @@ package com.maksyank.finance.saving.process;
 import com.maksyank.finance.saving.boundary.request.TransactionRequest;
 import com.maksyank.finance.saving.boundary.request.TransactionUpdateRequest;
 import com.maksyank.finance.saving.boundary.response.StateOfSavingResponse;
+import com.maksyank.finance.saving.boundary.response.TransactionAllResponse;
 import com.maksyank.finance.saving.boundary.response.TransactionResponse;
-import com.maksyank.finance.saving.boundary.response.TransactionViewResponse;
 import com.maksyank.finance.saving.dao.SavingDao;
 import com.maksyank.finance.saving.dao.TransactionDao;
 import com.maksyank.finance.saving.domain.Saving;
@@ -18,8 +18,6 @@ import com.maksyank.finance.saving.validation.service.TransactionValidationServi
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 public class TransactionProcess {
@@ -30,15 +28,15 @@ public class TransactionProcess {
     private final StateOfSavingResponseMapper stateOfSavingResponseMapper;
     private final TransactionMapper transactionMapper;
 
-    public List<TransactionViewResponse> processGetByPage(int savingId, int pageNumber, int boardSavingId) throws NotFoundException {
-        boolean ifExists = savingDao.existsSaving(savingId, boardSavingId);
-        if (!ifExists) {
+    public TransactionAllResponse processGetAll(final int savingId, final int pageNumber, final int boardSavingId)
+            throws NotFoundException {
+        if (!savingDao.existsSaving(savingId, boardSavingId))
             throw new NotFoundException("Entity 'Saving' not found by attribute 'savingId' = " + savingId);
-        }
 
-        final var foundTransactions =
-                this.transactionDao.fetchTransactionsBySavingIdPageable(savingId, pageNumber);
-        return transactionMapper.transactionListToTransactionViewResponseList(foundTransactions);
+        final var foundSliceTransaction = transactionDao.fetchAllTransactions(savingId, pageNumber);
+        final var mappedTransactionViewResponse =
+                transactionMapper.transactionListToTransactionViewResponseList(foundSliceTransaction.getContent());
+        return new TransactionAllResponse(mappedTransactionViewResponse, foundSliceTransaction.hasNext());
     }
 
     // TODO add validation to dealDate

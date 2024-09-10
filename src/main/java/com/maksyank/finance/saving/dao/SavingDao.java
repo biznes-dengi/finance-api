@@ -3,6 +3,7 @@ package com.maksyank.finance.saving.dao;
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.enums.SavingState;
 import com.maksyank.finance.saving.exception.NotFoundException;
+import org.springframework.data.domain.Slice;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface SavingDao {
      * @param boardSavingId unique identifier of BoardSaving which Saving belongs
      * @return list of found Saving records
      */
-    List<Saving> fetchSavingByState(SavingState state, int boardSavingId) throws NotFoundException;
+    List<Saving> fetchSavingsByState(SavingState state, int boardSavingId) throws NotFoundException;
 
     /**
      * Fetch list of Saving by state which has deadline is not NULL
@@ -32,7 +33,7 @@ public interface SavingDao {
      * @param boardSavingId unique identifier of BoardSaving which Saving belongs
      * @return list of found Saving records
      */
-    List<Saving> fetchSavingByStateAndDeadlineIsNotNull(SavingState state, int boardSavingId);
+    List<Saving> fetchSavingsByStateAndDeadlineIsNotNull(SavingState state, int boardSavingId);
 
     /**
      * Fetch Saving record by savingId and boardSavingId
@@ -42,6 +43,16 @@ public interface SavingDao {
      * @return found Saving record
      */
     Saving fetchSavingById(int savingId, int boardSavingId) throws NotFoundException;
+
+    /**
+     * Fetch Slice of Savings by given boardSavingId
+     *
+     * @param boardSavingId unique identifier of BoardSaving which Saving belongs
+     * @param pageNumber number of page with Saving
+     * @return batch of Savings
+     * @throws NotFoundException if Savings wasn't found by given boardSavingId and pageNumber
+     */
+    Slice<Saving> fetchAllSavings(int boardSavingId, int pageNumber) throws NotFoundException;
 
     /**
      * Delete Saving record by given savingId

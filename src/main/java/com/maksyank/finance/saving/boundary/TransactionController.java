@@ -3,8 +3,8 @@ package com.maksyank.finance.saving.boundary;
 import com.maksyank.finance.saving.boundary.request.TransactionRequest;
 import com.maksyank.finance.saving.boundary.request.TransactionUpdateRequest;
 import com.maksyank.finance.saving.boundary.response.StateOfSavingResponse;
+import com.maksyank.finance.saving.boundary.response.TransactionAllResponse;
 import com.maksyank.finance.saving.boundary.response.TransactionResponse;
-import com.maksyank.finance.saving.boundary.response.TransactionViewResponse;
 import com.maksyank.finance.saving.exception.ParentException;
 import com.maksyank.finance.saving.process.TransactionProcess;
 import lombok.RequiredArgsConstructor;
@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
@@ -29,10 +27,10 @@ public class TransactionController {
     private final TransactionProcess transactionProcess;
 
     @GetMapping
-    public List<TransactionViewResponse> getByPage(@PathVariable("savingId") int savingId,
-                                                   @RequestParam("pageNumber") int pageNumber,
-                                                   @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
-        return this.transactionProcess.processGetByPage(savingId, pageNumber, boardSavingId);
+    public TransactionAllResponse getAll(@PathVariable("savingId") int savingId,
+                                         @RequestParam("pageNumber") int pageNumber,
+                                         @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
+        return this.transactionProcess.processGetAll(savingId, pageNumber, boardSavingId);
     }
 
     @PostMapping

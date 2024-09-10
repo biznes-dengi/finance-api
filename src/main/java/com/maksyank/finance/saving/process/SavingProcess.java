@@ -1,6 +1,7 @@
 package com.maksyank.finance.saving.process;
 
 import com.maksyank.finance.saving.boundary.request.SavingRequest;
+import com.maksyank.finance.saving.boundary.response.SavingAllResponse;
 import com.maksyank.finance.saving.boundary.response.SavingResponse;
 import com.maksyank.finance.saving.boundary.response.SavingViewResponse;
 import com.maksyank.finance.saving.dao.BoardSavingDao;
@@ -17,14 +18,12 @@ import com.maksyank.finance.saving.exception.ValidationException;
 import com.maksyank.finance.saving.mapper.SavingMapper;
 import com.maksyank.finance.saving.validation.service.SavingValidationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Service
-@EnableAsync
 @RequiredArgsConstructor
 public class SavingProcess {
     private final SavingDao savingDao;
@@ -39,8 +38,15 @@ public class SavingProcess {
     }
 
     public List<SavingViewResponse> processGetByState(SavingState state, int boardSavingId) throws NotFoundException {
-        final var foundSavings = savingDao.fetchSavingByState(state, boardSavingId);
+        final var foundSavings = savingDao.fetchSavingsByState(state, boardSavingId);
         return savingMapper.savingListToSavingViewResponseList(foundSavings);
+    }
+
+    public SavingAllResponse processGetAll(int boardSavingId, int pageNumber) throws NotFoundException {
+        final var foundSliceListSaving = savingDao.fetchAllSavings(boardSavingId, pageNumber);
+        final var mappedSavingViewResponse =
+                savingMapper.savingListToSavingViewResponseList(foundSliceListSaving.getContent());
+        return new SavingAllResponse(mappedSavingViewResponse, foundSliceListSaving.hasNext());
     }
 
     public SavingResponse processSave(SavingRequest savingRequest, int boardSavingId) throws ValidationException, NotFoundException {

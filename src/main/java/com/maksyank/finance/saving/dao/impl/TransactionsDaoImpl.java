@@ -6,14 +6,12 @@ import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class TransactionsDaoImpl implements TransactionDao {
-
     private final TransactionRepository transactionRepository;
 
     @Override
@@ -21,18 +19,16 @@ public class TransactionsDaoImpl implements TransactionDao {
         return transactionRepository.save(transactionToSave);
     }
 
-    // TODO (refactor) A client will have the same exceptions two cases:
-    // TODO If there were 10 items and they just ran out or were not there originally
     @Override
-    public List<Transaction> fetchTransactionsBySavingIdPageable(int savingId, int pageNumber) throws NotFoundException {
+    public Slice<Transaction> fetchAllTransactions(int savingId, int pageNumber) throws NotFoundException {
         final var response =
                 this.transactionRepository.findAllBySaving_Id(savingId, PageRequest.of(pageNumber, 5));
 
         if (response.getNumberOfElements() == 0) {
-            throw new NotFoundException("Entities 'Transaction' not found by attribute " +
-                    "'savingId' = " + savingId + ", and by 'pageNumber' = " + pageNumber);
+            throw new NotFoundException("No 'Transaction' records were found relative to 'savingId' = " +
+                    savingId + " and by 'pageNumber' = " + pageNumber);
         }
-        return response.getContent();
+        return response;
     }
 
     @Override

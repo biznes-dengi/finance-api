@@ -1,6 +1,7 @@
 package com.maksyank.finance.saving.boundary;
 
 import com.maksyank.finance.saving.boundary.request.SavingRequest;
+import com.maksyank.finance.saving.boundary.response.SavingAllResponse;
 import com.maksyank.finance.saving.boundary.response.SavingResponse;
 import com.maksyank.finance.saving.boundary.response.SavingViewResponse;
 import com.maksyank.finance.saving.domain.enums.SavingState;
@@ -32,7 +33,12 @@ public class SavingController {
     private final SavingProcess savingProcess;
 
     @GetMapping
-    public List<SavingViewResponse> getByState(@RequestParam("state") SavingState state,
+    public SavingAllResponse getAll(@PathVariable("boardSavingId") int boardSavingId, @RequestParam("pageNumber") int pageNumber) throws ParentException {
+        return savingProcess.processGetAll(boardSavingId, pageNumber);
+    }
+
+    @GetMapping("/{state}")
+    public List<SavingViewResponse> getByState(@PathVariable("state") SavingState state,
                                                @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
         return savingProcess.processGetByState(state, boardSavingId);
     }

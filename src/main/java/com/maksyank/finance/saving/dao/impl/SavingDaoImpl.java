@@ -6,6 +6,8 @@ import com.maksyank.finance.saving.domain.enums.SavingState;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.repository.SavingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -14,7 +16,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class SavingDaoImpl implements SavingDao {
-
     private final SavingRepository savingRepository;
 
     @Override
@@ -23,7 +24,7 @@ public class SavingDaoImpl implements SavingDao {
     }
 
     @Override
-    public List<Saving> fetchSavingByState(SavingState state, int boardSavingId) throws NotFoundException {
+    public List<Saving> fetchSavingsByState(SavingState state, int boardSavingId) throws NotFoundException {
         return savingRepository
                 .findByStateAndBoardSaving_Id(state, boardSavingId)
                 .orElseThrow(
@@ -32,7 +33,7 @@ public class SavingDaoImpl implements SavingDao {
     }
 
     @Override
-    public List<Saving> fetchSavingByStateAndDeadlineIsNotNull(SavingState state, int boardSavingId) {
+    public List<Saving> fetchSavingsByStateAndDeadlineIsNotNull(SavingState state, int boardSavingId) {
         return savingRepository
                 .findByBoardSaving_IdAndDeadlineNotNullAndState(boardSavingId, state)
                 .orElse(Collections.emptyList());
@@ -43,6 +44,18 @@ public class SavingDaoImpl implements SavingDao {
         return savingRepository
                 .findByIdAndBoardSaving_Id(savingId, boardSavingId)
                 .orElseThrow(() -> new NotFoundException("Entity 'Saving' not found by attribute 'id' = " + savingId));
+    }
+
+    @Override
+    public Slice<Saving> fetchAllSavings(int boardSavingId, int pageNumber) throws NotFoundException {
+        final var response =
+                savingRepository.findAllByBoardSaving_Id(boardSavingId, PageRequest.of(pageNumber, 5));
+
+        if (response.getNumberOfElements() == 0) {
+            throw new NotFoundException("No 'Saving' records were found relative to 'boardSavingId' = "
+                    + boardSavingId + " and by 'pageNumber' = " + pageNumber);
+        }
+        return response;
     }
 
     @Override

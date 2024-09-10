@@ -34,7 +34,7 @@ public class UtilityProcessTest {
         // When
         when(this.accountProcess.getListIdsOfUsers())
                 .thenReturn(List.of(1));
-        when(savingDao.fetchSavingByStateAndDeadlineIsNotNull(SavingState.ACTIVE, 1))
+        when(savingDao.fetchSavingsByStateAndDeadlineIsNotNull(SavingState.ACTIVE, 1))
                 .thenReturn(saving);
 
         utilityProcess.scheduledCheckSavingsIfOverdue();
@@ -52,7 +52,7 @@ public class UtilityProcessTest {
         // When
         when(this.accountProcess.getListIdsOfUsers())
                 .thenReturn(List.of(1));
-        when(savingDao.fetchSavingByStateAndDeadlineIsNotNull(SavingState.ACTIVE, 1))
+        when(savingDao.fetchSavingsByStateAndDeadlineIsNotNull(SavingState.ACTIVE, 1))
                 .thenReturn(saving);
 
         utilityProcess.scheduledCheckSavingsIfOverdue();

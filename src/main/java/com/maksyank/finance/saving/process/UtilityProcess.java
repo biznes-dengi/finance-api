@@ -23,7 +23,7 @@ public class UtilityProcess {
     @Scheduled(cron = "0 0 * * * *")
     public void scheduledCheckSavingsIfOverdue() {
         this.accountProcess.getListIdsOfUsers().stream()
-                .map(userId -> savingDao.fetchSavingByStateAndDeadlineIsNotNull(SavingState.ACTIVE, userId))
+                .map(userId -> savingDao.fetchSavingsByStateAndDeadlineIsNotNull(SavingState.ACTIVE, userId))
                 .filter(listSaving -> !listSaving.isEmpty())
                 .forEach(listSaving ->
                         listSaving.stream()
