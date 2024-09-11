@@ -18,7 +18,7 @@ public class GeneratorDataSaving {
     public static Saving getTestData_testUpdateBalance_01() {
         Saving saving = new Saving();
         List<Transaction> transactions = new ArrayList<>();
-        saving.setBalance(BigDecimal.ZERO);
+        saving.setSavingBalance(BigDecimal.ZERO);
         saving.setState(SavingState.ACTIVE);
         saving.setTargetAmount(BigDecimal.valueOf(900));
         saving.setTransactions(transactions);
@@ -235,14 +235,14 @@ public class GeneratorDataSaving {
 
     public static Saving getTestData_testUpdateState_01() {
         Saving saving = new Saving();
-        saving.setBalance(BigDecimal.valueOf(120.2));
+        saving.setSavingBalance(BigDecimal.valueOf(120.2));
         saving.setState(SavingState.OVERDUE);
         return saving;
     }
 
     public static Saving getTestData_testUpdateState_02() {
         Saving saving = new Saving();
-        saving.setBalance(BigDecimal.valueOf(120.2));
+        saving.setSavingBalance(BigDecimal.valueOf(120.2));
         saving.setTargetAmount(BigDecimal.valueOf(150));
         saving.setState(SavingState.ACTIVE);
         return saving;
@@ -250,7 +250,7 @@ public class GeneratorDataSaving {
 
     public static Saving getTestData_testUpdateState_03() {
         Saving saving = new Saving();
-        saving.setBalance(BigDecimal.valueOf(160.9));
+        saving.setSavingBalance(BigDecimal.valueOf(160.9));
         saving.setTargetAmount(BigDecimal.valueOf(150));
         saving.setState(SavingState.ACHIEVED);
         return saving;

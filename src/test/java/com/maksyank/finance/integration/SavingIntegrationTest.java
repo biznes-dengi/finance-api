@@ -107,8 +107,8 @@ public class SavingIntegrationTest {
         private ResultMatcher[] getSavingJsonMatcher(final boolean isList) {
             return new ResultMatcher[]{
                     jsonPath("$%s.id".formatted(isList ? "[0]" : EMPTY)).value(1),
-                    jsonPath("$%s.title".formatted(isList ? "[0]" : EMPTY)).value("Trichilia"),
-                    jsonPath("$%s.amount".formatted(isList ? "[0]" : EMPTY)).value(950),
+                    jsonPath("$%s.name".formatted(isList ? "[0]" : EMPTY)).value("Trichilia"),
+                    jsonPath("$%s.balance".formatted(isList ? "[0]" : EMPTY)).value(950),
                     jsonPath("$%s.targetAmount".formatted(isList ? "[0]" : EMPTY)).value(1500.50),
                     jsonPath("$%s.image".formatted(isList ? "[0]" : EMPTY)).isEmpty()
             };
@@ -118,11 +118,11 @@ public class SavingIntegrationTest {
             return """
                     {
                        "id":2,
-                       "title":"TEST_TITLE",
+                       "name":"TEST_TITLE",
                        "state":"ACHIEVED",
                        "currency": "EUR",
                        "description":"TEST_DESCRIPTION",
-                       "amount":228.00,
+                       "balance":228.00,
                        "targetAmount":1408.00,
                        "deadline":"2050-10-24"
                     }""";
@@ -131,7 +131,7 @@ public class SavingIntegrationTest {
         private String getSavingUpdateBody() {
             return """
                     {
-                       "title":"UPDATED_TITLE",
+                       "name":"UPDATED_TITLE",
                        "currency": "RUB",
                        "description":"UPDATED_DESCRIPTION",
                        "targetAmount":1408.00,

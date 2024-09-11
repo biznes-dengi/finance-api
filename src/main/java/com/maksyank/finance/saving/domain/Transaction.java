@@ -38,7 +38,7 @@ public class Transaction {
     private String description;
     @Column(name = "deal_date")
     private LocalDateTime dealDate;
-    @Column(name = "amount")
+    @Column(name = "balance")
     private BigDecimal amount;
 
     @ManyToOne
@@ -56,7 +56,7 @@ public class Transaction {
     @Override
     public String toString() {
         return "Transaction(id=" + this.getId() + ", type=" + this.getType() + ", description=" +
-                this.getDescription() + ", dealDate=" + this.getDealDate() + ", amount=" +
+                this.getDescription() + ", dealDate=" + this.getDealDate() + ", balance=" +
                 this.getAmount() + ", savingId=" + this.getSaving().getId() + ")";
     }
 }

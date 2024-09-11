@@ -8,10 +8,10 @@ import java.time.LocalDate;
 
 public record SavingResponse(
         int id,
-        String title,
+        String name,
         SavingState state,
         String description,
-        BigDecimal amount,
+        BigDecimal balance,
         BigDecimal targetAmount,
         LocalDate deadline,
         RiskProfileType riskProfile,

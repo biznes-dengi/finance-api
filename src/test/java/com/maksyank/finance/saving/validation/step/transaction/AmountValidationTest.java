@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AmountValidationTest {
     @Test
-    @DisplayName(value = "Test Amount step, check if the amount has no digits after comma")
+    @DisplayName(value = "Test Amount step, check if the balance has no digits after comma")
     public void testAmountValidationStep_01() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfScaleOneOrTwo();
@@ -26,7 +26,7 @@ public class AmountValidationTest {
     }
 
     @Test
-    @DisplayName(value = "Test Amount step, check if the amount has three digits after comma")
+    @DisplayName(value = "Test Amount step, check if the balance has three digits after comma")
     public void testAmountValidationStep_02() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfScaleOneOrTwo();
@@ -37,11 +37,11 @@ public class AmountValidationTest {
 
         // Then
         assertFalse(response.isValid());
-        assertEquals("The 'amount' field must contain one or two digits after a decimal point.", response.errorMsg());
+        assertEquals("The 'balance' field must contain one or two digits after a decimal point.", response.errorMsg());
     }
 
     @Test
-    @DisplayName(value = "Test Amount step, check if the amount has two digits after comma")
+    @DisplayName(value = "Test Amount step, check if the balance has two digits after comma")
     public void testAmountValidationStep_03() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfScaleOneOrTwo();
@@ -56,7 +56,7 @@ public class AmountValidationTest {
 
     @Test
     @DisplayName(value = "Test Amount step, " +
-            "check if the field 'amount' is correct if type of transaction is DEPOSIT and amount is less then zero")
+            "check if the field 'balance' is correct if type of transaction is DEPOSIT and balance is less then zero")
     public void testAmountValidationStep_04() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfDepositHasAmountMoreThenZero();
@@ -67,12 +67,12 @@ public class AmountValidationTest {
 
         // Then
         assertFalse(response.isValid());
-        assertEquals("When transaction type is DEPOSIT then the 'amount' field must contain positive value.", response.errorMsg());
+        assertEquals("When transaction type is DEPOSIT then the 'balance' field must contain positive value.", response.errorMsg());
     }
 
     @Test
     @DisplayName(value = "Test Amount step, " +
-            "check if the field 'amount' is correct if type of transaction is DEPOSIT and amount is zero")
+            "check if the field 'balance' is correct if type of transaction is DEPOSIT and balance is zero")
     public void testAmountValidationStep_05() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfDepositHasAmountMoreThenZero();
@@ -83,12 +83,12 @@ public class AmountValidationTest {
 
         // Then
         assertFalse(response.isValid());
-        assertEquals("When transaction type is DEPOSIT then the 'amount' field must contain positive value.", response.errorMsg());
+        assertEquals("When transaction type is DEPOSIT then the 'balance' field must contain positive value.", response.errorMsg());
     }
 
     @Test
     @DisplayName(value = "Test Amount step, " +
-            "check if the field 'amount' is correct if type of transaction is DEPOSIT and amount is greater then zero")
+            "check if the field 'balance' is correct if type of transaction is DEPOSIT and balance is greater then zero")
     public void testAmountValidationStep_06() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfDepositHasAmountMoreThenZero();
@@ -103,7 +103,7 @@ public class AmountValidationTest {
 
     @Test
     @DisplayName(value = "Test Amount step, " +
-            "check if the field 'amount' is correct if type of transaction is WITHDRAW and amount is less then zero")
+            "check if the field 'balance' is correct if type of transaction is WITHDRAW and balance is less then zero")
     public void testAmountValidationStep_07() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfWithdrawHasAmountLessThenZero();
@@ -118,7 +118,7 @@ public class AmountValidationTest {
 
     @Test
     @DisplayName(value = "Test Amount step, " +
-            "check if the field 'amount' is correct if type of transaction is WITHDRAW and amount is zero")
+            "check if the field 'balance' is correct if type of transaction is WITHDRAW and balance is zero")
     public void testAmountValidationStep_08() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfWithdrawHasAmountLessThenZero();
@@ -129,12 +129,12 @@ public class AmountValidationTest {
 
         // Then
         assertFalse(response.isValid());
-        assertEquals("When transaction type is WITHDRAW then, the 'amount' field must contain negative value.", response.errorMsg());
+        assertEquals("When transaction type is WITHDRAW then, the 'balance' field must contain negative value.", response.errorMsg());
     }
 
     @Test
     @DisplayName(value = "Test Amount step, " +
-            "check if the field 'amount' is correct if type of transaction is WITHDRAW and amount is greater then zero")
+            "check if the field 'balance' is correct if type of transaction is WITHDRAW and balance is greater then zero")
     public void testAmountValidationStep_09() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfWithdrawHasAmountLessThenZero();
@@ -145,7 +145,7 @@ public class AmountValidationTest {
 
         // Then
         assertFalse(response.isValid());
-        assertEquals("When transaction type is WITHDRAW then, the 'amount' field must contain negative value.", response.errorMsg());
+        assertEquals("When transaction type is WITHDRAW then, the 'balance' field must contain negative value.", response.errorMsg());
     }
 
 

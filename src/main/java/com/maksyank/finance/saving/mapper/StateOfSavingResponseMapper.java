@@ -2,10 +2,7 @@ package com.maksyank.finance.saving.mapper;
 
 import com.maksyank.finance.saving.boundary.response.StateOfSavingResponse;
 import com.maksyank.finance.saving.domain.Saving;
-import org.mapstruct.InjectionStrategy;
-import org.mapstruct.Mapper;
-import org.mapstruct.MappingConstants;
-import org.mapstruct.ReportingPolicy;
+import org.mapstruct.*;
 
 @Mapper(
         componentModel = MappingConstants.ComponentModel.SPRING,
@@ -14,6 +11,6 @@ import org.mapstruct.ReportingPolicy;
         unmappedTargetPolicy = ReportingPolicy.ERROR
 )
 public interface StateOfSavingResponseMapper {
-
+    @Mapping(source = "savingBalance", target = "balance")
     StateOfSavingResponse savingToStateOfSavingResponse(Saving source);
 }

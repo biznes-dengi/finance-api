@@ -14,7 +14,7 @@ public class AmountValidation {
             if (0 <= toValidate.amount().scale() && toValidate.amount().scale() <= 2)
                 return this.checkNext(toValidate);
 
-            return ValidationResult.invalid("The 'amount' field must contain one or two digits after a decimal point.");
+            return ValidationResult.invalid("The 'balance' field must contain one or two digits after a decimal point.");
         }
     }
     public static class StepValidIfDepositHasAmountMoreThenZero extends ValidationStep<TransactionDto> {
@@ -23,7 +23,7 @@ public class AmountValidation {
             if ((toValidate.type() == TransactionType.DEPOSIT)) {
                 if ((toValidate.amount().compareTo(BigDecimal.ZERO) < 0) || (toValidate.amount().compareTo(BigDecimal.ZERO) == 0)) {
                     return ValidationResult.invalid("When transaction type is DEPOSIT then " +
-                            "the 'amount' field must contain positive value.");
+                            "the 'balance' field must contain positive value.");
                 }
             }
             return this.checkNext(toValidate);
@@ -36,7 +36,7 @@ public class AmountValidation {
             if ((toValidate.type() == TransactionType.WITHDRAW)) {
                 if ((toValidate.amount().compareTo(BigDecimal.ZERO) > 0) || (toValidate.amount().compareTo(BigDecimal.ZERO) == 0)) {
                     return ValidationResult.invalid("When transaction type is WITHDRAW then, " +
-                            "the 'amount' field must contain negative value.");
+                            "the 'balance' field must contain negative value.");
                 }
             }
             return this.checkNext(toValidate);

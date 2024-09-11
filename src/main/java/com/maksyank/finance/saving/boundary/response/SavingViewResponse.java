@@ -4,8 +4,8 @@ import java.math.BigDecimal;
 
 public record SavingViewResponse(
         int id,
-        String title,
-        BigDecimal amount,
+        String name,
+        BigDecimal balance,
         BigDecimal targetAmount,
         String image
 ) { }

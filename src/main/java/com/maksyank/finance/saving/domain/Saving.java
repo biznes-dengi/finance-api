@@ -49,7 +49,7 @@ public class Saving {
     @Column(name = "description")
     private String description;
     @Column(name = "balance")
-    private BigDecimal balance;
+    private BigDecimal savingBalance;
     @Column(name = "target_amount")
     private BigDecimal targetAmount;
     @Column(name = "deadline")
@@ -80,7 +80,7 @@ public class Saving {
         this.state = initRulesSaving.state();
         this.currency = currency;
         this.description = description;
-        this.balance = initRulesSaving.balance();
+        this.savingBalance = initRulesSaving.balance();
         this.targetAmount = targetAmount;
         this.deadline = deadline;
         this.riskProfile = riskProfile;
@@ -88,7 +88,7 @@ public class Saving {
         this.boardSaving = boardSaving;
     }
 
-    public Saving(int id, String title, SavingState state, CurrencyCode currency, String description, BigDecimal balance,
+    public Saving(int id, String title, SavingState state, CurrencyCode currency, String description, BigDecimal savingBalance,
                   BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
                   ImageSaving image, LocalDateTime createdOn, LocalDateTime lastChange, BoardSaving boardSaving
     ) {
@@ -97,7 +97,7 @@ public class Saving {
         this.state = state;
         this.currency = currency;
         this.description = description;
-        this.balance = balance;
+        this.savingBalance = savingBalance;
         this.targetAmount = targetAmount;
         this.deadline = deadline;
         this.riskProfile = riskProfile;
@@ -109,9 +109,9 @@ public class Saving {
 
     @Override
     public String toString() {
-        return "Saving(id=" + this.getId() + ", title=" + this.getTitle() +
+        return "Saving(id=" + this.getId() + ", name=" + this.getTitle() +
                 ", state=" + this.getState() + ", currencyCode=" + this.getCurrency() +
-                ", description=" + this.getDescription() + ", amount=" + this.getBalance() +
+                ", description=" + this.getDescription() + ", balance=" + this.getSavingBalance() +
                 ", targetAmount=" + this.getTargetAmount() + ", deadline=" + this.getDeadline() +
                 ", riskProfile=" + this.getRiskProfile() + ", createdOn=" + this.getCreatedOn() +
                 ", lastChange=" + this.getLastChange() + ", boardSavingId=" + this.getBoardSaving().getId() + ")";

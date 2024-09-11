@@ -84,8 +84,8 @@ public class SavingProcess {
 
     public Saving updateSavingBalance(BigDecimal amountNewDeposit, int savingId, int boardSavingId) throws NotFoundException {
         final var savingForUpdateBalance = savingDao.fetchSavingById(savingId, boardSavingId);
-        final var newBalance = savingForUpdateBalance.getBalance().add(amountNewDeposit);
-        savingForUpdateBalance.setBalance(newBalance);
+        final var newBalance = savingForUpdateBalance.getSavingBalance().add(amountNewDeposit);
+        savingForUpdateBalance.setSavingBalance(newBalance);
 
         this.updateSavingState(savingForUpdateBalance);
         return savingDao.createSaving(savingForUpdateBalance);
@@ -95,7 +95,7 @@ public class SavingProcess {
         if (saving.getState() == SavingState.OVERDUE || saving.getTargetAmount() == null)
             return;
 
-        if (saving.getBalance().compareTo(saving.getTargetAmount()) >= 0) {
+        if (saving.getSavingBalance().compareTo(saving.getTargetAmount()) >= 0) {
             saving.setState(SavingState.ACHIEVED);
         } else {
             saving.setState(SavingState.ACTIVE);
