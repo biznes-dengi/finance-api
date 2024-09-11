@@ -1,6 +1,6 @@
 package com.maksyank.finance.saving.process;
 
-import com.maksyank.finance.saving.GeneratorDataSaving;
+import com.maksyank.finance.saving.GeneratorDataBoardSaving;
 import com.maksyank.finance.saving.dao.BoardSavingDao;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import org.junit.jupiter.api.DisplayName;
@@ -27,7 +27,7 @@ public class BoardSavingProcessTest {
     @DisplayName("Test updateBoardBalance. Check if new value will be positive")
     void testUpdateBoardBalance_01() throws NotFoundException {
         // Given
-        final var boardSaving = GeneratorDataSaving.getTestData_testUpdateBoardBalance_01();
+        final var boardSaving = GeneratorDataBoardSaving.getTestData_testUpdateBoardBalance_01_02_03();
 
         // When
         when(boardSavingDao.fetchBoardSavingById(anyInt())).thenReturn(boardSaving);
@@ -42,7 +42,7 @@ public class BoardSavingProcessTest {
     @DisplayName("Test updateBoardBalance. Check if new value will be negative")
     void testUpdateBoardBalance_02() throws NotFoundException {
         // Given
-        final var boardSaving = GeneratorDataSaving.getTestData_testUpdateBoardBalance_01();
+        final var boardSaving = GeneratorDataBoardSaving.getTestData_testUpdateBoardBalance_01_02_03();
 
         // When
         when(boardSavingDao.fetchBoardSavingById(anyInt())).thenReturn(boardSaving);
@@ -57,7 +57,7 @@ public class BoardSavingProcessTest {
     @DisplayName("Test updateBoardBalance. Check if new value will be ZERO")
     void testUpdateBoardBalance_03() throws NotFoundException {
         // Given
-        final var boardSaving = GeneratorDataSaving.getTestData_testUpdateBoardBalance_01();
+        final var boardSaving = GeneratorDataBoardSaving.getTestData_testUpdateBoardBalance_01_02_03();
 
         // When
         when(boardSavingDao.fetchBoardSavingById(anyInt())).thenReturn(boardSaving);
