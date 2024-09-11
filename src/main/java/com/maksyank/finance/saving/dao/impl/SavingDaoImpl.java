@@ -6,6 +6,7 @@ import com.maksyank.finance.saving.domain.enums.SavingState;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.repository.SavingRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class SavingDaoImpl implements SavingDao {
     private final SavingRepository savingRepository;
+    @Value("${saving.batch-size}")
+    private int savingBatchSize;
 
     @Override
     public Saving createSaving(Saving newSavingToSave) {
@@ -49,7 +52,7 @@ public class SavingDaoImpl implements SavingDao {
     @Override
     public Slice<Saving> fetchAllSavings(int boardSavingId, int pageNumber) throws NotFoundException {
         final var response =
-                savingRepository.findAllByBoardSaving_Id(boardSavingId, PageRequest.of(pageNumber, 5));
+                savingRepository.findAllByBoardSaving_Id(boardSavingId, PageRequest.of(pageNumber, savingBatchSize));
 
         if (response.getNumberOfElements() == 0) {
             throw new NotFoundException("No 'Saving' records were found relative to 'boardSavingId' = "

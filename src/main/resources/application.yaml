@@ -21,3 +21,9 @@ spring:
     scheduling:
       pool:
         size: 5
+
+saving:
+  batch-size: 5
+
+transaction:
+  batch-size: 5
