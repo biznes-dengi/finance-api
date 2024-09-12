@@ -1,4 +1,7 @@
-# finance
+# Finance
 
-Api. Build image:
+#### Build image:
+
+```shell
 docker build -t api-finance .
+```
