@@ -1,4 +1,4 @@
-package com.maksyank.finance.saving.service.validation.step.transaction;
+package com.maksyank.finance.saving.validation.step.transaction;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.ConstraintValidator;
