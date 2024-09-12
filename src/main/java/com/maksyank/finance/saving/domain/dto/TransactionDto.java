@@ -8,8 +8,9 @@ import jakarta.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record TransactionDto(@NotNull TransactionType type,
-                             @Size(max = 100) String description,
-                             LocalDateTime dealDate,
-                             @NotNull @DecimalScale(2) BigDecimal amount) {
-}
+public record TransactionDto(
+        @NotNull TransactionType type,
+        @Size(max = 100) String description,
+        LocalDateTime dealDate,
+        @NotNull @DecimalScale(2) BigDecimal amount
+) { }
