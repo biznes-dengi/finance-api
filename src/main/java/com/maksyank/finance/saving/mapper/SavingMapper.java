@@ -5,7 +5,7 @@ import com.maksyank.finance.saving.boundary.response.SavingResponse;
 import com.maksyank.finance.saving.boundary.response.SavingViewResponse;
 import com.maksyank.finance.saving.domain.ImageSaving;
 import com.maksyank.finance.saving.domain.Saving;
-import com.maksyank.finance.saving.dto.SavingDto;
+import com.maksyank.finance.saving.domain.dto.SavingDto;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -27,26 +27,28 @@ import java.util.List;
         }
 )
 public interface SavingMapper {
-
-//    @Mapping(target = "image", expression = "java(source.getImage().getValue())")
-    @Mapping(source = "balance", target = "amount")
+    @Mapping(source = "title", target = "name")
+    @Mapping(source = "savingBalance", target = "balance")
     SavingResponse savingToSavingResponse(Saving source);
 
-    @Mapping(source = "balance", target = "amount")
+    @Mapping(source = "title", target = "name")
+    @Mapping(source = "savingBalance", target = "balance")
     List<SavingViewResponse> savingListToSavingViewResponseList(List<Saving> source);
 
-    @Mapping(source = "balance", target = "amount")
+    @Mapping(source = "title", target = "name")
+    @Mapping(source = "savingBalance", target = "balance")
     SavingViewResponse savingToSavingViewResponse(Saving source);
 
+    @Mapping(source = "name", target = "title")
     SavingDto savingRequestToSavingDto(SavingRequest source);
 
     @Mapping(target = "image", expression = "java(new ImageSaving(source.imageType(), source.image()))")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "state", ignore = true)
-    @Mapping(target = "balance", ignore = true)
+    @Mapping(target = "savingBalance", ignore = true)
     @Mapping(target = "createdOn", ignore = true)
     @Mapping(target = "lastChange", ignore = true)
-    @Mapping(target = "userAccount", ignore = true)
+    @Mapping(target = "boardSaving", ignore = true)
     @Mapping(target = "transactions", ignore = true)
     Saving updateSavingDtoToSaving(SavingDto source, @MappingTarget Saving target);
 

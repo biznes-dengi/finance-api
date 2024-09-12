@@ -8,7 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record SavingRequest(
-        String title,
+        String name,
         CurrencyCode currency,
         String description,
         BigDecimal targetAmount,

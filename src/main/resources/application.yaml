@@ -3,6 +3,7 @@ server:
     context-path: "/api"
   error:
     include-message: always
+
 spring:
   datasource:
     url: "jdbc:postgresql://localhost:5432/finance"
@@ -21,9 +22,15 @@ spring:
     scheduling:
       pool:
         size: 5
+
 springdoc:
   title: @project.name@
   version: @project.version@
   description: @project.description@
   api-docs:
     enabled: true
+
+saving:
+  batch-size: 5
+transaction:
+  batch-size: 5
