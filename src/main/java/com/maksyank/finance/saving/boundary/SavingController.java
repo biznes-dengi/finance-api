@@ -37,8 +37,8 @@ public class SavingController {
         return savingProcess.processGetAll(boardSavingId, pageNumber);
     }
 
-    @GetMapping("/{state}")
-    public List<SavingViewResponse> getByState(@PathVariable("state") SavingState state,
+    @GetMapping("/state/{nameState}")
+    public List<SavingViewResponse> getByState(@PathVariable("nameState") SavingState state,
                                                @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
         return savingProcess.processGetByState(state, boardSavingId);
     }
