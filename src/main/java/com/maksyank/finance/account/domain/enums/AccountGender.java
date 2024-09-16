@@ -1,5 +1,5 @@
 package com.maksyank.finance.account.domain.enums;
 
-public enum UserGender {
+public enum AccountGender {
     MALE, FEMALE
 }

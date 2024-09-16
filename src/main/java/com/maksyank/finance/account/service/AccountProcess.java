@@ -1,7 +1,10 @@
 package com.maksyank.finance.account.service;
 
+import com.maksyank.finance.account.boundary.AccountRequest;
 import com.maksyank.finance.account.domain.Account;
+import com.maksyank.finance.account.mapper.AccountMapper;
 import com.maksyank.finance.account.repository.AccountRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -9,14 +12,10 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class AccountProcess {
-
     private final AccountRepository accountRepository;
-
-    @Autowired
-    AccountProcess(AccountRepository accountRepository) {
-        this.accountRepository = accountRepository;
-    }
+    private final AccountMapper accountMapper;
 
     public Account getByEmailAndPassword(String email, String password) {
         final var foundUser = accountRepository.findByEmailAndPassword(email, password);
@@ -38,6 +37,11 @@ public class AccountProcess {
             // exception not found
         }
         return null;
+    }
+
+    public Account createNewAccount(AccountRequest request) {
+        final var accountToSave = accountMapper.accountRequestToAccount(request);
+        return accountRepository.save(accountToSave);
     }
 
     @Transactional(readOnly = true)
