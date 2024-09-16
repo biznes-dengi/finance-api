@@ -1,6 +1,6 @@
 package com.maksyank.finance.saving.domain;
 
-import com.maksyank.finance.user.domain.Account;
+import com.maksyank.finance.account.domain.Account;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;

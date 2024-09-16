@@ -5,7 +5,7 @@ import com.maksyank.finance.saving.dao.BoardSavingDao;
 import com.maksyank.finance.saving.domain.BoardSaving;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.mapper.BoardSavingMapper;
-import com.maksyank.finance.user.service.AccountProcess;
+import com.maksyank.finance.account.service.AccountProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

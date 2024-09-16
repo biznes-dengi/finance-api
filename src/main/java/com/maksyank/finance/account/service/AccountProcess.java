@@ -1,14 +1,13 @@
-package com.maksyank.finance.user.service;
+package com.maksyank.finance.account.service;
 
-import com.maksyank.finance.user.domain.Account;
-import com.maksyank.finance.user.repository.AccountRepository;
+import com.maksyank.finance.account.domain.Account;
+import com.maksyank.finance.account.repository.AccountRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-// TO DO refactor userAccount vs user (additionally task in notion 'refactor entity UserAccount')
 @Service
 public class AccountProcess {
 

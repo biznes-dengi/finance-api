@@ -1,12 +1,12 @@
-package com.maksyank.finance.user.boundary;
+package com.maksyank.finance.account.boundary;
 
-import com.maksyank.finance.user.service.AccountProcess;
+import com.maksyank.finance.account.service.AccountProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-public class UserAccountController {
+public class AccountController {
 
     private final AccountProcess accountProcess;
 }

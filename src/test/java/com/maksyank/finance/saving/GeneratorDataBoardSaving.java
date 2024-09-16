@@ -1,7 +1,7 @@
 package com.maksyank.finance.saving;
 
 import com.maksyank.finance.saving.domain.BoardSaving;
-import com.maksyank.finance.user.domain.Account;
+import com.maksyank.finance.account.domain.Account;
 
 import java.math.BigDecimal;
 
