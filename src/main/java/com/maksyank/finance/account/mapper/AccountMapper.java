@@ -14,7 +14,6 @@ import org.mapstruct.*;
 public interface AccountMapper {
 
     @Mapping(target = "id", ignore = true)
-    @Mapping(target = "createdOn", ignore = true)
     @Mapping(target = "lastLogin", ignore = true)
     @Mapping(source = "pass", target = "password")
     Account accountRequestToAccount(AccountRequest request);

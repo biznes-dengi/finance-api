@@ -25,11 +25,7 @@ public class ImageSaving {
 
     public ImageSaving(ImageType type, String value) {
         this.type = type;
-
-        if (value == null)
-            this.value = null;
-        else
-            this.setValue(value);
+        this.setValue(value);
     }
 
     public String getValue() {

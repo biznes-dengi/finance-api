@@ -21,6 +21,5 @@ public record SavingDto(
         BigDecimal targetAmount,
         LocalDate deadline,
         RiskProfileType riskProfile,
-        String image,
-        ImageType imageType
+        ImageSavingDto image
 ) { }

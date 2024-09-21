@@ -104,9 +104,16 @@ public class SavingProcess {
 
     public Saving attachInitRulesToNewSaving(SavingDto source, BoardSaving boardSaving) {
         final var rulesForSaving = new InitRulesSaving(SavingState.ACTIVE, BigDecimal.ZERO);
+
+        ImageSaving newImage;
+        if (source.image() == null)
+            newImage = null;
+        else
+            newImage = new ImageSaving(source.image().imageType(), source.image().value());
+
         return new Saving(
                 rulesForSaving, source.title(), source.currency(), source.description(), source.targetAmount(),
-                source.deadline(), source.riskProfile(), new ImageSaving(source.imageType(), source.image()), boardSaving
+                source.deadline(), source.riskProfile(), newImage, boardSaving
         );
     }
 }
