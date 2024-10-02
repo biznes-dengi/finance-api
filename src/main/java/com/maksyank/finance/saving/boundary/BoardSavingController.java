@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/board-saving")
+@RequestMapping("/board-savings")
 @RequiredArgsConstructor
 public class BoardSavingController {
     private final BoardSavingProcess boardSavingProcess;

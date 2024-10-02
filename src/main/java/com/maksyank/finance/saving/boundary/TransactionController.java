@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("board-saving/{boardSavingId}/saving/{savingId}/transaction")
+@RequestMapping("board-savings/{boardSavingId}/savings/{savingId}/transactions")
 public class TransactionController {
     private final TransactionProcess transactionProcess;
 

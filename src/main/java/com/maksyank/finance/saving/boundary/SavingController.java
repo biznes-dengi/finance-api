@@ -24,7 +24,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 // TODO for update & save will be better use not check  just get\find
 // TODO think about toSave \ toUpdate (refactor) (naming)
 @RestController
-@RequestMapping("board-saving/{boardSavingId}/saving")
+@RequestMapping("board-savings/{boardSavingId}/savings")
 @RequiredArgsConstructor
 public class SavingController {
     private final SavingProcess savingProcess;
