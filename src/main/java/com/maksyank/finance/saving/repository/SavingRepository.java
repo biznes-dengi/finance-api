@@ -13,7 +13,7 @@ import java.util.Optional;
 @Repository
 public interface SavingRepository extends JpaRepository<Saving, Integer> {
     Optional<Saving> findByIdAndBoardSaving_Id(int savingId, int boardSavingId);
-    Optional<List<Saving>> findByStateAndBoardSaving_Id(SavingState status, int boardSavingId);
+    Slice<Saving> findByStateAndBoardSaving_Id(SavingState status, int boardSavingId, Pageable pageable);
     Optional<List<Saving>> findByBoardSaving_IdAndDeadlineNotNullAndState(int boardSavingId, SavingState status);
     Slice<Saving> findAllByBoardSaving_Id(int boardSavingId, Pageable pageable);
     boolean existsByIdAndBoardSaving_Id(int savingId, int boardSavingId);
