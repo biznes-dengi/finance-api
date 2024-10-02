@@ -8,8 +8,12 @@ public class ImageTypeValidation {
     public static class StepValidIfNotExistWithoutImage extends ValidationStep<SavingDto> {
         @Override
         public ValidationResult validate(SavingDto toValidate) {
-            if (toValidate.image() == null && toValidate.imageType() != null || toValidate.image() != null && toValidate.imageType() == null) {
-                return ValidationResult.invalid("The 'ImageType' field can not exist without field 'Image'");
+            if (toValidate.image() == null)
+                return this.checkNext(toValidate);
+
+            if (toValidate.image().value() == null && toValidate.image().imageType() != null
+                    || toValidate.image().value() != null && toValidate.image().imageType() == null) {
+                return ValidationResult.invalid("ImageType must be entered together with value of image.");
             }
 
             return this.checkNext(toValidate);

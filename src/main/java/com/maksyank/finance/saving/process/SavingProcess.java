@@ -3,7 +3,6 @@ package com.maksyank.finance.saving.process;
 import com.maksyank.finance.saving.boundary.request.SavingRequest;
 import com.maksyank.finance.saving.boundary.response.SavingAllResponse;
 import com.maksyank.finance.saving.boundary.response.SavingResponse;
-import com.maksyank.finance.saving.boundary.response.SavingViewResponse;
 import com.maksyank.finance.saving.dao.BoardSavingDao;
 import com.maksyank.finance.saving.dao.SavingDao;
 import com.maksyank.finance.saving.dao.TransactionDao;
@@ -21,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -37,9 +35,11 @@ public class SavingProcess {
         return savingMapper.savingToSavingResponse(foundSaving);
     }
 
-    public List<SavingViewResponse> processGetByState(SavingState state, int boardSavingId) throws NotFoundException {
-        final var foundSavings = savingDao.fetchSavingsByState(state, boardSavingId);
-        return savingMapper.savingListToSavingViewResponseList(foundSavings);
+    public SavingAllResponse processGetByState(SavingState state, int boardSavingId, int pageNumber) throws NotFoundException {
+        final var foundSliceListSaving = savingDao.fetchSavingsByState(state, boardSavingId, pageNumber);
+        final var mappedSavingViewResponse =
+                savingMapper.savingListToSavingViewResponseList(foundSliceListSaving.getContent());
+        return new SavingAllResponse(mappedSavingViewResponse, foundSliceListSaving.hasNext());
     }
 
     public SavingAllResponse processGetAll(int boardSavingId, int pageNumber) throws NotFoundException {
@@ -104,9 +104,16 @@ public class SavingProcess {
 
     public Saving attachInitRulesToNewSaving(SavingDto source, BoardSaving boardSaving) {
         final var rulesForSaving = new InitRulesSaving(SavingState.ACTIVE, BigDecimal.ZERO);
+
+        ImageSaving newImage;
+        if (source.image() == null)
+            newImage = null;
+        else
+            newImage = new ImageSaving(source.image().imageType(), source.image().value());
+
         return new Saving(
                 rulesForSaving, source.title(), source.currency(), source.description(), source.targetAmount(),
-                source.deadline(), source.riskProfile(), new ImageSaving(source.imageType(), source.image()), boardSaving
+                source.deadline(), source.riskProfile(), newImage, boardSaving
         );
     }
 }

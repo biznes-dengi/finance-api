@@ -2,7 +2,7 @@ package com.maksyank.finance.saving.process;
 
 import com.maksyank.finance.saving.dao.SavingDao;
 import com.maksyank.finance.saving.domain.enums.SavingState;
-import com.maksyank.finance.user.service.AccountProcess;
+import com.maksyank.finance.account.service.AccountProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;

@@ -2,6 +2,7 @@ package com.maksyank.finance.saving;
 
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.Transaction;
+import com.maksyank.finance.saving.domain.dto.ImageSavingDto;
 import com.maksyank.finance.saving.domain.enums.CurrencyCode;
 import com.maksyank.finance.saving.domain.enums.ImageType;
 import com.maksyank.finance.saving.domain.enums.RiskProfileType;
@@ -33,8 +34,7 @@ public class GeneratorDataSaving {
                 null,
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                "",
-                ImageType.JPEG
+                new ImageSavingDto("", ImageType.JPEG)
         );
     }
 
@@ -46,8 +46,7 @@ public class GeneratorDataSaving {
                 BigDecimal.ZERO,
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                "",
-                ImageType.JPEG
+                new ImageSavingDto("", ImageType.JPEG)
         );
     }
 
@@ -59,8 +58,7 @@ public class GeneratorDataSaving {
                 BigDecimal.valueOf(-120.03),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                "",
-                ImageType.JPEG
+                new ImageSavingDto("", ImageType.JPEG)
         );
     }
 
@@ -72,8 +70,7 @@ public class GeneratorDataSaving {
                 BigDecimal.valueOf(120),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                "",
-                ImageType.JPEG
+                new ImageSavingDto("", ImageType.JPEG)
         );
     }
 
@@ -85,8 +82,7 @@ public class GeneratorDataSaving {
                 BigDecimal.valueOf(120.1),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                "",
-                ImageType.JPEG
+                new ImageSavingDto("", ImageType.JPEG)
         );
     }
 
@@ -98,8 +94,7 @@ public class GeneratorDataSaving {
                 BigDecimal.valueOf(120.182),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                "",
-                ImageType.JPEG
+                new ImageSavingDto("", ImageType.JPEG)
         );
     }
 
@@ -111,8 +106,7 @@ public class GeneratorDataSaving {
                 BigDecimal.valueOf(120.18),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                "",
-                ImageType.JPEG
+                new ImageSavingDto("", ImageType.JPEG)
         );
     }
 
@@ -124,8 +118,7 @@ public class GeneratorDataSaving {
                 BigDecimal.valueOf(120.18),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                "",
-                ImageType.JPEG
+                new ImageSavingDto("", ImageType.JPEG)
         );
     }
 
@@ -137,8 +130,7 @@ public class GeneratorDataSaving {
                 null,
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                "",
-                ImageType.JPEG
+                new ImageSavingDto("", ImageType.JPEG)
         );
     }
 
@@ -150,8 +142,7 @@ public class GeneratorDataSaving {
                 null,
                 null,
                 RiskProfileType.MODERATE,
-                "",
-                ImageType.JPEG
+                new ImageSavingDto("", ImageType.JPEG)
         );
     }
 
@@ -163,8 +154,7 @@ public class GeneratorDataSaving {
                 BigDecimal.valueOf(1102.32),
                 LocalDate.of(2020, 8, 18),
                 RiskProfileType.MODERATE,
-                "",
-                ImageType.JPEG
+                new ImageSavingDto("", ImageType.JPEG)
         );
     }
 
@@ -176,8 +166,7 @@ public class GeneratorDataSaving {
                 BigDecimal.valueOf(1102.32),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                "",
-                ImageType.JPEG
+                new ImageSavingDto("", ImageType.JPEG)
         );
     }
 
@@ -189,8 +178,7 @@ public class GeneratorDataSaving {
                 BigDecimal.valueOf(1102.32),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                "sfkfdskl",
-                null
+                new ImageSavingDto("sfkfdskl", null)
         );
     }
 
@@ -202,8 +190,7 @@ public class GeneratorDataSaving {
                 BigDecimal.valueOf(1102.32),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                null,
-                ImageType.JPG
+                new ImageSavingDto(null, ImageType.JPG)
         );
     }
 
@@ -215,8 +202,7 @@ public class GeneratorDataSaving {
                 BigDecimal.valueOf(1102.32),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                null,
-                null
+                new ImageSavingDto(null, null)
         );
     }
 
@@ -228,8 +214,7 @@ public class GeneratorDataSaving {
                 BigDecimal.valueOf(1102.32),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
-                "fdsfdsfds",
-                ImageType.JPEG
+                new ImageSavingDto("fdsfdsfds", ImageType.JPEG)
         );
     }
 

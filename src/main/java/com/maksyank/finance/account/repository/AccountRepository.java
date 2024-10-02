@@ -1,6 +1,6 @@
-package com.maksyank.finance.user.repository;
+package com.maksyank.finance.account.repository;
 
-import com.maksyank.finance.user.domain.Account;
+import com.maksyank.finance.account.domain.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

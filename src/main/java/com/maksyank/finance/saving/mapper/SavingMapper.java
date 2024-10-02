@@ -5,6 +5,7 @@ import com.maksyank.finance.saving.boundary.response.SavingResponse;
 import com.maksyank.finance.saving.boundary.response.SavingViewResponse;
 import com.maksyank.finance.saving.domain.ImageSaving;
 import com.maksyank.finance.saving.domain.Saving;
+import com.maksyank.finance.saving.domain.dto.ImageSavingDto;
 import com.maksyank.finance.saving.domain.dto.SavingDto;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -42,7 +43,6 @@ public interface SavingMapper {
     @Mapping(source = "name", target = "title")
     SavingDto savingRequestToSavingDto(SavingRequest source);
 
-    @Mapping(target = "image", expression = "java(new ImageSaving(source.imageType(), source.image()))")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "state", ignore = true)
     @Mapping(target = "savingBalance", ignore = true)
@@ -53,6 +53,10 @@ public interface SavingMapper {
     Saving updateSavingDtoToSaving(SavingDto source, @MappingTarget Saving target);
 
     default String mapImage(ImageSaving image) {
-        return image != null ? image.getValue() : null;
+        return image.getValue();
+    }
+
+    default ImageSaving mapImageDto(ImageSavingDto source) {
+        return new ImageSaving(source.imageType(), source.value());
     }
 }

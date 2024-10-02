@@ -1,11 +1,12 @@
 package com.maksyank.finance.saving.process;
 
+import com.maksyank.finance.account.domain.Account;
 import com.maksyank.finance.saving.boundary.response.BoardSavingResponse;
 import com.maksyank.finance.saving.dao.BoardSavingDao;
 import com.maksyank.finance.saving.domain.BoardSaving;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.mapper.BoardSavingMapper;
-import com.maksyank.finance.user.service.AccountProcess;
+import com.maksyank.finance.account.service.AccountProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,8 +34,7 @@ public class BoardSavingProcess {
             return boardSavingMapper.boardSavingToBoardSavingResponse(response);
         } catch (NotFoundException e) {
             final var currentUser = accountProcess.getById(accountId);
-            final var newBoardSaving = new BoardSaving(currentUser);
-            final var response = boardSavingDao.createBoardSaving(newBoardSaving);
+            final var response = boardSavingDao.createBoardSaving(createNewBoardSavingToSave(currentUser));
             return boardSavingMapper.boardSavingToBoardSavingResponse(response);
         }
     }
@@ -60,6 +60,11 @@ public class BoardSavingProcess {
         final var newValueOfBalance = boardSavingToUpdate.getBoardBalance().add(newValue);
         boardSavingToUpdate.setBoardBalance(newValueOfBalance);
         return boardSavingDao.createBoardSaving(boardSavingToUpdate);
+    }
+
+    private BoardSaving createNewBoardSavingToSave(Account account) {
+        final var initBalance = BigDecimal.ZERO;
+        return new BoardSaving(account, initBalance);
     }
 
     private void checkIfAccountExists(int accountId) throws NotFoundException {

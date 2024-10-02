@@ -1,6 +1,6 @@
 package com.maksyank.finance.saving.domain;
 
-import com.maksyank.finance.user.domain.Account;
+import com.maksyank.finance.account.domain.Account;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,7 +24,8 @@ public class BoardSaving {
     @JoinColumn(name = "account_id")
     private Account account;
 
-    public BoardSaving(Account account) {
+    public BoardSaving(Account account, BigDecimal boardBalance) {
         this.account = account;
+        this.boardBalance = boardBalance;
     }
 }

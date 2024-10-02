@@ -1,8 +1,8 @@
-package com.maksyank.finance.user.domain;
+package com.maksyank.finance.account.domain;
 
-import com.maksyank.finance.user.domain.base.BaseUser;
-import com.maksyank.finance.user.domain.enums.AppRole;
-import com.maksyank.finance.user.domain.enums.UserGender;
+import com.maksyank.finance.account.domain.base.BaseUser;
+import com.maksyank.finance.account.domain.enums.AppRole;
+import com.maksyank.finance.account.domain.enums.AccountGender;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -43,7 +43,7 @@ public class Account extends BaseUser {
 
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
-    private UserGender gender;
+    private AccountGender gender;
 
     @Column(name = "date_of_birth")
     private LocalDate dateOfBirth;
