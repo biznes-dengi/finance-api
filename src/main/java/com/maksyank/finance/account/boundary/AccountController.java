@@ -10,7 +10,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("user")
+@RequestMapping("users")
 public class AccountController {
     private final AccountProcess accountProcess;
 
