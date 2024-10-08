@@ -56,8 +56,8 @@ public class SavingController {
     @PutMapping("/{savingId}")
     public SavingResponse update(@PathVariable("savingId") int savingId,
                        @PathVariable("boardSavingId") int boardSavingId,
-                       @RequestBody SavingRequest savingDtoToSave) throws ParentException {
-        return savingProcess.processUpdate(savingId, savingDtoToSave, boardSavingId);
+                       @RequestBody SavingRequest savingToSave) throws ParentException {
+        return savingProcess.processUpdate(savingId, savingToSave, boardSavingId);
     }
 
     @DeleteMapping("/{savingId}")
