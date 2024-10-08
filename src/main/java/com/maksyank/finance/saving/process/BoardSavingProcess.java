@@ -2,11 +2,13 @@ package com.maksyank.finance.saving.process;
 
 import com.maksyank.finance.account.domain.Account;
 import com.maksyank.finance.saving.boundary.request.BoardSavingRequest;
+import com.maksyank.finance.saving.boundary.response.BalanceResponse;
 import com.maksyank.finance.saving.boundary.response.BoardSavingResponse;
 import com.maksyank.finance.saving.dao.BoardSavingDao;
 import com.maksyank.finance.saving.domain.BoardSaving;
 import com.maksyank.finance.saving.domain.enums.CurrencyCode;
 import com.maksyank.finance.saving.exception.NotFoundException;
+import com.maksyank.finance.saving.mapper.BalanceMapper;
 import com.maksyank.finance.saving.mapper.BoardSavingMapper;
 import com.maksyank.finance.account.service.AccountProcess;
 import lombok.RequiredArgsConstructor;
@@ -22,12 +24,15 @@ public class BoardSavingProcess {
     private final BoardSavingDao boardSavingDao;
     private final BoardSavingMapper boardSavingMapper;
 
+    private final BalanceMapper balanceMapper;
+
     public int processGetOnlyId(int accountId) throws NotFoundException {
         return getBoardSavingByAccountId(accountId).getId();
     }
 
-    public BigDecimal processGetOnlyBalance(int boardSavingId) throws NotFoundException {
-        return getBoardSavingByBoardSavingId(boardSavingId).getBoardBalance();
+    public BalanceResponse processGetOnlyBalance(int boardSavingId) throws NotFoundException {
+        final var response = getBoardSavingByBoardSavingId(boardSavingId);
+        return balanceMapper.boardSavingToBalanceResponse(response);
     }
 
     public BoardSavingResponse processCreate(final BoardSavingRequest boardSavingRequest) {

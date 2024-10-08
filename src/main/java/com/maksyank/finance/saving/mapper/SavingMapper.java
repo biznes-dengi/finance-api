@@ -29,15 +29,18 @@ import java.util.List;
 )
 public interface SavingMapper {
     @Mapping(source = "title", target = "name")
-    @Mapping(source = "savingBalance", target = "balance")
+    @Mapping(source = "savingBalance", target = "balanceResponse.amount")
+    @Mapping(source = "currency", target = "balanceResponse.currency")
     SavingResponse savingToSavingResponse(Saving source);
 
     @Mapping(source = "title", target = "name")
-    @Mapping(source = "savingBalance", target = "balance")
+    @Mapping(source = "savingBalance", target = "balanceResponse.amount")
+    @Mapping(source = "currency", target = "balanceResponse.currency")
     List<SavingViewResponse> savingListToSavingViewResponseList(List<Saving> source);
 
     @Mapping(source = "title", target = "name")
-    @Mapping(source = "savingBalance", target = "balance")
+    @Mapping(source = "savingBalance", target = "balanceResponse.amount")
+    @Mapping(source = "currency", target = "balanceResponse.currency")
     SavingViewResponse savingToSavingViewResponse(Saving source);
 
     @Mapping(source = "name", target = "title")

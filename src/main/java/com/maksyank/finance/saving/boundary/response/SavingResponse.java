@@ -11,7 +11,7 @@ public record SavingResponse(
         String name,
         SavingState state,
         String description,
-        BigDecimal balance,
+        BalanceResponse balanceResponse,
         BigDecimal targetAmount,
         LocalDate deadline,
         RiskProfileType riskProfile,

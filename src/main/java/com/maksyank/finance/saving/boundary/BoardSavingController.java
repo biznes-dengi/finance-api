@@ -1,13 +1,12 @@
 package com.maksyank.finance.saving.boundary;
 
 import com.maksyank.finance.saving.boundary.request.BoardSavingRequest;
+import com.maksyank.finance.saving.boundary.response.BalanceResponse;
 import com.maksyank.finance.saving.boundary.response.BoardSavingResponse;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.process.BoardSavingProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
-
-import java.math.BigDecimal;
 
 import static org.springframework.http.HttpStatus.CREATED;
 
@@ -23,7 +22,7 @@ public class BoardSavingController {
     }
 
     @GetMapping("/balance")
-    public BigDecimal getOnlyBalance(@RequestParam("boardSavingId") int boardSavingId) throws NotFoundException {
+    public BalanceResponse getOnlyBalance(@RequestParam("boardSavingId") int boardSavingId) throws NotFoundException {
         return boardSavingProcess.processGetOnlyBalance(boardSavingId);
     }
 
