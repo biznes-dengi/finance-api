@@ -18,13 +18,13 @@ public interface SavingDao {
     Saving createSaving(Saving newSavingToSave);
 
     /**
-     * Fetch list of Saving record by state and boardSavingId
+     * Fetch list of Savings by state. Method is pageable.
      *
      * @param state state of Saving entity
      * @param boardSavingId unique identifier of BoardSaving which Saving belongs
      * @return list of found Saving records
      */
-    List<Saving> fetchSavingsByState(SavingState state, int boardSavingId) throws NotFoundException;
+    Slice<Saving>  fetchSavingsByState(SavingState state, int boardSavingId, int pageNumber) throws NotFoundException;
 
     /**
      * Fetch list of Saving by state which has deadline is not NULL

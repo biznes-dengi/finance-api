@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("board-saving/{boardSavingId}/saving/{savingId}/transaction/deposit")
+@RequestMapping("board-savings/{boardSavingId}/savings/{savingId}/transactions/deposits")
 public class TransactionDepositController {
     private final TransactionDepositProcess transactionDepositProcess;
 

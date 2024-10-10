@@ -27,12 +27,19 @@ public class SavingDaoImpl implements SavingDao {
     }
 
     @Override
-    public List<Saving> fetchSavingsByState(SavingState state, int boardSavingId) throws NotFoundException {
-        return savingRepository
-                .findByStateAndBoardSaving_Id(state, boardSavingId)
-                .orElseThrow(
-                        () -> new NotFoundException("Entities 'Saving' not found by attribute 'state' = " + state)
+    public Slice<Saving> fetchSavingsByState(SavingState state, int boardSavingId, int pageNumber) throws NotFoundException {
+        final var response =
+                savingRepository.findByStateAndBoardSaving_Id(
+                        state,
+                        boardSavingId,
+                        PageRequest.of(pageNumber, savingBatchSize)
                 );
+
+        if (response.getNumberOfElements() == 0) {
+            throw new NotFoundException("No 'Saving' records were found relative to 'boardSavingId' = "
+                    + boardSavingId + " and by 'pageNumber' = " + pageNumber + " and by 'state' = " + state.name());
+        }
+        return response;
     }
 
     @Override

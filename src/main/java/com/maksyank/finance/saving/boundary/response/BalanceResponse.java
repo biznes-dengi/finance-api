@@ -4,8 +4,7 @@ import com.maksyank.finance.saving.domain.enums.CurrencyCode;
 
 import java.math.BigDecimal;
 
-public record BoardSavingResponse(
-        int boardSavingId,
-        BigDecimal boardBalance,
+public record BalanceResponse(
+        BigDecimal amount,
         CurrencyCode currency
-) {}
+) { }

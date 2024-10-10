@@ -7,7 +7,7 @@ import java.math.BigDecimal;
 public record SavingViewResponse(
         int id,
         String name,
-        BigDecimal balance,
+        BalanceResponse balanceResponse,
         CurrencyCode currency,
         BigDecimal targetAmount,
         String image

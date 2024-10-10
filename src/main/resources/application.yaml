@@ -12,10 +12,10 @@ spring:
   jpa:
     hibernate:
       ddl-auto: none
-    show-sql: true
+    #show-sql: true // enable if you try to optimize query to db (customize hibernate)
     properties:
       hibernate:
-        generate_statistics: true
+        #generate_statistics: true // enable if you try to optimize query to db (customize hibernate)
         dialect: "org.hibernate.dialect.PostgreSQLDialect"
     database-platform: "org.hibernate.dialect.PostgreSQLDialect"
   task:

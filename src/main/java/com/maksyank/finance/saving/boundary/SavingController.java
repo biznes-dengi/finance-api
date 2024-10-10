@@ -3,7 +3,6 @@ package com.maksyank.finance.saving.boundary;
 import com.maksyank.finance.saving.boundary.request.SavingRequest;
 import com.maksyank.finance.saving.boundary.response.SavingAllResponse;
 import com.maksyank.finance.saving.boundary.response.SavingResponse;
-import com.maksyank.finance.saving.boundary.response.SavingViewResponse;
 import com.maksyank.finance.saving.domain.enums.SavingState;
 import com.maksyank.finance.saving.exception.ParentException;
 import com.maksyank.finance.saving.process.SavingProcess;
@@ -19,28 +18,26 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 import static org.springframework.http.HttpStatus.CREATED;
 
 // TODO delete end-point must have id user maybe (check when realize security)
 // TODO for update & save will be better use not check  just get\find
 // TODO think about toSave \ toUpdate (refactor) (naming)
 @RestController
-@RequestMapping("board-saving/{boardSavingId}/saving")
+@RequestMapping("board-savings/{boardSavingId}/savings")
 @RequiredArgsConstructor
 public class SavingController {
     private final SavingProcess savingProcess;
 
     @GetMapping
-    public SavingAllResponse getAll(@PathVariable("boardSavingId") int boardSavingId, @RequestParam("pageNumber") int pageNumber) throws ParentException {
-        return savingProcess.processGetAll(boardSavingId, pageNumber);
-    }
-
-    @GetMapping("/state/{nameState}")
-    public List<SavingViewResponse> getByState(@PathVariable("nameState") SavingState state,
-                                               @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
-        return savingProcess.processGetByState(state, boardSavingId);
+    public SavingAllResponse get(
+            @PathVariable("boardSavingId") int boardSavingId,
+            @RequestParam("pageNumber") int pageNumber,
+            @RequestParam(value = "status", required = false) SavingState state) throws ParentException {
+        if (state == null)
+            return savingProcess.processGetAll(boardSavingId, pageNumber);
+        else
+            return savingProcess.processGetByState(state, boardSavingId, pageNumber);
     }
 
     @GetMapping("/{savingId}")
@@ -59,8 +56,8 @@ public class SavingController {
     @PutMapping("/{savingId}")
     public SavingResponse update(@PathVariable("savingId") int savingId,
                        @PathVariable("boardSavingId") int boardSavingId,
-                       @RequestBody SavingRequest savingDtoToSave) throws ParentException {
-        return savingProcess.processUpdate(savingId, savingDtoToSave, boardSavingId);
+                       @RequestBody SavingRequest savingToSave) throws ParentException {
+        return savingProcess.processUpdate(savingId, savingToSave, boardSavingId);
     }
 
     @DeleteMapping("/{savingId}")
