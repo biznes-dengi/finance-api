@@ -39,7 +39,7 @@ public class TransactionProcess {
         return new TransactionAllResponse(mappedTransactionViewResponse, foundSliceTransaction.hasNext());
     }
 
-    // TODO add validation to dealDate
+    // TODO add validation to transactionTimestamp
     public StateOfSavingResponse processSave(final TransactionRequest requestToSave, final int savingId, final int boardSavingId)
             throws NotFoundException, ValidationException {
         final var transactionDtoToSave = transactionMapper.transactionRequestToTransactionDto(requestToSave);
@@ -83,7 +83,7 @@ public class TransactionProcess {
         return new Transaction(
                 transactionDtoToSave.type(),
                 transactionDtoToSave.description(),
-                transactionDtoToSave.dealDate(),
+                transactionDtoToSave.transactionTimestamp(),
                 transactionDtoToSave.amount(),
                 linkedSaving
         );

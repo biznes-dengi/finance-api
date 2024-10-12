@@ -23,7 +23,6 @@ public class BoardSavingProcess {
     private final AccountProcess accountProcess;
     private final BoardSavingDao boardSavingDao;
     private final BoardSavingMapper boardSavingMapper;
-
     private final BalanceMapper balanceMapper;
 
     public int processGetOnlyId(int accountId) throws NotFoundException {

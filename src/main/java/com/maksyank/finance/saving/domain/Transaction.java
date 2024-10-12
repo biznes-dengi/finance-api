@@ -36,8 +36,8 @@ public class Transaction {
     private TransactionType type;
     @Column(name = "description")
     private String description;
-    @Column(name = "deal_date")
-    private LocalDateTime dealDate;
+    @Column(name = "transaction_timestamp")
+    private LocalDateTime transactionTimestamp;
     @Column(name = "amount")
     private BigDecimal amount;
 
@@ -45,10 +45,10 @@ public class Transaction {
     @JoinColumn(name = "saving_id")
     private Saving saving;
 
-    public Transaction(TransactionType type, String description, LocalDateTime dealDate, BigDecimal amount, Saving saving) {
+    public Transaction(TransactionType type, String description, LocalDateTime transactionTimestamp, BigDecimal amount, Saving saving) {
         this.type = type;
         this.description = description;
-        this.dealDate = dealDate;
+        this.transactionTimestamp = transactionTimestamp;
         this.amount = amount;
         this.saving = saving;
     }
@@ -56,7 +56,7 @@ public class Transaction {
     @Override
     public String toString() {
         return "Transaction(id=" + this.getId() + ", type=" + this.getType() + ", description=" +
-                this.getDescription() + ", dealDate=" + this.getDealDate() + ", amount=" +
+                this.getDescription() + ", transactionTimestamp=" + this.getTransactionTimestamp() + ", amount=" +
                 this.getAmount() + ", savingId=" + this.getSaving().getId() + ")";
     }
 }

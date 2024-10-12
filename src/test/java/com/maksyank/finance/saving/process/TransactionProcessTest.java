@@ -42,7 +42,7 @@ public class TransactionProcessTest {
         when(transactionMapper.transactionToTransactionResponse(any())).thenAnswer((invocationOnMock) -> {
             final var responseTransaction = (Transaction) invocationOnMock.getArguments()[0];
             return new TransactionResponse(responseTransaction.getId(), responseTransaction.getType(),
-                    responseTransaction.getDescription() , responseTransaction.getDealDate(), responseTransaction.getAmount());
+                    responseTransaction.getDescription() , responseTransaction.getTransactionTimestamp(), responseTransaction.getAmount());
         });
         final var result = transactionProcess.processGetById(expectedId, mockedSavingId, mockerUserId);
 
