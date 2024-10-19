@@ -16,7 +16,7 @@ import java.math.BigDecimal;
 @Constraint(validatedBy = DecimalScale.DecimalScaleValidator.class)
 public @interface DecimalScale {
 
-    String message() default "The 'amount' field must contain at least [{value}] digits after a decimal point.";
+    String message() default "The 'fromGoalAmount' field must contain at least [{value}] digits after a decimal point.";
 
     Class<?>[] groups() default {};
 

@@ -40,23 +40,57 @@ public class Transaction {
     private LocalDateTime transactionTimestamp;
     @Column(name = "amount")
     private BigDecimal amount;
+    @Column(name = "from_goal_id")
+    private Integer fromIdGoal;
+    @Column(name = "to_goal_id")
+    private Integer toIdGoal;
 
     @ManyToOne
     @JoinColumn(name = "saving_id")
     private Saving saving;
+
+    public Transaction(int id, TransactionType type, String description, LocalDateTime transactionTimestamp, BigDecimal amount, Saving saving) {
+        this.id = id;
+        this.type = type;
+        this.description = description;
+        this.transactionTimestamp = transactionTimestamp;
+        this.amount = amount;
+        this.fromIdGoal = null;
+        this.toIdGoal = null;
+        this.saving = saving;
+    }
+
+    public Transaction(TransactionType type, String description, LocalDateTime transactionTimestamp, BigDecimal amount, Integer fromIdGoal, Integer toIdGoal, Saving saving) {
+        this.type = type;
+        this.description = description;
+        this.transactionTimestamp = transactionTimestamp;
+        this.amount = amount;
+        this.fromIdGoal = fromIdGoal;
+        this.toIdGoal = toIdGoal;
+        this.saving = saving;
+    }
 
     public Transaction(TransactionType type, String description, LocalDateTime transactionTimestamp, BigDecimal amount, Saving saving) {
         this.type = type;
         this.description = description;
         this.transactionTimestamp = transactionTimestamp;
         this.amount = amount;
+        this.fromIdGoal = null;
+        this.toIdGoal = null;
         this.saving = saving;
     }
 
     @Override
     public String toString() {
-        return "Transaction(id=" + this.getId() + ", type=" + this.getType() + ", description=" +
-                this.getDescription() + ", transactionTimestamp=" + this.getTransactionTimestamp() + ", amount=" +
-                this.getAmount() + ", savingId=" + this.getSaving().getId() + ")";
+        return "Transaction{" +
+                "id=" + id +
+                ", type=" + type +
+                ", description='" + description + '\'' +
+                ", transactionTimestamp=" + transactionTimestamp +
+                ", fromGoalAmount=" + amount +
+                ", fromIdGoal=" + fromIdGoal +
+                ", toIdGoal=" + toIdGoal +
+                ", saving=" + saving +
+                '}';
     }
 }

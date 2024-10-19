@@ -12,5 +12,7 @@ public record TransactionResponse(
         String description,
         @JsonProperty("date")
         LocalDateTime transactionTimestamp,
+        Integer fromIdGoal,
+        Integer toIdGoal,
         BigDecimal amount
 ) { }

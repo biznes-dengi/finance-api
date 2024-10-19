@@ -1,4 +1,4 @@
-package com.maksyank.finance.saving;
+package com.maksyank.finance.utility.generator;
 
 import com.maksyank.finance.saving.domain.BoardSaving;
 import com.maksyank.finance.account.domain.Account;

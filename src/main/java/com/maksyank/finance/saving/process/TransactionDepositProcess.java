@@ -6,6 +6,7 @@ import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.domain.enums.TransactionType;
 import com.maksyank.finance.saving.exception.NotFoundException;
+import com.maksyank.finance.saving.exception.ParentException;
 import com.maksyank.finance.saving.exception.ValidationException;
 import com.maksyank.finance.saving.validation.service.TransactionDepositValidationService;
 import lombok.RequiredArgsConstructor;
@@ -20,7 +21,7 @@ public class TransactionDepositProcess {
     private final TransactionDepositValidationService validator;
     private final SavingDao savingDao;
 
-    public BigDecimal processGetFundAmountByMonth(final DepositAmountRequest request) throws NotFoundException, ValidationException {
+    public BigDecimal processGetFundAmountByMonth(final DepositAmountRequest request) throws ParentException {
         final var savingForCalculateAmount = savingDao.fetchSavingById(request.savingId(), request.boardSavingId());
 
         final var resultOfValidation = validator.validate(request);

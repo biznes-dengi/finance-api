@@ -13,7 +13,6 @@ import com.maksyank.finance.saving.mapper.BoardSavingMapper;
 import com.maksyank.finance.account.service.AccountProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 
@@ -47,13 +46,11 @@ public class BoardSavingProcess {
         return boardSavingDao.createBoardSaving(boardSavingToUpdate);
     }
 
-    @Transactional(readOnly = true)
     BoardSaving getBoardSavingByAccountId(final int accountId) throws NotFoundException {
         checkIfAccountExists(accountId);
         return boardSavingDao.fetchBoardSavingByAccountId(accountId);
     }
 
-    @Transactional(readOnly = true)
     BoardSaving getBoardSavingByBoardSavingId(final int boardSavingId) throws NotFoundException {
         return boardSavingDao.fetchBoardSavingById(boardSavingId);
     }

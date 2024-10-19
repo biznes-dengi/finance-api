@@ -3,6 +3,7 @@ package com.maksyank.finance.saving.dao.impl;
 import com.maksyank.finance.saving.dao.SavingDao;
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.enums.SavingState;
+import com.maksyank.finance.saving.exception.InternalError;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.repository.SavingRepository;
 import lombok.RequiredArgsConstructor;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Collections;
 import java.util.List;
@@ -27,6 +29,7 @@ public class SavingDaoImpl implements SavingDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Slice<Saving> fetchSavingsByState(SavingState state, int boardSavingId, int pageNumber) throws NotFoundException {
         final var response =
                 savingRepository.findByStateAndBoardSaving_Id(
@@ -43,6 +46,7 @@ public class SavingDaoImpl implements SavingDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Saving> fetchSavingsByStateAndDeadlineIsNotNull(SavingState state, int boardSavingId) {
         return savingRepository
                 .findByBoardSaving_IdAndDeadlineNotNullAndState(boardSavingId, state)
@@ -50,13 +54,19 @@ public class SavingDaoImpl implements SavingDao {
     }
 
     @Override
-    public Saving fetchSavingById(int savingId, int boardSavingId) throws NotFoundException {
-        return savingRepository
-                .findByIdAndBoardSaving_Id(savingId, boardSavingId)
-                .orElseThrow(() -> new NotFoundException("Entity 'Saving' not found by attribute 'id' = " + savingId));
+    @Transactional(readOnly = true)
+    public Saving fetchSavingById(int savingId, int boardSavingId) throws NotFoundException, InternalError {
+        final var response = savingRepository
+                .findById(savingId)
+                .orElseThrow(() -> new NotFoundException("Record Goal not found by ID = " + savingId));
+
+        if (response.getBoardSaving().getId() != boardSavingId)
+            throw new InternalError("Something went wrong. The goal doesn't belong of the boardSavingId: " + boardSavingId);
+        return response;
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Slice<Saving> fetchAllSavings(int boardSavingId, int pageNumber) throws NotFoundException {
         final var response =
                 savingRepository.findAllByBoardSaving_Id(boardSavingId, PageRequest.of(pageNumber, savingBatchSize));

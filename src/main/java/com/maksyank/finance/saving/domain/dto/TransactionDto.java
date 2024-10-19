@@ -12,5 +12,7 @@ public record TransactionDto(
         @NotNull TransactionType type,
         @Size(max = 100) String description,
         LocalDateTime transactionTimestamp,
+        Integer fromIdGoal,
+        Integer toIdGoal,
         @NotNull @DecimalScale(2) BigDecimal amount
 ) { }

@@ -6,11 +6,11 @@ import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.repository.SavingBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 public class BoardSavingDaoImpl implements BoardSavingDao {
-
     private final SavingBoardRepository savingBoardRepository;
 
     @Override
@@ -19,12 +19,14 @@ public class BoardSavingDaoImpl implements BoardSavingDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public BoardSaving fetchBoardSavingByAccountId(int accountId) throws NotFoundException {
        return savingBoardRepository.findByAccount_Id(accountId)
                .orElseThrow(() -> new NotFoundException("Entity 'BoardSaving' not found by attribute 'accountId' = " + accountId));
     }
 
     @Override
+    @Transactional(readOnly = true)
     public BoardSaving fetchBoardSavingById(int boardSavingId) throws NotFoundException {
         return savingBoardRepository.findById(boardSavingId)
                 .orElseThrow(() -> new NotFoundException("Entity 'BoardSaving' not found by attribute 'boardSavingId' = " + boardSavingId));

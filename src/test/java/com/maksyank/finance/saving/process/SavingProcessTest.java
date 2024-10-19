@@ -2,8 +2,8 @@ package com.maksyank.finance.saving.process;
 
 import com.maksyank.finance.saving.dao.SavingDao;
 import com.maksyank.finance.saving.domain.enums.SavingState;
-import com.maksyank.finance.saving.exception.NotFoundException;
-import com.maksyank.finance.saving.GeneratorDataSaving;
+import com.maksyank.finance.utility.generator.GeneratorDataSaving;
+import com.maksyank.finance.saving.exception.ParentException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +25,7 @@ public class SavingProcessTest {
 
     @Test
     @DisplayName("Test updateSavingBalance, if a new transaction arrived but state of saving already is OVERDUE")
-    void testUpdateSavingBalance_01() throws NotFoundException {
+    void testUpdateSavingBalance_01() throws ParentException {
         // Given
         final var saving = GeneratorDataSaving.getTestData_testUpdateState_01();
 
@@ -41,7 +41,7 @@ public class SavingProcessTest {
 
     @Test
     @DisplayName("Test updateSavingBalance, if balance will be more that target balance")
-    void testUpdateSavingBalance_02() throws NotFoundException {
+    void testUpdateSavingBalance_02() throws ParentException {
         // Given
         final var saving = GeneratorDataSaving.getTestData_testUpdateState_02();
 
@@ -57,7 +57,7 @@ public class SavingProcessTest {
 
     @Test
     @DisplayName("Test updateSavingBalance, if a new withdraw arrived but state of saving already is ACHIEVED")
-    void testUpdateSavingBalance_03() throws NotFoundException {
+    void testUpdateSavingBalance_03() throws ParentException {
         // Given
         final var saving = GeneratorDataSaving.getTestData_testUpdateState_03();
 
@@ -73,7 +73,7 @@ public class SavingProcessTest {
 
     @Test
     @DisplayName("Test updateBalance, if a new transaction arrived but state of saving already is OVERDUE")
-    void testUpdateSavingBalance_04() throws NotFoundException {
+    void testUpdateSavingBalance_04() throws ParentException {
         // Given
         final var saving = GeneratorDataSaving.getTestData_testUpdateBalance_01();
 

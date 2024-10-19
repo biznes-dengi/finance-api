@@ -2,7 +2,6 @@ package com.maksyank.finance.saving.boundary;
 
 import com.maksyank.finance.saving.boundary.request.TransactionRequest;
 import com.maksyank.finance.saving.boundary.request.TransactionUpdateRequest;
-import com.maksyank.finance.saving.boundary.response.StateOfSavingResponse;
 import com.maksyank.finance.saving.boundary.response.TransactionAllResponse;
 import com.maksyank.finance.saving.boundary.response.TransactionResponse;
 import com.maksyank.finance.saving.exception.ParentException;
@@ -30,22 +29,22 @@ public class TransactionController {
     public TransactionAllResponse getAll(@PathVariable("savingId") int savingId,
                                          @RequestParam("pageNumber") int pageNumber,
                                          @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
-        return this.transactionProcess.processGetAll(savingId, pageNumber, boardSavingId);
+        return transactionProcess.processGetAll(savingId, pageNumber, boardSavingId);
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public StateOfSavingResponse save(@PathVariable("savingId") int savingId,
+    public TransactionResponse save(@PathVariable("savingId") int savingId,
                                       @RequestBody TransactionRequest requestToSave,
                                       @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
-        return this.transactionProcess.processSave(requestToSave, savingId, boardSavingId);
+        return transactionProcess.processSave(requestToSave, savingId, boardSavingId);
     }
 
     @GetMapping("/{transactionId}")
     public TransactionResponse getById(@PathVariable("savingId") int savingId,
                                        @PathVariable("transactionId") int depositId,
                                        @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
-        return this.transactionProcess.processGetById(depositId, savingId, boardSavingId);
+        return transactionProcess.processGetById(depositId, savingId, boardSavingId);
     }
 
     @PatchMapping("/{transactionId}")
@@ -53,6 +52,6 @@ public class TransactionController {
                        @PathVariable("transactionId") int depositId,
                        @PathVariable("boardSavingId") int boardSavingId,
                        @RequestBody TransactionUpdateRequest requestToUpdate) throws ParentException {
-        return this.transactionProcess.processUpdate(depositId, savingId, requestToUpdate, boardSavingId);
+        return transactionProcess.processUpdate(depositId, savingId, requestToUpdate, boardSavingId);
     }
 }

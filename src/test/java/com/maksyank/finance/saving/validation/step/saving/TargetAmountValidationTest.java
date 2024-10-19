@@ -1,7 +1,7 @@
 package com.maksyank.finance.saving.validation.step.saving;
 
 import com.maksyank.finance.saving.domain.dto.SavingDto;
-import com.maksyank.finance.saving.GeneratorDataSaving;
+import com.maksyank.finance.utility.generator.GeneratorDataSaving;
 import com.maksyank.finance.saving.validation.step.ValidationStep;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

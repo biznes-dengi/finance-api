@@ -3,8 +3,8 @@ package com.maksyank.finance.saving.process;
 import com.maksyank.finance.saving.boundary.request.DepositAmountRequest;
 import com.maksyank.finance.saving.dao.SavingDao;
 import com.maksyank.finance.saving.exception.NotFoundException;
-import com.maksyank.finance.saving.exception.ValidationException;
-import com.maksyank.finance.saving.GeneratorDataTransaction;
+import com.maksyank.finance.saving.exception.ParentException;
+import com.maksyank.finance.utility.generator.GeneratorDataTransaction;
 import com.maksyank.finance.saving.validation.ValidationResult;
 import com.maksyank.finance.saving.validation.service.TransactionDepositValidationService;
 import org.junit.jupiter.api.DisplayName;
@@ -33,7 +33,7 @@ public class TransactionDepositProcessTest {
 
     @Test
     @DisplayName("Check if fund deposits will be summed correctly")
-    void testProcessGetDepositAmountByMonth_01() throws NotFoundException, ValidationException {
+    void testProcessGetDepositAmountByMonth_01() throws ParentException {
         // Given
         final int year = 2023;
         final int month = 3;
@@ -50,7 +50,7 @@ public class TransactionDepositProcessTest {
 
     @Test
     @DisplayName("Check if it will throw NotFoundException, if the month do not have any deposits")
-    void testProcessGetDepositAmountByMonth_02() throws NotFoundException {
+    void testProcessGetDepositAmountByMonth_02() throws ParentException {
         // Given
         final int year = 2023;
         final int month = 8;

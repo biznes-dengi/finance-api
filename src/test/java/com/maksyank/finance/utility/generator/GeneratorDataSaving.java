@@ -1,4 +1,4 @@
-package com.maksyank.finance.saving;
+package com.maksyank.finance.utility.generator;
 
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.Transaction;
@@ -253,5 +253,22 @@ public class GeneratorDataSaving {
         saving.setState(SavingState.ACTIVE);
         saving.setDeadline(LocalDate.of(2100, 1, 23));
         return List.of(saving);
+    }
+
+    public static Saving getTestData_testProcessSave_01() {
+        final Saving response = new Saving();
+        response.setId(1);
+        response.setTitle("test_01");
+        return response;
+    }
+
+    public static List<Saving> getTestData_testProcessSaveTransactionTransfer_01() {
+        final Saving saving1 = new Saving();
+        saving1.setId(1);
+        saving1.setTitle("test_01");
+        final Saving saving2 = new Saving();
+        saving2.setId(1);
+        saving2.setTitle("test_01");
+        return List.of(saving1, saving2);
     }
 }

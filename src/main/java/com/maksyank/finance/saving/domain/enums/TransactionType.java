@@ -1,5 +1,5 @@
 package com.maksyank.finance.saving.domain.enums;
 
 public enum TransactionType {
-    DEPOSIT, WITHDRAW
+    DEPOSIT, WITHDRAW, TRANSFER
 }

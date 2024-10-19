@@ -1,6 +1,6 @@
 package com.maksyank.finance.saving.process;
 
-import com.maksyank.finance.saving.GeneratorDataBoardSaving;
+import com.maksyank.finance.utility.generator.GeneratorDataBoardSaving;
 import com.maksyank.finance.saving.dao.BoardSavingDao;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import org.junit.jupiter.api.DisplayName;

@@ -1,5 +1,7 @@
-package com.maksyank.finance.saving;
+package com.maksyank.finance.utility.generator;
 
+import com.maksyank.finance.saving.boundary.request.TransactionRequest;
+import com.maksyank.finance.saving.boundary.request.TransactionTransferRequest;
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.Transaction;
 import com.maksyank.finance.saving.domain.enums.TransactionType;
@@ -115,6 +117,8 @@ public class GeneratorDataTransaction {
                 TransactionType.DEPOSIT,
                 "test",
                 null,
+                null,
+                null,
                 BigDecimal.valueOf(-98.98)
         );
     }
@@ -123,6 +127,8 @@ public class GeneratorDataTransaction {
         return new TransactionDto(
                 TransactionType.DEPOSIT,
                 "test",
+                null,
+                null,
                 null,
                 BigDecimal.ZERO
         );
@@ -133,6 +139,8 @@ public class GeneratorDataTransaction {
                 TransactionType.DEPOSIT,
                 "test",
                 null,
+                null,
+                null,
                 BigDecimal.valueOf(98.20)
         );
     }
@@ -141,6 +149,8 @@ public class GeneratorDataTransaction {
         return new TransactionDto(
                 TransactionType.WITHDRAW,
                 "test",
+                null,
+                null,
                 null,
                 BigDecimal.valueOf(-98.10)
         );
@@ -151,6 +161,8 @@ public class GeneratorDataTransaction {
                 TransactionType.WITHDRAW,
                 "test",
                 null,
+                null,
+                null,
                 BigDecimal.ZERO
         );
     }
@@ -160,7 +172,94 @@ public class GeneratorDataTransaction {
                 TransactionType.WITHDRAW,
                 "test",
                 null,
+                null,
+                null,
                 BigDecimal.valueOf(98.13)
+        );
+    }
+
+    public static TransactionDto getTestData_testTypeValidation_01() {
+        return new TransactionDto(
+                TransactionType.TRANSFER,
+                "bla",
+                LocalDateTime.now(),
+                1,
+                2,
+                BigDecimal.valueOf(1032.10)
+        );
+    }
+
+    public static TransactionDto getTestData_testTypeValidation_02() {
+        return new TransactionDto(
+                TransactionType.TRANSFER,
+                "bla",
+                LocalDateTime.now(),
+                null,
+                null,
+                BigDecimal.valueOf(1032.10)
+        );
+    }
+
+    public static TransactionDto getTestData_testTypeValidation_03() {
+        return new TransactionDto(
+                TransactionType.TRANSFER,
+                "bla",
+                LocalDateTime.now(),
+                1,
+                2,
+                BigDecimal.ZERO
+        );
+    }
+
+    public static TransactionDto getTestData_testTypeValidation_04() {
+        return new TransactionDto(
+                TransactionType.TRANSFER,
+                "bla",
+                LocalDateTime.now(),
+                1,
+                2,
+                BigDecimal.valueOf(-10232)
+        );
+    }
+
+    public static TransactionDto getTestData_testTypeValidation_05() {
+        return new TransactionDto(
+                TransactionType.DEPOSIT,
+                "bla",
+                LocalDateTime.now(),
+                null,
+                null,
+                BigDecimal.valueOf(3220)
+        );
+    }
+
+    public static TransactionDto getTestData_testTypeValidation_06() {
+        return new TransactionDto(
+                TransactionType.DEPOSIT,
+                "bla",
+                LocalDateTime.now(),
+                2,
+                3,
+                BigDecimal.valueOf(1002)
+        );
+    }
+
+    public static TransactionRequest getTestData_testProcessSave_01_payload() {
+        return new TransactionRequest(
+                TransactionType.DEPOSIT,
+                "bla",
+                LocalDateTime.now(),
+                BigDecimal.valueOf(1032)
+        );
+    }
+
+    public static TransactionTransferRequest getTestData_testProcessSaveTransactionTransfer_01() {
+        return new TransactionTransferRequest(
+                "bla",
+                LocalDateTime.now(),
+                1,
+                2,
+                BigDecimal.valueOf(1032)
         );
     }
 }

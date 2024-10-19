@@ -2,6 +2,7 @@ package com.maksyank.finance.saving.dao;
 
 import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.enums.SavingState;
+import com.maksyank.finance.saving.exception.InternalError;
 import com.maksyank.finance.saving.exception.NotFoundException;
 import org.springframework.data.domain.Slice;
 
@@ -42,7 +43,7 @@ public interface SavingDao {
      * @param boardSavingId unique identifier of BoardSaving which Saving belongs
      * @return found Saving record
      */
-    Saving fetchSavingById(int savingId, int boardSavingId) throws NotFoundException;
+    Saving fetchSavingById(int savingId, int boardSavingId) throws NotFoundException, InternalError;
 
     /**
      * Fetch Slice of Savings by given boardSavingId

@@ -1,7 +1,7 @@
 package com.maksyank.finance.saving.validation.step.transaction;
 
 import com.maksyank.finance.saving.domain.dto.TransactionDto;
-import com.maksyank.finance.saving.GeneratorDataTransaction;
+import com.maksyank.finance.utility.generator.GeneratorDataTransaction;
 import com.maksyank.finance.saving.validation.step.ValidationStep;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,7 +14,7 @@ public class AmountValidationTest {
 
     @Test
     @DisplayName(value = "Test Amount step, " +
-            "check if the field 'amount' is correct if type of transaction is DEPOSIT and amount is less then zero")
+            "check if the field 'fromGoalAmount' is correct if type of transaction is DEPOSIT and fromGoalAmount is less then zero")
     public void testAmountValidationStep_04() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfDepositHasAmountMoreThenZero();
@@ -25,12 +25,12 @@ public class AmountValidationTest {
 
         // Then
         assertFalse(response.isValid());
-        assertEquals("When transaction type is DEPOSIT then the 'amount' field must contain positive value.", response.errorMsg());
+        assertEquals("When transaction type is DEPOSIT then the 'fromGoalAmount' field must contain positive value.", response.errorMsg());
     }
 
     @Test
     @DisplayName(value = "Test Amount step, " +
-            "check if the field 'amount' is correct if type of transaction is DEPOSIT and amount is zero")
+            "check if the field 'fromGoalAmount' is correct if type of transaction is DEPOSIT and fromGoalAmount is zero")
     public void testAmountValidationStep_05() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfDepositHasAmountMoreThenZero();
@@ -41,12 +41,12 @@ public class AmountValidationTest {
 
         // Then
         assertFalse(response.isValid());
-        assertEquals("When transaction type is DEPOSIT then the 'amount' field must contain positive value.", response.errorMsg());
+        assertEquals("When transaction type is DEPOSIT then the 'fromGoalAmount' field must contain positive value.", response.errorMsg());
     }
 
     @Test
     @DisplayName(value = "Test Amount step, " +
-            "check if the field 'amount' is correct if type of transaction is DEPOSIT and amount is greater then zero")
+            "check if the field 'fromGoalAmount' is correct if type of transaction is DEPOSIT and fromGoalAmount is greater then zero")
     public void testAmountValidationStep_06() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfDepositHasAmountMoreThenZero();
@@ -61,7 +61,7 @@ public class AmountValidationTest {
 
     @Test
     @DisplayName(value = "Test Amount step, " +
-            "check if the field 'amount' is correct if type of transaction is WITHDRAW and amount is less then zero")
+            "check if the field 'fromGoalAmount' is correct if type of transaction is WITHDRAW and fromGoalAmount is less then zero")
     public void testAmountValidationStep_07() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfWithdrawHasAmountLessThenZero();
@@ -76,7 +76,7 @@ public class AmountValidationTest {
 
     @Test
     @DisplayName(value = "Test Amount step, " +
-            "check if the field 'amount' is correct if type of transaction is WITHDRAW and amount is zero")
+            "check if the field 'fromGoalAmount' is correct if type of transaction is WITHDRAW and fromGoalAmount is zero")
     public void testAmountValidationStep_08() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfWithdrawHasAmountLessThenZero();
@@ -87,12 +87,12 @@ public class AmountValidationTest {
 
         // Then
         assertFalse(response.isValid());
-        assertEquals("When transaction type is WITHDRAW then, the 'amount' field must contain negative value.", response.errorMsg());
+        assertEquals("When transaction type is WITHDRAW then, the 'fromGoalAmount' field must contain negative value.", response.errorMsg());
     }
 
     @Test
     @DisplayName(value = "Test Amount step, " +
-            "check if the field 'amount' is correct if type of transaction is WITHDRAW and amount is greater then zero")
+            "check if the field 'fromGoalAmount' is correct if type of transaction is WITHDRAW and fromGoalAmount is greater then zero")
     public void testAmountValidationStep_09() {
         // Given
         ValidationStep<TransactionDto> stepAmount = new AmountValidation.StepValidIfWithdrawHasAmountLessThenZero();
@@ -103,7 +103,7 @@ public class AmountValidationTest {
 
         // Then
         assertFalse(response.isValid());
-        assertEquals("When transaction type is WITHDRAW then, the 'amount' field must contain negative value.", response.errorMsg());
+        assertEquals("When transaction type is WITHDRAW then, the 'fromGoalAmount' field must contain negative value.", response.errorMsg());
     }
 
 

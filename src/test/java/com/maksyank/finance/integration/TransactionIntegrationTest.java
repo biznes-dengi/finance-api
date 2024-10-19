@@ -52,7 +52,7 @@ public class TransactionIntegrationTest {
                        "type":"DEPOSIT",
                        "description":"DESCRIPTION",
                        "dealDate":"2050-10-24T14:21:15",
-                       "amount":"123.2322"
+                       "fromGoalAmount":"123.2322"
                     }""";
         }
 
@@ -78,7 +78,7 @@ public class TransactionIntegrationTest {
                             .content(getPostOperationBody()))
                     .andDo(print())
                     .andExpect(status().isBadRequest())
-                    .andExpect(jsonPath("$.message").value("The 'amount' field must contain at least [2] digits after a decimal point."));
+                    .andExpect(jsonPath("$.message").value("The 'fromGoalAmount' field must contain at least [2] digits after a decimal point."));
         }
     }
 }

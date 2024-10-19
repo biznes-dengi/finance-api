@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -23,6 +24,7 @@ public class TransactionsDaoImpl implements TransactionDao {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Slice<Transaction> fetchAllTransactions(int savingId, int pageNumber) throws NotFoundException {
         final var response =
                 this.transactionRepository.findAllBySaving_Id(savingId, PageRequest.of(pageNumber, transactionBatchSize));

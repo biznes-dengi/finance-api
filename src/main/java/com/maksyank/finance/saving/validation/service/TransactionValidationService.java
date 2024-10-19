@@ -5,6 +5,7 @@ import com.maksyank.finance.saving.domain.dto.TransactionUpdateDto;
 import com.maksyank.finance.saving.validation.ValidationResult;
 import com.maksyank.finance.saving.validation.step.ValidationStep;
 import com.maksyank.finance.saving.validation.step.transaction.AmountValidation;
+import com.maksyank.finance.saving.validation.step.transaction.TypeValidation;
 import jakarta.validation.Validator;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,11 @@ public class TransactionValidationService extends ValidationService {
 
     TransactionValidationService(Validator validator) {
         super(validator);
-        this.validationPath = new AmountValidation.StepValidIfWithdrawHasAmountLessThenZero();
+        this.validationPath =
+                new AmountValidation.StepValidIfWithdrawHasAmountLessThenZero()
+                        .linkWith(new AmountValidation.StepValidIfDepositHasAmountMoreThenZero())
+                        .linkWith(new TypeValidation.StepValidIfTypeIsTransfer())
+                        .linkWith(new TypeValidation.StepValidIfTypeIsNotTransfer());
     }
 
     public ValidationResult validate(TransactionDto toValidate) {
