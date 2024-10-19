@@ -16,8 +16,6 @@ public record SavingDto(
         String title,
         @NotNull
         CurrencyCode currency,
-        @Size(max = 100)
-        String description,
         BigDecimal targetAmount,
         LocalDate deadline,
         RiskProfileType riskProfile,

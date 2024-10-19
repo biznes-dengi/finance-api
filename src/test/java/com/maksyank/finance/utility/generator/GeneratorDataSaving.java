@@ -30,7 +30,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 null,
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -42,7 +41,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.ZERO,
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -54,7 +52,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.valueOf(-120.03),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -66,7 +63,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.valueOf(120),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -78,7 +74,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.valueOf(120.1),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -90,7 +85,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.valueOf(120.182),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -102,7 +96,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.valueOf(120.18),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -114,7 +107,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.valueOf(120.18),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -126,7 +118,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 null,
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -138,7 +129,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 null,
                 null,
                 RiskProfileType.MODERATE,
@@ -150,7 +140,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.valueOf(1102.32),
                 LocalDate.of(2020, 8, 18),
                 RiskProfileType.MODERATE,
@@ -162,7 +151,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.valueOf(1102.32),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -174,7 +162,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.valueOf(1102.32),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -186,7 +173,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.valueOf(1102.32),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -198,7 +184,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.valueOf(1102.32),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,
@@ -210,7 +195,6 @@ public class GeneratorDataSaving {
         return new SavingDto(
                 "test",
                 CurrencyCode.EUR,
-                "test",
                 BigDecimal.valueOf(1102.32),
                 LocalDate.of(2025, 8, 18),
                 RiskProfileType.MODERATE,

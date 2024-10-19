@@ -9,7 +9,6 @@ import java.time.LocalDate;
 public record SavingRequest(
         String name,
         CurrencyCode currency,
-        String description,
         BigDecimal targetAmount,
         LocalDate deadline,
         RiskProfileType riskProfile,

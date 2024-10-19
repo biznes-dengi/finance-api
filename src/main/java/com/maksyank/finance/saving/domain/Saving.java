@@ -36,32 +36,40 @@ public class Saving {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "saving_id")
     private int id;
+
     @Column(name = "title")
     private String title;
+
     @Column(name = "state")
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private SavingState state;
+
     @Column(name = "currency")
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private CurrencyCode currency;
-    @Column(name = "description")
-    private String description;
+
     @Column(name = "balance")
     private BigDecimal savingBalance;
+
     @Column(name = "target_amount")
     private BigDecimal targetAmount;
+
     @Column(name = "deadline")
     private LocalDate deadline;
+
     @Column(name = "risk_profile")
     @Enumerated(EnumType.STRING)
     @JdbcType(PostgreSQLEnumJdbcType.class)
     private RiskProfileType riskProfile;
+
     @Embedded
     private ImageSaving image;
+
     @Column(name = "created_on")
     private LocalDateTime createdOn;
+
     @Column(name = "last_change")
     private LocalDateTime lastChange;
 
@@ -72,14 +80,13 @@ public class Saving {
     @OneToMany(mappedBy = "saving", fetch = FetchType.LAZY)
     private Collection<Transaction> transactions;
 
-    public Saving(InitRulesSaving initRulesSaving, String title, CurrencyCode currency, String description,
+    public Saving(InitRulesSaving initRulesSaving, String title, CurrencyCode currency,
                   BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
                   ImageSaving image, BoardSaving boardSaving
     ) {
         this.title = title;
         this.state = initRulesSaving.state();
         this.currency = currency;
-        this.description = description;
         this.savingBalance = initRulesSaving.balance();
         this.targetAmount = targetAmount;
         this.deadline = deadline;
@@ -88,7 +95,7 @@ public class Saving {
         this.boardSaving = boardSaving;
     }
 
-    public Saving(int id, String title, SavingState state, CurrencyCode currency, String description, BigDecimal savingBalance,
+    public Saving(int id, String title, SavingState state, CurrencyCode currency, BigDecimal savingBalance,
                   BigDecimal targetAmount, LocalDate deadline, RiskProfileType riskProfile,
                   ImageSaving image, LocalDateTime createdOn, LocalDateTime lastChange, BoardSaving boardSaving
     ) {
@@ -96,7 +103,6 @@ public class Saving {
         this.title = title;
         this.state = state;
         this.currency = currency;
-        this.description = description;
         this.savingBalance = savingBalance;
         this.targetAmount = targetAmount;
         this.deadline = deadline;
@@ -111,7 +117,7 @@ public class Saving {
     public String toString() {
         return "Saving(id=" + this.getId() + ", name=" + this.getTitle() +
                 ", state=" + this.getState() + ", currencyCode=" + this.getCurrency() +
-                ", description=" + this.getDescription() + ", balance=" + this.getSavingBalance() +
+                 ", balance=" + this.getSavingBalance() +
                 ", targetAmount=" + this.getTargetAmount() + ", deadline=" + this.getDeadline() +
                 ", riskProfile=" + this.getRiskProfile() + ", createdOn=" + this.getCreatedOn() +
                 ", lastChange=" + this.getLastChange() + ", boardSavingId=" + this.getBoardSaving().getId() + ")";

@@ -10,7 +10,6 @@ public record SavingResponse(
         int id,
         String name,
         SavingState state,
-        String description,
         BalanceResponse balance,
         BigDecimal targetAmount,
         LocalDate deadline,

@@ -12,8 +12,6 @@ import com.maksyank.finance.saving.domain.Saving;
 import com.maksyank.finance.saving.domain.businessrules.InitRulesSaving;
 import com.maksyank.finance.saving.domain.enums.SavingState;
 import com.maksyank.finance.saving.domain.dto.SavingDto;
-import com.maksyank.finance.saving.exception.InternalError;
-import com.maksyank.finance.saving.exception.NotFoundException;
 import com.maksyank.finance.saving.exception.ParentException;
 import com.maksyank.finance.saving.exception.ValidationException;
 import com.maksyank.finance.saving.mapper.SavingMapper;
@@ -125,7 +123,7 @@ public class SavingProcess {
             newImage = new ImageSaving(source.image().imageType(), source.image().value());
 
         return new Saving(
-                rulesForSaving, source.title(), source.currency(), source.description(), source.targetAmount(),
+                rulesForSaving, source.title(), source.currency(), source.targetAmount(),
                 source.deadline(), source.riskProfile(), newImage, boardSaving
         );
     }
