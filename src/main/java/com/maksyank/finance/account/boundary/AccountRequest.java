@@ -1,6 +1,5 @@
 package com.maksyank.finance.account.boundary;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.maksyank.finance.account.domain.enums.AccountGender;
 import com.maksyank.finance.account.domain.enums.AppRole;
 
@@ -16,6 +15,5 @@ public record AccountRequest(
         AccountGender gender,
         LocalDate dateOfBirth,
         String phoneNumber,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime createdOn
 ) { }
