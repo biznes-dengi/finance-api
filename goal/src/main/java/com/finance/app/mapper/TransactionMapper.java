@@ -8,7 +8,7 @@ import com.finance.app.boundary.response.TransactionViewResponse;
 import com.finance.app.domain.Transaction;
 import com.finance.app.domain.dto.TransactionDto;
 import com.finance.app.domain.dto.TransactionUpdateDto;
-import com.finance.app.mapper.context.SavingContext;
+import com.finance.app.mapper.context.GoalContext;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -40,7 +40,7 @@ public interface TransactionMapper {
 
     TransactionUpdateDto transactionUpdateRequestToTransactionUpdateDto(TransactionUpdateRequest source);
 
-    @Mapping(target = "saving", expression = "java(linkedSaving.saving)")
+    @Mapping(target = "goal", expression = "java(linkedGoal.goal)")
     @Mapping(target = "id", ignore = true)
-    Transaction transactionDtoToTransaction(TransactionDto source, @Context SavingContext linkedSaving);
+    Transaction transactionDtoToTransaction(TransactionDto source, @Context GoalContext linkedGoal);
 }

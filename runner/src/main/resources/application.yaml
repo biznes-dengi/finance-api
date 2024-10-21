@@ -30,7 +30,7 @@ springdoc:
   api-docs:
     enabled: true
 
-saving:
+goal:
   batch-size: 5
 transaction:
   batch-size: 5

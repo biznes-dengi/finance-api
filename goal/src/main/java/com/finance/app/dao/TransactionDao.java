@@ -15,18 +15,18 @@ public interface TransactionDao {
     Transaction createTransaction(Transaction transactionToSave);
 
     /**
-     * Fetch Slice of transactions by given savingId.
+     * Fetch Slice of transactions by given goalId.
      *
-     * @param savingId unique identifier of Saving entity which must find
+     * @param goalId unique identifier of Goal entity which must find
      * @param pageNumber number of page with Transactions
      * @return batch of Transactions
      */
-    Slice<Transaction> fetchAllTransactions(int savingId, int pageNumber) throws NotFoundException;
+    Slice<Transaction> fetchAllTransactions(int goalId, int pageNumber) throws NotFoundException;
 
     /**
-     * Remove all transaction records by given savingId
+     * Remove all transaction records by given goalId
      *
-     * @param savingId unique identifier of Saving entity which must find
+     * @param goalId unique identifier of Goal entity which must find
      */
-    void removeAllTransactionsBySavingId(int savingId);
+    void removeAllTransactionsByGoalId(int goalId);
 }

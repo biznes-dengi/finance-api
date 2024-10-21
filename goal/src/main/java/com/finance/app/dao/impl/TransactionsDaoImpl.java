@@ -25,19 +25,19 @@ public class TransactionsDaoImpl implements TransactionDao {
 
     @Override
     @Transactional(readOnly = true)
-    public Slice<Transaction> fetchAllTransactions(int savingId, int pageNumber) throws NotFoundException {
+    public Slice<Transaction> fetchAllTransactions(int goalId, int pageNumber) throws NotFoundException {
         final var response =
-                this.transactionRepository.findAllBySaving_Id(savingId, PageRequest.of(pageNumber, transactionBatchSize));
+                this.transactionRepository.findAllByGoal_Id(goalId, PageRequest.of(pageNumber, transactionBatchSize));
 
         if (response.getNumberOfElements() == 0) {
-            throw new NotFoundException("No 'Transaction' records were found relative to 'savingId' = " +
-                    savingId + " and by 'pageNumber' = " + pageNumber);
+            throw new NotFoundException("No 'Transaction' records were found relative to 'goalId' = " +
+                    goalId + " and by 'pageNumber' = " + pageNumber);
         }
         return response;
     }
 
     @Override
-    public void removeAllTransactionsBySavingId(int savingId) {
-        this.transactionRepository.deleteAllBySaving_Id(savingId);
+    public void removeAllTransactionsByGoalId(int goalId) {
+        this.transactionRepository.deleteAllByGoal_Id(goalId);
     }
 }

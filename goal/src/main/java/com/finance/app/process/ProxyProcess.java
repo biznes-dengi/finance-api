@@ -1,7 +1,7 @@
 package com.finance.app.process;
 
-import com.finance.app.domain.BoardSaving;
-import com.finance.app.domain.Saving;
+import com.finance.app.domain.BoardGoal;
+import com.finance.app.domain.Goal;
 import com.finance.app.exception.NotFoundException;
 import com.finance.app.exception.ParentException;
 import lombok.RequiredArgsConstructor;
@@ -11,28 +11,28 @@ import java.math.BigDecimal;
 import java.util.List;
 
 /**
- * Bridge between TransactionProcess and SavingProcess.
+ * Bridge between TransactionProcess and GoalProcess.
  * The bridge helps get access from one process to another.
  *
  */
 @Service
 @RequiredArgsConstructor
 public class ProxyProcess {
-    private final SavingProcess savingProcess;
-    private final BoardSavingProcess boardSavingProcess;
+    private final GoalProcess goalProcess;
+    private final BoardGoalProcess boardGoalProcess;
 
-    public Saving proxyToUpdateSavingBalance(final BigDecimal newValue, final int savingId, final int boardSavingId)
+    public Goal proxyToUpdateGoalBalance(final BigDecimal newValue, final int goalId, final int boardGoalId)
             throws ParentException {
-        return savingProcess.updateSavingBalance(newValue, savingId, boardSavingId);
+        return goalProcess.updateGoalBalance(newValue, goalId, boardGoalId);
     }
 
-    public BoardSaving proxyToUpdateBoardBalance(final int boardSavingId, final BigDecimal newValue)
+    public BoardGoal proxyToUpdateBoardBalance(final int boardGoalId, final BigDecimal newValue)
             throws NotFoundException {
-        return boardSavingProcess.updateBoardBalance(boardSavingId, newValue);
+        return boardGoalProcess.updateBoardBalance(boardGoalId, newValue);
     }
 
-    public List<Saving> proxyToUpdateSavingBalancesWhenDoTransferTransaction(int boardSavingId, int fromSavingId, int toSavingId, BigDecimal amount)
+    public List<Goal> proxyToUpdateGoalBalancesWhenDoTransferTransaction(int boardGoalId, int fromGoalId, int toGoalId, BigDecimal amount)
             throws ParentException {
-        return savingProcess.updateSavingBalancesWhenDoTransferTransaction(boardSavingId, fromSavingId, toSavingId, amount);
+        return goalProcess.updateGoalBalancesWhenDoTransferTransaction(boardGoalId, fromGoalId, toGoalId, amount);
     }
 }

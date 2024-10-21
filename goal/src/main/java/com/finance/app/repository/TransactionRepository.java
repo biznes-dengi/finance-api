@@ -8,6 +8,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TransactionRepository extends JpaRepository<Transaction, Integer>{
-    Slice<Transaction> findAllBySaving_Id(int savingId, Pageable pageable);
-    void deleteAllBySaving_Id(int savingId);
+    Slice<Transaction> findAllByGoal_Id(int goalId, Pageable pageable);
+    void deleteAllByGoal_Id(int goalId);
 }

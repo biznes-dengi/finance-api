@@ -46,10 +46,10 @@ public class Transaction {
     private Integer toIdGoal;
 
     @ManyToOne
-    @JoinColumn(name = "saving_id")
-    private Saving saving;
+    @JoinColumn(name = "goal_id")
+    private Goal goal;
 
-    public Transaction(int id, TransactionType type, String description, LocalDateTime transactionTimestamp, BigDecimal amount, Saving saving) {
+    public Transaction(int id, TransactionType type, String description, LocalDateTime transactionTimestamp, BigDecimal amount, Goal goal) {
         this.id = id;
         this.type = type;
         this.description = description;
@@ -57,27 +57,27 @@ public class Transaction {
         this.amount = amount;
         this.fromIdGoal = null;
         this.toIdGoal = null;
-        this.saving = saving;
+        this.goal = goal;
     }
 
-    public Transaction(TransactionType type, String description, LocalDateTime transactionTimestamp, BigDecimal amount, Integer fromIdGoal, Integer toIdGoal, Saving saving) {
+    public Transaction(TransactionType type, String description, LocalDateTime transactionTimestamp, BigDecimal amount, Integer fromIdGoal, Integer toIdGoal, Goal goal) {
         this.type = type;
         this.description = description;
         this.transactionTimestamp = transactionTimestamp;
         this.amount = amount;
         this.fromIdGoal = fromIdGoal;
         this.toIdGoal = toIdGoal;
-        this.saving = saving;
+        this.goal = goal;
     }
 
-    public Transaction(TransactionType type, String description, LocalDateTime transactionTimestamp, BigDecimal amount, Saving saving) {
+    public Transaction(TransactionType type, String description, LocalDateTime transactionTimestamp, BigDecimal amount, Goal goal) {
         this.type = type;
         this.description = description;
         this.transactionTimestamp = transactionTimestamp;
         this.amount = amount;
         this.fromIdGoal = null;
         this.toIdGoal = null;
-        this.saving = saving;
+        this.goal = goal;
     }
 
     @Override
@@ -90,7 +90,7 @@ public class Transaction {
                 ", fromGoalAmount=" + amount +
                 ", fromIdGoal=" + fromIdGoal +
                 ", toIdGoal=" + toIdGoal +
-                ", saving=" + saving +
+                ", goal=" + goal +
                 '}';
     }
 }

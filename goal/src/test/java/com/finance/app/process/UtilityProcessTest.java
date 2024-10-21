@@ -1,9 +1,9 @@
 package com.finance.app.process;
 
 import com.finance.app.service.AccountProcess;
-import com.finance.app.dao.SavingDao;
-import com.finance.app.domain.enums.SavingState;
-import com.finance.app.generator.GeneratorDataSaving;
+import com.finance.app.dao.GoalDao;
+import com.finance.app.domain.enums.GoalState;
+import com.finance.app.generator.GeneratorDataGoal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -21,43 +21,43 @@ public class UtilityProcessTest {
     @Mock
     private AccountProcess accountProcess;
     @Mock
-    private SavingDao savingDao;
+    private GoalDao goalDao;
     @InjectMocks
     private UtilityProcess utilityProcess;
 
     @Test
-    @DisplayName("Test scheduledCheckSavingsIfOverdue. Check if will change a status of savings to OVERDUE")
-    void testScheduledCheckSavingsIfOverdue_01() {
+    @DisplayName("Test scheduledCheckGoalsIfOverdue. Check if will change a status of goals to OVERDUE")
+    void testScheduledCheckGoalsIfOverdue_01() {
         // Given
-        final var saving = GeneratorDataSaving.getTestData_testScheduledCheckSavingsIfOverdue_01();
+        final var goal = GeneratorDataGoal.getTestData_testScheduledCheckGoalsIfOverdue_01();
 
         // When
         when(this.accountProcess.getListIdsOfUsers())
                 .thenReturn(List.of(1));
-        when(savingDao.fetchSavingsByStateAndDeadlineIsNotNull(SavingState.ACTIVE, 1))
-                .thenReturn(saving);
+        when(goalDao.fetchGoalsByStateAndDeadlineIsNotNull(GoalState.ACTIVE, 1))
+                .thenReturn(goal);
 
-        utilityProcess.scheduledCheckSavingsIfOverdue();
+        utilityProcess.scheduledCheckGoalsIfOverdue();
 
         // Then
-        assertEquals(SavingState.OVERDUE, saving.get(0).getState());
+        assertEquals(GoalState.OVERDUE, goal.get(0).getState());
     }
 
     @Test
-    @DisplayName("Test scheduledCheckSavingsIfOverdue. Check if will not change a status of savings to OVERDUE")
-    void testScheduledCheckSavingsIfOverdue_02() {
+    @DisplayName("Test scheduledCheckGoalsIfOverdue. Check if will not change a status of goals to OVERDUE")
+    void testScheduledCheckGoalsIfOverdue_02() {
         // Given
-        final var saving = GeneratorDataSaving.getTestData_testScheduledCheckSavingsIfOverdue_02();
+        final var goal = GeneratorDataGoal.getTestData_testScheduledCheckGoalsIfOverdue_02();
 
         // When
         when(this.accountProcess.getListIdsOfUsers())
                 .thenReturn(List.of(1));
-        when(savingDao.fetchSavingsByStateAndDeadlineIsNotNull(SavingState.ACTIVE, 1))
-                .thenReturn(saving);
+        when(goalDao.fetchGoalsByStateAndDeadlineIsNotNull(GoalState.ACTIVE, 1))
+                .thenReturn(goal);
 
-        utilityProcess.scheduledCheckSavingsIfOverdue();
+        utilityProcess.scheduledCheckGoalsIfOverdue();
 
         // Then
-        assertEquals(SavingState.ACTIVE, saving.get(0).getState());
+        assertEquals(GoalState.ACTIVE, goal.get(0).getState());
     }
 }

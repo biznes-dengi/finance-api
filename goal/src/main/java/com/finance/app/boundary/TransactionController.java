@@ -21,37 +21,37 @@ import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("board-savings/{boardSavingId}/savings/{savingId}/transactions")
+@RequestMapping("board-goals/{boardGoalId}/goals/{goalId}/transactions")
 public class TransactionController {
     private final TransactionProcess transactionProcess;
 
     @GetMapping
-    public TransactionAllResponse getAll(@PathVariable("savingId") int savingId,
+    public TransactionAllResponse getAll(@PathVariable("goalId") int goalId,
                                          @RequestParam("pageNumber") int pageNumber,
-                                         @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
-        return transactionProcess.processGetAll(savingId, pageNumber, boardSavingId);
+                                         @PathVariable("boardGoalId") int boardGoalId) throws ParentException {
+        return transactionProcess.processGetAll(goalId, pageNumber, boardGoalId);
     }
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public TransactionResponse save(@PathVariable("savingId") int savingId,
+    public TransactionResponse save(@PathVariable("goalId") int goalId,
                                       @RequestBody TransactionRequest requestToSave,
-                                      @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
-        return transactionProcess.processSave(requestToSave, savingId, boardSavingId);
+                                      @PathVariable("boardGoalId") int boardGoalId) throws ParentException {
+        return transactionProcess.processSave(requestToSave, goalId, boardGoalId);
     }
 
     @GetMapping("/{transactionId}")
-    public TransactionResponse getById(@PathVariable("savingId") int savingId,
+    public TransactionResponse getById(@PathVariable("goalId") int goalId,
                                        @PathVariable("transactionId") int depositId,
-                                       @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
-        return transactionProcess.processGetById(depositId, savingId, boardSavingId);
+                                       @PathVariable("boardGoalId") int boardGoalId) throws ParentException {
+        return transactionProcess.processGetById(depositId, goalId, boardGoalId);
     }
 
     @PatchMapping("/{transactionId}")
-    public TransactionResponse update(@PathVariable("savingId") int savingId,
+    public TransactionResponse update(@PathVariable("goalId") int goalId,
                        @PathVariable("transactionId") int depositId,
-                       @PathVariable("boardSavingId") int boardSavingId,
+                       @PathVariable("boardGoalId") int boardGoalId,
                        @RequestBody TransactionUpdateRequest requestToUpdate) throws ParentException {
-        return transactionProcess.processUpdate(depositId, savingId, requestToUpdate, boardSavingId);
+        return transactionProcess.processUpdate(depositId, goalId, requestToUpdate, boardGoalId);
     }
 }

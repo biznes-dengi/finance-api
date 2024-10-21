@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import static org.springframework.http.HttpStatus.CREATED;
 
 @RestController
-@RequestMapping("/board-savings/{boardSavingId}/transfer")
+@RequestMapping("/board-goals/{boardGoalId}/transfer")
 @RequiredArgsConstructor
 public class TransferController {
     private final TransactionProcess transactionProcess;
@@ -18,7 +18,7 @@ public class TransferController {
     @PostMapping
     @ResponseStatus(CREATED)
     public TransactionResponse saveTransactionTransfer(@RequestBody TransactionTransferRequest requestBody,
-                                                       @PathVariable("boardSavingId") int boardSavingId) throws ParentException {
-        return transactionProcess.processSaveTransactionTransfer(requestBody, boardSavingId);
+                                                       @PathVariable("boardGoalId") int boardGoalId) throws ParentException {
+        return transactionProcess.processSaveTransactionTransfer(requestBody, boardGoalId);
     }
 }

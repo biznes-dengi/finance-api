@@ -1,8 +1,8 @@
 package com.finance.app.process;
 
 import com.finance.app.boundary.request.DepositAmountRequest;
-import com.finance.app.dao.SavingDao;
-import com.finance.app.domain.Saving;
+import com.finance.app.dao.GoalDao;
+import com.finance.app.domain.Goal;
 import com.finance.app.domain.Transaction;
 import com.finance.app.domain.enums.TransactionType;
 import com.finance.app.exception.NotFoundException;
@@ -19,16 +19,16 @@ import java.util.List;
 @RequiredArgsConstructor
 public class TransactionDepositProcess {
     private final TransactionDepositValidationService validator;
-    private final SavingDao savingDao;
+    private final GoalDao goalDao;
 
     public BigDecimal processGetFundAmountByMonth(final DepositAmountRequest request) throws ParentException {
-        final var savingForCalculateAmount = savingDao.fetchSavingById(request.savingId(), request.boardSavingId());
+        final var goalForCalculateAmount = goalDao.fetchGoalById(request.goalId(), request.boardGoalId());
 
         final var resultOfValidation = validator.validate(request);
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var foundDepositsByMonth = this.findDepositTransactionsByMonth(savingForCalculateAmount, request.year(), request.month());
+        final var foundDepositsByMonth = this.findDepositTransactionsByMonth(goalForCalculateAmount, request.year(), request.month());
         if (foundDepositsByMonth.isEmpty()) {
             throw new NotFoundException("Entities 'Deposit' were not found in " + request.year() + "/" + request.month());
         }
@@ -37,7 +37,7 @@ public class TransactionDepositProcess {
 
     // TODO critical point. For big data troubles with time of response (maybe move logic to SQL query)
     // TODO maybe split logic into methods by filters. It relates from if there's a need for it
-    private List<Transaction> findDepositTransactionsByMonth(Saving source, int year, int month) {
+    private List<Transaction> findDepositTransactionsByMonth(Goal source, int year, int month) {
         return source.getTransactions().stream()
                 .filter(deposit -> deposit.getType() == TransactionType.DEPOSIT)
                 .filter(deposit -> deposit.getTransactionTimestamp().getYear() == year)

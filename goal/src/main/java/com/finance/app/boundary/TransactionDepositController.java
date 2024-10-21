@@ -14,15 +14,15 @@ import java.math.BigDecimal;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("board-savings/{boardSavingId}/savings/{savingId}/transactions/deposits")
+@RequestMapping("board-goals/{boardGoalId}/goals/{goalId}/transactions/deposits")
 public class TransactionDepositController {
     private final TransactionDepositProcess transactionDepositProcess;
 
     @GetMapping("/month")
-    public BigDecimal getDepositAmountByMonth(@PathVariable("savingId") final int savingId,
+    public BigDecimal getDepositAmountByMonth(@PathVariable("goalId") final int goalId,
                                               @RequestParam("month") final int month,
                                               @RequestParam("year") final int year,
-                                              @PathVariable("boardSavingId") final int boardSavingId) throws ParentException {
-        return this.transactionDepositProcess.processGetFundAmountByMonth(new DepositAmountRequest(savingId, year, month, boardSavingId));
+                                              @PathVariable("boardGoalId") final int boardGoalId) throws ParentException {
+        return this.transactionDepositProcess.processGetFundAmountByMonth(new DepositAmountRequest(goalId, year, month, boardGoalId));
     }
 }

@@ -1,6 +1,6 @@
 package com.finance.app.mapper;
 
-import com.finance.app.boundary.response.BalanceResponse;
+import com.finance.app.boundary.response.BoardGoalResponse;
 import com.finance.app.domain.BoardGoal;
 import org.mapstruct.*;
 
@@ -10,8 +10,8 @@ import org.mapstruct.*;
         unmappedSourcePolicy = ReportingPolicy.IGNORE,
         unmappedTargetPolicy = ReportingPolicy.ERROR
 )
-public interface BalanceMapper {
+public interface BoardGoalMapper {
 
-    @Mapping(source = "boardBalance", target = "amount")
-    BalanceResponse boardGoalToBalanceResponse(BoardGoal source);
+    @Mapping(source = "id", target = "boardGoalId")
+    BoardGoalResponse boardGoalToBoardGoalResponse(BoardGoal source);
 }

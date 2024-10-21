@@ -1,8 +1,8 @@
 package com.finance.app.process;
 
 import com.finance.app.service.AccountProcess;
-import com.finance.app.dao.SavingDao;
-import com.finance.app.domain.enums.SavingState;
+import com.finance.app.dao.GoalDao;
+import com.finance.app.domain.enums.GoalState;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,23 +15,23 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class UtilityProcess {
     final private AccountProcess accountProcess;
-    final private SavingDao savingDao;
+    final private GoalDao goalDao;
 
     // TODO it's temporary impl, task in Notion
     // TODO there's bug with time zone, right now the impl only for one time zone
     @Async
     @Scheduled(cron = "0 0 * * * *")
-    public void scheduledCheckSavingsIfOverdue() {
+    public void scheduledCheckGoalsIfOverdue() {
         this.accountProcess.getListIdsOfUsers().stream()
-                .map(userId -> savingDao.fetchSavingsByStateAndDeadlineIsNotNull(SavingState.ACTIVE, userId))
-                .filter(listSaving -> !listSaving.isEmpty())
-                .forEach(listSaving ->
-                        listSaving.stream()
-                                .filter(saving -> saving.getDeadline().isBefore(LocalDate.now()) ||
-                                        saving.getDeadline().isEqual(LocalDate.now()))
-                                .forEach(saving -> {
-                                    saving.setState(SavingState.OVERDUE);
-                                    savingDao.createSaving(saving);
+                .map(userId -> goalDao.fetchGoalsByStateAndDeadlineIsNotNull(GoalState.ACTIVE, userId))
+                .filter(listGoal -> !listGoal.isEmpty())
+                .forEach(listGoal ->
+                        listGoal.stream()
+                                .filter(goal -> goal.getDeadline().isBefore(LocalDate.now()) ||
+                                        goal.getDeadline().isEqual(LocalDate.now()))
+                                .forEach(goal -> {
+                                    goal.setState(GoalState.OVERDUE);
+                                    goalDao.createGoal(goal);
                                 })
                 );
     }

@@ -1,7 +1,7 @@
 package com.finance.app.process;
 
 import com.finance.app.boundary.request.DepositAmountRequest;
-import com.finance.app.dao.SavingDao;
+import com.finance.app.dao.GoalDao;
 import com.finance.app.exception.NotFoundException;
 import com.finance.app.exception.ParentException;
 import com.finance.app.generator.GeneratorDataTransaction;
@@ -25,7 +25,7 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class TransactionDepositProcessTest {
     @Mock
-    private SavingDao savingDao;
+    private GoalDao goalDao;
     @Mock
     private TransactionDepositValidationService validator;
     @InjectMocks
@@ -37,10 +37,10 @@ public class TransactionDepositProcessTest {
         // Given
         final int year = 2023;
         final int month = 3;
-        final var saving = GeneratorDataTransaction.getTestData_testProcessGetDepositAmountByMonth_01();
+        final var goal = GeneratorDataTransaction.getTestData_testProcessGetDepositAmountByMonth_01();
 
         // When
-        when(savingDao.fetchSavingById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
+        when(goalDao.fetchGoalById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(goal);
         when(validator.validate(any())).thenReturn(ValidationResult.valid());
         final var result = transactionDepositProcess.processGetFundAmountByMonth(new DepositAmountRequest(1, year, month, 1));
 
@@ -54,10 +54,10 @@ public class TransactionDepositProcessTest {
         // Given
         final int year = 2023;
         final int month = 8;
-        final var saving = GeneratorDataTransaction.getTestData_testProcessGetDepositAmountByMonth_02();
+        final var goal = GeneratorDataTransaction.getTestData_testProcessGetDepositAmountByMonth_02();
 
         // When
-        when(savingDao.fetchSavingById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(saving);
+        when(goalDao.fetchGoalById(Mockito.anyInt(), Mockito.anyInt())).thenReturn(goal);
         when(validator.validate(any())).thenReturn(ValidationResult.valid());
 
         // Then
