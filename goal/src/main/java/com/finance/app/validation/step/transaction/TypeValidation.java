@@ -17,10 +17,6 @@ public class TypeValidation {
                     return ValidationResult.invalid("If the transaction is TRANSFER then please specify " +
                             "fields like fromIdGoal and toIdGoal.");
                 }
-
-                if (toValidate.amount().compareTo(BigDecimal.ZERO) <= 0) {
-                    return ValidationResult.invalid("Amount of Transfer transaction must be greater than zero.");
-                }
             }
             return this.checkNext(toValidate);
         }

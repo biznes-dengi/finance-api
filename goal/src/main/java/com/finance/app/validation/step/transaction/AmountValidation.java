@@ -34,4 +34,16 @@ public class AmountValidation {
             return this.checkNext(toValidate);
         }
     }
+
+    public static class StepValidIfTransferGreaterThenZero extends ValidationStep<TransactionDto> {
+        @Override
+        public ValidationResult validate(TransactionDto toValidate) {
+            if (toValidate.type().equals(TransactionType.TRANSFER)) {
+                if (toValidate.amount().compareTo(BigDecimal.ZERO) <= 0) {
+                    return ValidationResult.invalid("Amount of Transfer transaction must be greater than zero.");
+                }
+            }
+            return this.checkNext(toValidate);
+        }
+    }
 }

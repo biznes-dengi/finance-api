@@ -200,7 +200,7 @@ public class GeneratorDataTransaction {
         );
     }
 
-    public static TransactionDto getTestData_testTypeValidation_03() {
+    public static TransactionDto getTestData_testAmountValidationStep_10() {
         return new TransactionDto(
                 TransactionType.TRANSFER,
                 "bla",
@@ -211,7 +211,7 @@ public class GeneratorDataTransaction {
         );
     }
 
-    public static TransactionDto getTestData_testTypeValidation_04() {
+    public static TransactionDto getTestData_testAmountValidationStep_11() {
         return new TransactionDto(
                 TransactionType.TRANSFER,
                 "bla",

@@ -40,34 +40,6 @@ public class TypeValidationTest {
     }
 
     @Test
-    @DisplayName("Test StepValidIfTypeIsTransfer - negative, amount is zero")
-    public void testTypeValidation_03() {
-        // Given
-        ValidationStep<TransactionDto> stepTypeValidation = new TypeValidation.StepValidIfTypeIsTransfer();
-        final var dtoToTest = GeneratorDataTransaction.getTestData_testTypeValidation_03();
-
-        // When
-        final var result = stepTypeValidation.validate(dtoToTest);
-
-        // Then
-        assertFalse(result.isValid());
-    }
-
-    @Test
-    @DisplayName("Test StepValidIfTypeIsTransfer - negative, amount is negative")
-    public void testTypeValidation_04() {
-        // Given
-        ValidationStep<TransactionDto> stepTypeValidation = new TypeValidation.StepValidIfTypeIsTransfer();
-        final var dtoToTest = GeneratorDataTransaction.getTestData_testTypeValidation_04();
-
-        // When
-        final var result = stepTypeValidation.validate(dtoToTest);
-
-        // Then
-        assertFalse(result.isValid());
-    }
-
-    @Test
     @DisplayName("Test StepValidIfTypeIsNotTransfer - positive")
     public void testTypeValidation_05() {
         // Given

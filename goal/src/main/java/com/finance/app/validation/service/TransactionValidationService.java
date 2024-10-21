@@ -18,6 +18,7 @@ public class TransactionValidationService extends ValidationService {
         this.validationPath =
                 new AmountValidation.StepValidIfWithdrawHasAmountLessThenZero()
                         .linkWith(new AmountValidation.StepValidIfDepositHasAmountMoreThenZero())
+                        .linkWith(new AmountValidation.StepValidIfTransferGreaterThenZero())
                         .linkWith(new TypeValidation.StepValidIfTypeIsTransfer())
                         .linkWith(new TypeValidation.StepValidIfTypeIsNotTransfer());
     }
