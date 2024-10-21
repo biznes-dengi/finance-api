@@ -19,7 +19,7 @@ public class TypeValidation {
                 }
 
                 if (toValidate.amount().compareTo(BigDecimal.ZERO) <= 0) {
-                    return ValidationResult.invalid("Amount of Transfer must be greater than zero.");
+                    return ValidationResult.invalid("Amount of Transfer transaction must be greater than zero.");
                 }
             }
             return this.checkNext(toValidate);

@@ -15,7 +15,7 @@ import java.time.format.DateTimeFormatter;
 @Configuration
 public class JacksonConfig {
     private final static DateTimeFormatter LOCAL_DATE = DateTimeFormatter.ISO_LOCAL_DATE;
-    private final static DateTimeFormatter LOCAL_DATE_TIME = DateTimeFormatter.ISO_LOCAL_DATE;
+    private final static DateTimeFormatter LOCAL_DATE_TIME = DateTimeFormatter.ISO_LOCAL_DATE_TIME;
 
     @Bean
     public ObjectMapper objectMapper() {

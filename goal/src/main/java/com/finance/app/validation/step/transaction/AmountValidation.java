@@ -15,7 +15,7 @@ public class AmountValidation {
             if ((toValidate.type() == TransactionType.DEPOSIT)) {
                 if ((toValidate.amount().compareTo(BigDecimal.ZERO) < 0) || (toValidate.amount().compareTo(BigDecimal.ZERO) == 0)) {
                     return ValidationResult.invalid("When transaction type is DEPOSIT then " +
-                            "the 'fromGoalAmount' field must contain positive value.");
+                            "the 'amount' field must contain positive value.");
                 }
             }
             return this.checkNext(toValidate);
@@ -28,7 +28,7 @@ public class AmountValidation {
             if ((toValidate.type() == TransactionType.WITHDRAW)) {
                 if ((toValidate.amount().compareTo(BigDecimal.ZERO) > 0) || (toValidate.amount().compareTo(BigDecimal.ZERO) == 0)) {
                     return ValidationResult.invalid("When transaction type is WITHDRAW then, " +
-                            "the 'fromGoalAmount' field must contain negative value.");
+                            "the 'amount' field must contain negative value.");
                 }
             }
             return this.checkNext(toValidate);
