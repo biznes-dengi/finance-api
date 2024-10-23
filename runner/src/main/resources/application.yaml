@@ -31,6 +31,6 @@ springdoc:
     enabled: true
 
 goal:
-  batch-size: 5
+  batch-size: 50
 transaction:
-  batch-size: 5
+  batch-size: 50
