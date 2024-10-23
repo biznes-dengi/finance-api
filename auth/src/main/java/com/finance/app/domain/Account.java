@@ -1,8 +1,8 @@
 package com.finance.app.domain;
 
 import com.finance.app.domain.base.BaseUser;
-import com.finance.app.domain.enums.AppRole;
 import com.finance.app.domain.enums.AccountGender;
+import com.finance.app.domain.enums.AppRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -11,7 +11,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

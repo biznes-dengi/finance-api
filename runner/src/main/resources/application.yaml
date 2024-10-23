@@ -5,6 +5,9 @@ server:
     include-message: always
 
 spring:
+  security:
+    jwt:
+      secret-key: hujeMojeDwaOdinJaSOsalMenyaEbaliTriKonyahujeMojeDwaOdinJaSOsalMenyaEbaliTriKonyahujeMojeDwaOdinJaSOsalMenyaEbaliTriKonyahujeMojeDwaOdinJaSOsalMenyaEbaliTriKonyahujeMojeDwaOdinJaSOsalMenyaEbaliTriKonya
   datasource:
     url: "jdbc:postgresql://localhost:5432/finance"
     username: dev

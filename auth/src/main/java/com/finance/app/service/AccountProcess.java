@@ -1,6 +1,6 @@
 package com.finance.app.service;
 
-import com.finance.app.boundary.AccountRequest;
+import com.finance.app.boundary.request.RegisterRequest;
 import com.finance.app.domain.Account;
 import com.finance.app.mapper.AccountMapper;
 import com.finance.app.repository.AccountRepository;
@@ -17,7 +17,7 @@ public class AccountProcess {
     private final AccountMapper accountMapper;
 
     public Account getByEmailAndPassword(String email, String password) {
-        final var foundUser = accountRepository.findByEmailAndPassword(email, password);
+        final var foundUser = accountRepository.findTopByEmailAndPassword(email, password);
 
         if (foundUser.isPresent()) {
             return foundUser.get();
@@ -38,12 +38,12 @@ public class AccountProcess {
         return null;
     }
 
-    public Account createNewAccount(AccountRequest request) {
+    @Transactional
+    public Account createNewAccount(RegisterRequest request) {
         final var accountToSave = accountMapper.accountRequestToAccount(request);
         return accountRepository.save(accountToSave);
     }
 
-    @Transactional(readOnly = true)
     public boolean checkIfNotExists(int id) {
         return !this.accountRepository.existsById(id);
     }

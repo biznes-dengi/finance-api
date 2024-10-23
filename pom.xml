@@ -14,7 +14,7 @@
     <modules>
         <module>goal</module>
         <module>runner</module>
-        <module>account</module>
+        <module>auth</module>
     </modules>
 
     <parent>
@@ -32,6 +32,7 @@
         <lombok.verstion>1.18.30</lombok.verstion>
         <org.mapstruct.version>1.5.5.Final</org.mapstruct.version>
         <springdoc-openapi-starter-webmvc-ui.version>2.5.0</springdoc-openapi-starter-webmvc-ui.version>
+        <jwt.version>0.11.5</jwt.version>
 
         <junit.version>5.10.0</junit.version>
         <mockito.version>5.4.0</mockito.version>
@@ -48,6 +49,11 @@
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-jpa</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-security</artifactId>
                 <version>${spring.boot.version}</version>
             </dependency>
             <!-- COMMON -->
@@ -78,6 +84,23 @@
                 <groupId>org.springdoc</groupId>
                 <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
                 <version>${springdoc-openapi-starter-webmvc-ui.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-api</artifactId>
+                <version>${jwt.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-impl</artifactId>
+                <version>${jwt.version}</version>
+                <scope>runtime</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.jsonwebtoken</groupId>
+                <artifactId>jjwt-jackson</artifactId>
+                <version>${jwt.version}</version>
+                <scope>runtime</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
