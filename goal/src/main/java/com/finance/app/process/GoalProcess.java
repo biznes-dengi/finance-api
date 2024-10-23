@@ -14,8 +14,6 @@ import com.finance.app.domain.dto.GoalDto;
 import com.finance.app.domain.dto.TransactionTransferDto;
 import com.finance.app.domain.enums.GoalState;
 import com.finance.app.domain.enums.TransactionType;
-import com.finance.app.exception.InternalError;
-import com.finance.app.exception.NotFoundException;
 import com.finance.app.exception.ParentException;
 import com.finance.app.exception.ValidationException;
 import com.finance.app.mapper.GoalMapper;
