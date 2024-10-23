@@ -1,8 +1,9 @@
 package com.finance.app.domain.dto;
 
-import jakarta.validation.constraints.Size;
+import com.finance.app.domain.dto.base.BaseTransactionDto;
 
-public record TransactionUpdateDto(
-        @Size(max = 100, message = "The 'description' field must contain less than [100] symbols.")
-        String description
-) { }
+public class TransactionUpdateDto extends BaseTransactionDto {
+        public TransactionUpdateDto(String description) {
+                super(description);
+        }
+}

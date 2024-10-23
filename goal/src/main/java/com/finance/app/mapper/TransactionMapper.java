@@ -4,9 +4,11 @@ import com.finance.app.boundary.request.TransactionRequest;
 import com.finance.app.boundary.request.TransactionTransferRequest;
 import com.finance.app.boundary.request.TransactionUpdateRequest;
 import com.finance.app.boundary.response.TransactionResponse;
+import com.finance.app.boundary.response.TransactionTransferResponse;
 import com.finance.app.boundary.response.TransactionViewResponse;
 import com.finance.app.domain.Transaction;
 import com.finance.app.domain.dto.TransactionDto;
+import com.finance.app.domain.dto.TransactionTransferDto;
 import com.finance.app.domain.dto.TransactionUpdateDto;
 import com.finance.app.mapper.context.GoalContext;
 import org.mapstruct.*;
@@ -27,20 +29,26 @@ public interface TransactionMapper {
 
     List<TransactionViewResponse> transactionListToTransactionViewResponseList(List<Transaction> source);
 
-    @Mapping(target = "fromIdGoal", ignore = true)
-    @Mapping(target = "toIdGoal", ignore = true)
     @Mapping(source = "date", target = "transactionTimestamp")
     TransactionDto transactionRequestToTransactionDto(TransactionRequest source);
 
-    @Mapping(target = "type", constant = "TRANSFER")
-    // TODO here mocked. when will logic of calculate of currency, fix
-    @Mapping(source = "fromGoalAmount", target = "amount")
-    @Mapping(source = "date", target = "transactionTimestamp")
-    TransactionDto transactionTransferRequestToTransactionDto(TransactionTransferRequest source);
+    TransactionTransferDto transactionTransferRequestToTransactionTransferDto(TransactionTransferRequest source);
 
     TransactionUpdateDto transactionUpdateRequestToTransactionUpdateDto(TransactionUpdateRequest source);
 
     @Mapping(target = "goal", expression = "java(linkedGoal.goal)")
     @Mapping(target = "id", ignore = true)
+    @Mapping(target = "fromIdGoal", ignore = true)
+    @Mapping(target = "fromGoalAmount", ignore = true)
+    @Mapping(target = "toIdGoal", ignore = true)
+    @Mapping(target = "toGoalAmount", ignore = true)
     Transaction transactionDtoToTransaction(TransactionDto source, @Context GoalContext linkedGoal);
+
+    @Mapping(target = "goal", expression = "java(linkedGoal.goal)")
+    @Mapping(target = "type", constant = "TRANSFER")
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "amount", ignore = true)
+    Transaction transactionTransferDtoToTransaction(TransactionTransferDto source, @Context GoalContext linkedGoal);
+
+    TransactionTransferResponse transactionToTransactionTransferResponse(Transaction source);
 }

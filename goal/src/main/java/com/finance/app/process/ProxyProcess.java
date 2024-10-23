@@ -2,7 +2,8 @@ package com.finance.app.process;
 
 import com.finance.app.domain.BoardGoal;
 import com.finance.app.domain.Goal;
-import com.finance.app.exception.NotFoundException;
+import com.finance.app.domain.dto.TransactionTransferDto;
+import com.finance.app.domain.enums.TransactionType;
 import com.finance.app.exception.ParentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -21,18 +22,18 @@ public class ProxyProcess {
     private final GoalProcess goalProcess;
     private final BoardGoalProcess boardGoalProcess;
 
-    public Goal proxyToUpdateGoalBalance(final BigDecimal newValue, final int goalId, final int boardGoalId)
+    public Goal proxyToUpdateGoalBalance(TransactionType type, BigDecimal amount, int goalId, int boardGoalId)
             throws ParentException {
-        return goalProcess.updateGoalBalance(newValue, goalId, boardGoalId);
+        return goalProcess.updateGoalBalance(type, amount, goalId, boardGoalId);
     }
 
-    public BoardGoal proxyToUpdateBoardBalance(final int boardGoalId, final BigDecimal newValue)
-            throws NotFoundException {
-        return boardGoalProcess.updateBoardBalance(boardGoalId, newValue);
+    public BoardGoal proxyToUpdateBoardBalance(TransactionType type, BigDecimal amount, int boardGoalId)
+            throws ParentException {
+        return boardGoalProcess.updateBoardBalance(type, amount, boardGoalId);
     }
 
-    public List<Goal> proxyToUpdateGoalBalancesWhenDoTransferTransaction(int boardGoalId, int fromGoalId, int toGoalId, BigDecimal amount)
+    public List<Goal> proxyToUpdateGoalBalancesByTransferTransaction(TransactionTransferDto transferDto, int boardGoalId)
             throws ParentException {
-        return goalProcess.updateGoalBalancesWhenDoTransferTransaction(boardGoalId, fromGoalId, toGoalId, amount);
+        return goalProcess.updateGoalBalancesByTransferTransaction(transferDto, boardGoalId);
     }
 }

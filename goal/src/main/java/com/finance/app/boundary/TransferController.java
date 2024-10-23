@@ -1,7 +1,7 @@
 package com.finance.app.boundary;
 
 import com.finance.app.boundary.request.TransactionTransferRequest;
-import com.finance.app.boundary.response.TransactionResponse;
+import com.finance.app.boundary.response.TransactionTransferResponse;
 import com.finance.app.exception.ParentException;
 import com.finance.app.process.TransactionProcess;
 import lombok.RequiredArgsConstructor;
@@ -17,8 +17,8 @@ public class TransferController {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public TransactionResponse saveTransactionTransfer(@RequestBody TransactionTransferRequest requestBody,
-                                                       @PathVariable("boardGoalId") int boardGoalId) throws ParentException {
+    public TransactionTransferResponse saveTransactionTransfer(@RequestBody TransactionTransferRequest requestBody,
+                                                               @PathVariable("boardGoalId") int boardGoalId) throws ParentException {
         return transactionProcess.processSaveTransactionTransfer(requestBody, boardGoalId);
     }
 }

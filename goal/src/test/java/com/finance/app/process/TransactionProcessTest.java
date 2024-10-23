@@ -4,7 +4,7 @@ import com.finance.app.boundary.response.TransactionResponse;
 import com.finance.app.dao.GoalDao;
 import com.finance.app.dao.TransactionDao;
 import com.finance.app.domain.Transaction;
-import com.finance.app.domain.dto.TransactionDto;
+import com.finance.app.domain.dto.base.BaseTransactionDto;
 import com.finance.app.exception.InternalError;
 import com.finance.app.exception.NotFoundException;
 import com.finance.app.exception.ParentException;
@@ -14,7 +14,7 @@ import com.finance.app.mapper.TransactionMapperImpl;
 import com.finance.app.mapper.context.GoalContext;
 import com.finance.app.validation.ValidationResult;
 import com.finance.app.generator.GeneratorDataGoal;
-import com.finance.app.validation.service.TransactionValidationService;
+import com.finance.app.validation.service.ValidationOnlyConstraintService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -35,7 +35,7 @@ public class TransactionProcessTest {
     @InjectMocks
     private TransactionProcess testObj;
     @Mock
-    private TransactionValidationService transactionValidationServiceMock;
+    private ValidationOnlyConstraintService<BaseTransactionDto> transactionValidationServiceMock;
     @Mock
     private ProxyProcess proxyProcessMock;
     @Mock
@@ -104,8 +104,8 @@ public class TransactionProcessTest {
         when(transactionMapperMock.transactionDtoToTransaction(any(), any()))
                 .thenReturn(newTx);
 
-        when(transactionValidationServiceMock.validate((TransactionDto) any())).thenReturn(ValidationResult.valid());
-        when(proxyProcessMock.proxyToUpdateGoalBalance(any(), anyInt(), anyInt()))
+        when(transactionValidationServiceMock.validate(any())).thenReturn(ValidationResult.valid());
+        when(proxyProcessMock.proxyToUpdateGoalBalance(any(), any(), anyInt(), anyInt()))
                 .thenReturn(linkedGoal);
 
         final var actual = testObj.processSave(payload, goalId, boardGoalId);
@@ -126,15 +126,15 @@ public class TransactionProcessTest {
                 .transactionDtoToTransaction(any(), any());
 
         verify(proxyProcessMock, times(1))
-                .proxyToUpdateGoalBalance(dto.amount(), goalId, boardGoalId);
+                .proxyToUpdateGoalBalance(any(), any(), anyInt(), anyInt());
         verify(proxyProcessMock, times(1))
-                .proxyToUpdateBoardBalance(boardGoalId, dto.amount());
+                .proxyToUpdateBoardBalance(any(), any(), anyInt());
         verify(transactionDaoNock, times(1))
                 .createTransaction(any());
     }
 
     @Test
-    @DisplayName("Test processSaveTransactionTransfer, create new transaction with type TRANSFER with all valid fields - Happy Path")
+    @DisplayName("Test processSaveTransactionTransfer, create new transaction with type TRANSFER with one currency and with all valid fields - Happy Path")
     void testProcessSaveTransactionTransfer_01() throws ParentException {
         // Given
         final var payload = GeneratorDataTransaction.getTestData_testProcessSaveTransactionTransfer_01();
@@ -143,21 +143,21 @@ public class TransactionProcessTest {
         final var boardGoalId = 1;
 
         final var mapper = new TransactionMapperImpl();
-        final var dto = mapper.transactionTransferRequestToTransactionDto(payload);
-        final var newTxFromGoal = mapper.transactionDtoToTransaction(dto, new GoalContext(linkedGoal.get(0)));
-        final var newTxToGoal = mapper.transactionDtoToTransaction(dto, new GoalContext(linkedGoal.get(1)));
-        final var expected = mapper.transactionToTransactionResponse(newTxFromGoal);
+        final var dto = mapper.transactionTransferRequestToTransactionTransferDto(payload);
+        final var newTxFromGoal = mapper.transactionTransferDtoToTransaction(dto, new GoalContext(linkedGoal.get(0)));
+        final var newTxToGoal = mapper.transactionTransferDtoToTransaction(dto, new GoalContext(linkedGoal.get(1)));
+        final var expected = mapper.transactionToTransactionTransferResponse(newTxFromGoal);
 
         // When
-        when(transactionValidationServiceMock.validate((TransactionDto) any())).thenReturn(ValidationResult.valid());
-        when(proxyProcessMock.proxyToUpdateGoalBalancesWhenDoTransferTransaction(anyInt(), anyInt(), anyInt(), any()))
+        when(transactionValidationServiceMock.validate(any())).thenReturn(ValidationResult.valid());
+        when(proxyProcessMock.proxyToUpdateGoalBalancesByTransferTransaction(dto, boardGoalId))
                 .thenReturn(linkedGoal);
 
-        when(transactionMapperMock.transactionTransferRequestToTransactionDto(payload)).thenReturn(dto);
-        when(transactionMapperMock.transactionDtoToTransaction(any(), any()))
+        when(transactionMapperMock.transactionTransferRequestToTransactionTransferDto(payload)).thenReturn(dto);
+        when(transactionMapperMock.transactionTransferDtoToTransaction(any(), any()))
                 .thenReturn(newTxFromGoal)
                 .thenReturn(newTxToGoal);
-        when(transactionMapperMock.transactionToTransactionResponse(any())).thenReturn(expected);
+        when(transactionMapperMock.transactionToTransactionTransferResponse(any())).thenReturn(expected);
 
         final var actual = testObj.processSaveTransactionTransfer(payload, boardGoalId);
 
@@ -166,20 +166,20 @@ public class TransactionProcessTest {
         assertEquals(expected.description(), actual.description());
         assertEquals(expected.transactionTimestamp(), actual.transactionTimestamp());
         assertEquals(expected.fromIdGoal(), actual.fromIdGoal());
+        assertEquals(expected.fromGoalAmount(), actual.fromGoalAmount());
         assertEquals(expected.toIdGoal(), actual.toIdGoal());
-        assertEquals(expected.amount(), actual.amount());
+        assertEquals(expected.toGoalAmount(), actual.toGoalAmount());
+
 
         verify(transactionMapperMock, times(1))
-                .transactionTransferRequestToTransactionDto(payload);
+                .transactionTransferRequestToTransactionTransferDto(payload);
         verify(transactionMapperMock, times(1))
-                .transactionToTransactionResponse(any());
+                .transactionToTransactionTransferResponse(any());
         verify(transactionMapperMock, times(2))
-                .transactionDtoToTransaction(any(), any());
+                .transactionTransferDtoToTransaction(any(), any());
 
         verify(proxyProcessMock, times(1))
-                .proxyToUpdateGoalBalancesWhenDoTransferTransaction(
-                        boardGoalId, dto.fromIdGoal(), dto.toIdGoal(), dto.amount()
-                );
+                .proxyToUpdateGoalBalancesByTransferTransaction(dto, boardGoalId);
         verify(transactionDaoNock, times(2))
                 .createTransaction(any());
     }

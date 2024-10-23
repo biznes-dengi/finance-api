@@ -3,6 +3,7 @@ package com.finance.app.boundary.request;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
+// TODO move validation annotations to DTO
 public record DepositAmountRequest(
         int goalId,
         @Min(value = 1970, message = "The 'year' field must contain value more than [1970].")

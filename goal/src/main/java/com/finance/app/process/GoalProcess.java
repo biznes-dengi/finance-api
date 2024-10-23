@@ -11,7 +11,9 @@ import com.finance.app.domain.ImageGoal;
 import com.finance.app.domain.Goal;
 import com.finance.app.domain.businessrules.InitRulesGoal;
 import com.finance.app.domain.dto.GoalDto;
+import com.finance.app.domain.dto.TransactionTransferDto;
 import com.finance.app.domain.enums.GoalState;
+import com.finance.app.domain.enums.TransactionType;
 import com.finance.app.exception.ParentException;
 import com.finance.app.exception.ValidationException;
 import com.finance.app.mapper.GoalMapper;
@@ -83,23 +85,26 @@ public class GoalProcess {
         goalDao.deleteGoal(goalId);
     }
 
-    public Goal updateGoalBalance(BigDecimal amountNewDeposit, int goalId, int boardGoalId)
-            throws ParentException {
-        final var goalForUpdateBalance = goalDao.fetchGoalById(goalId, boardGoalId);
-        final var newBalance = goalForUpdateBalance.getGoalBalance().add(amountNewDeposit);
-        goalForUpdateBalance.setGoalBalance(newBalance);
-
-        this.updateGoalState(goalForUpdateBalance);
-        return goalDao.createGoal(goalForUpdateBalance);
+    public Goal updateGoalBalance(TransactionType type, BigDecimal amount, int goalId, int boardGoalId) throws ParentException {
+        if (type == TransactionType.DEPOSIT)
+            return calculateNewGoalBalance(amount, goalId, boardGoalId);
+        else
+            return calculateNewGoalBalance(amount.multiply(BigDecimal.valueOf(-1)), goalId, boardGoalId);
     }
 
-    // TODO for transfer: we store two tx, first to "from" and second to "to"
-    // TODO each tx will have different amount if each will have different currency
-    public List<Goal> updateGoalBalancesWhenDoTransferTransaction(int boardGoalId, int fromGoalId, int toGoalId, BigDecimal amount)
+    public List<Goal> updateGoalBalancesByTransferTransaction(TransactionTransferDto transferDto, int boardGoalId)
             throws ParentException {
-        final var responseFromGoal = updateGoalBalance(amount.multiply(BigDecimal.valueOf(-1)), fromGoalId, boardGoalId);
-        final var responseToGoal = updateGoalBalance(amount, toGoalId, boardGoalId);
+        final var responseFromGoal = updateGoalBalance(TransactionType.WITHDRAW, transferDto.getFromGoalAmount(), transferDto.getFromIdGoal(), boardGoalId);
+        final var responseToGoal = updateGoalBalance(TransactionType.DEPOSIT, transferDto.getToGoalAmount(), transferDto.getToIdGoal(), boardGoalId);
         return List.of(responseFromGoal, responseToGoal);
+    }
+
+    private Goal calculateNewGoalBalance(BigDecimal value, int goalId, int boardGoalId) throws ParentException {
+        final var goal = goalDao.fetchGoalById(goalId, boardGoalId);
+        final var newBalance = goal.getGoalBalance().add(value);
+        goal.setGoalBalance(newBalance);
+        this.updateGoalState(goal);
+        return goalDao.createGoal(goal);
     }
 
     private void updateGoalState(Goal goal) {

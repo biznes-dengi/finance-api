@@ -1,18 +1,37 @@
 package com.finance.app.domain.dto;
 
+import com.finance.app.domain.dto.base.BaseTransactionDto;
 import com.finance.app.domain.enums.TransactionType;
 import com.finance.app.validation.step.transaction.DecimalScale;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.Positive;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-public record TransactionDto(
-        @NotNull TransactionType type,
-        @Size(max = 100) String description,
-        LocalDateTime transactionTimestamp,
-        Integer fromIdGoal,
-        Integer toIdGoal,
-        @NotNull @DecimalScale(2) BigDecimal amount
-) { }
+@Data
+@NoArgsConstructor
+@EqualsAndHashCode(callSuper = true)
+public class TransactionDto extends BaseTransactionDto {
+    @NotNull
+    private TransactionType type;
+
+    private LocalDateTime transactionTimestamp;
+
+    @NotNull @DecimalScale(2) @Positive
+    private BigDecimal amount;
+
+    public TransactionDto(String description, TransactionType type, LocalDateTime transactionTimestamp, BigDecimal amount) {
+        super(description);
+        this.type = type;
+        this.transactionTimestamp = transactionTimestamp;
+        this.amount = amount;
+    }
+
+    public TransactionDto(TransactionType type, LocalDateTime transactionTimestamp, BigDecimal amount) {
+        this.type = type;
+        this.transactionTimestamp = transactionTimestamp;
+        this.amount = amount;
+    }
+}

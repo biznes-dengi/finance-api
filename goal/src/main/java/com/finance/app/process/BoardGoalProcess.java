@@ -1,6 +1,8 @@
 package com.finance.app.process;
 
 import com.finance.app.domain.Account;
+import com.finance.app.domain.enums.TransactionType;
+import com.finance.app.exception.ParentException;
 import com.finance.app.service.AccountProcess;
 import com.finance.app.boundary.request.BoardGoalRequest;
 import com.finance.app.boundary.response.BalanceResponse;
@@ -39,11 +41,23 @@ public class BoardGoalProcess {
         return boardGoalMapper.boardGoalToBoardGoalResponse(response);
     }
 
-    public BoardGoal updateBoardBalance(final int boardGoalId, final BigDecimal newValue) throws NotFoundException {
-        final var boardGoalToUpdate = boardGoalDao.fetchBoardGoalById(boardGoalId);
-        final var newValueOfBalance = boardGoalToUpdate.getBoardBalance().add(newValue);
-        boardGoalToUpdate.setBoardBalance(newValueOfBalance);
-        return boardGoalDao.createBoardGoal(boardGoalToUpdate);
+    public BoardGoal updateBoardBalance(
+            final TransactionType type,
+            final BigDecimal amount,
+            final int boardGoalId
+    ) throws ParentException {
+        if (type == TransactionType.DEPOSIT)
+            return calculateNewBoardBalance(boardGoalId, amount);
+        else
+            return calculateNewBoardBalance(boardGoalId, amount.multiply(BigDecimal.valueOf(-1)));
+    }
+
+    public BoardGoal calculateNewBoardBalance(final int boardGoalId, final BigDecimal amount)
+            throws ParentException {
+        final var boardGoal = boardGoalDao.fetchBoardGoalById(boardGoalId);
+        final var newBalance = boardGoal.getBoardBalance().add(amount);
+        boardGoal.setBoardBalance(newBalance);
+        return boardGoalDao.createBoardGoal(boardGoal);
     }
 
     BoardGoal getBoardGoalByAccountId(final int accountId) throws NotFoundException {

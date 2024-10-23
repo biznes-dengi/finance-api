@@ -2,6 +2,7 @@ package com.finance.app.process;
 
 import com.finance.app.dao.GoalDao;
 import com.finance.app.domain.enums.GoalState;
+import com.finance.app.domain.enums.TransactionType;
 import com.finance.app.generator.GeneratorDataGoal;
 import com.finance.app.exception.ParentException;
 import org.junit.jupiter.api.DisplayName;
@@ -32,7 +33,7 @@ public class GoalProcessTest {
         // When
         when(goalDaoMock.fetchGoalById(anyInt(), anyInt())).thenReturn(goal);
         when(goalDaoMock.createGoal(any())).thenReturn(goal);
-        final var response = this.testObj.updateGoalBalance(BigDecimal.TEN, anyInt(), anyInt());
+        final var response = this.testObj.updateGoalBalance(TransactionType.DEPOSIT, BigDecimal.TEN, anyInt(), anyInt());
 
         // Then
         assertEquals(GoalState.OVERDUE, response.getState());
@@ -48,7 +49,7 @@ public class GoalProcessTest {
         // When
         when(goalDaoMock.fetchGoalById(anyInt(), anyInt())).thenReturn(goal);
         when(goalDaoMock.createGoal(any())).thenReturn(goal);
-        final var response = this.testObj.updateGoalBalance(BigDecimal.valueOf(100.6), anyInt(), anyInt());
+        final var response = this.testObj.updateGoalBalance(TransactionType.DEPOSIT, BigDecimal.valueOf(100.6), anyInt(), anyInt());
 
         // Then
         assertEquals(GoalState.ACHIEVED, response.getState());
@@ -64,7 +65,7 @@ public class GoalProcessTest {
         // When
         when(goalDaoMock.fetchGoalById(anyInt(), anyInt())).thenReturn(goal);
         when(goalDaoMock.createGoal(any())).thenReturn(goal);
-        final var response = this.testObj.updateGoalBalance(BigDecimal.valueOf(-100.6), anyInt(), anyInt());
+        final var response = this.testObj.updateGoalBalance(TransactionType.WITHDRAW, BigDecimal.valueOf(100.6), anyInt(), anyInt());
 
         // Then
         assertEquals(GoalState.ACTIVE, response.getState());
@@ -83,19 +84,19 @@ public class GoalProcessTest {
 
         // Then
         var response = this.testObj
-                .updateGoalBalance(BigDecimal.valueOf(932.02), anyInt(), anyInt());
+                .updateGoalBalance(TransactionType.DEPOSIT, BigDecimal.valueOf(932.02), anyInt(), anyInt());
         assertEquals(BigDecimal.valueOf(932.02), response.getGoalBalance());
 
-        this.testObj.updateGoalBalance(BigDecimal.valueOf(-150.22), anyInt(), anyInt());
+        this.testObj.updateGoalBalance(TransactionType.WITHDRAW, BigDecimal.valueOf(150.22), anyInt(), anyInt());
         assertEquals(0, BigDecimal.valueOf(781.8).compareTo(response.getGoalBalance()));
 
-        this.testObj.updateGoalBalance(BigDecimal.valueOf(-1150), anyInt(), anyInt());
+        this.testObj.updateGoalBalance(TransactionType.WITHDRAW, BigDecimal.valueOf(1150), anyInt(), anyInt());
         assertEquals(0, BigDecimal.valueOf(-368.2).compareTo(response.getGoalBalance()));
 
-        this.testObj.updateGoalBalance(BigDecimal.valueOf(1930.1), anyInt(), anyInt());
+        this.testObj.updateGoalBalance(TransactionType.DEPOSIT, BigDecimal.valueOf(1930.1), anyInt(), anyInt());
         assertEquals(0, BigDecimal.valueOf(1561.9).compareTo(response.getGoalBalance()));
 
-        this.testObj.updateGoalBalance(BigDecimal.valueOf(-1561.91), anyInt(), anyInt());
+        this.testObj.updateGoalBalance(TransactionType.WITHDRAW, BigDecimal.valueOf(1561.91), anyInt(), anyInt());
         assertEquals(0, BigDecimal.valueOf(-0.01).compareTo(response.getGoalBalance()));
     }
 }
