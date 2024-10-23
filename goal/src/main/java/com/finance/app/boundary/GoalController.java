@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
+
 import static org.springframework.http.HttpStatus.CREATED;
 
 // TODO delete end-point must have id user maybe (check when realize security)
@@ -42,7 +44,8 @@ public class GoalController {
 
     @GetMapping("/{goalId}")
     public GoalResponse getById(@PathVariable("goalId") int goalId,
-                                  @PathVariable("boardGoalId") int boardGoalId) throws ParentException {
+                                @PathVariable("boardGoalId") int boardGoalId,
+                                Principal principal) throws ParentException {
         return goalProcess.processGetById(goalId, boardGoalId);
     }
 
