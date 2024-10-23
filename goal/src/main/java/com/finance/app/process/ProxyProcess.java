@@ -20,16 +20,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ProxyProcess {
     private final GoalProcess goalProcess;
-    private final BoardGoalProcess boardGoalProcess;
 
     public Goal proxyToUpdateGoalBalance(TransactionType type, BigDecimal amount, int goalId, int boardGoalId)
             throws ParentException {
         return goalProcess.updateGoalBalance(type, amount, goalId, boardGoalId);
-    }
-
-    public BoardGoal proxyToUpdateBoardBalance(TransactionType type, BigDecimal amount, int boardGoalId)
-            throws ParentException {
-        return boardGoalProcess.updateBoardBalance(type, amount, boardGoalId);
     }
 
     public List<Goal> proxyToUpdateGoalBalancesByTransferTransaction(TransactionTransferDto transferDto, int boardGoalId)

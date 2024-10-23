@@ -14,12 +14,15 @@ import com.finance.app.domain.dto.GoalDto;
 import com.finance.app.domain.dto.TransactionTransferDto;
 import com.finance.app.domain.enums.GoalState;
 import com.finance.app.domain.enums.TransactionType;
+import com.finance.app.exception.InternalError;
+import com.finance.app.exception.NotFoundException;
 import com.finance.app.exception.ParentException;
 import com.finance.app.exception.ValidationException;
 import com.finance.app.mapper.GoalMapper;
 import com.finance.app.validation.service.GoalValidationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -32,6 +35,7 @@ public class GoalProcess {
     private final TransactionDao transactionDao;
     private final GoalValidationService goalValidationService;
     private final GoalMapper goalMapper;
+    private final ProxyGoalAndBoard proxyToBoard;
 
     public GoalResponse processGetById(int goalId, int boardGoalId) throws ParentException {
         final var foundGoal = goalDao.fetchGoalById(goalId, boardGoalId);
@@ -80,7 +84,13 @@ public class GoalProcess {
         return goalMapper.goalToGoalResponse(response);
     }
 
-    public void processDelete(int goalId) {
+    @Transactional(
+            rollbackFor = {Exception.class, Error.class, RuntimeException.class}
+    )
+    public void processDelete(int goalId, int boardGoalId) throws ParentException {
+        final var goalToRemove = goalDao.fetchGoalById(goalId, boardGoalId);
+        proxyToBoard.proxyToUpdateBoardBalance(TransactionType.WITHDRAW, goalToRemove.getGoalBalance(), boardGoalId);
+
         transactionDao.removeAllTransactionsByGoalId(goalId);
         goalDao.deleteGoal(goalId);
     }

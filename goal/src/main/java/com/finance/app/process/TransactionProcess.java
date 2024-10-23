@@ -35,6 +35,7 @@ public class TransactionProcess {
     private final TransactionDao transactionDao;
     private final GoalDao goalDao;
     private final ProxyProcess proxyProcess;
+    private final ProxyGoalAndBoard proxyToBoard;
     private final ValidationOnlyConstraintService<BaseTransactionDto> validator;
     private final TransactionMapper transactionMapper;
 
@@ -62,7 +63,7 @@ public class TransactionProcess {
             throw new ValidationException(resultOfValidation.errorMsg());
 
         final var linkedGoal = proxyProcess.proxyToUpdateGoalBalance(transactionDto.getType(), transactionDto.getAmount(), goalId, boardGoalId);
-        proxyProcess.proxyToUpdateBoardBalance(transactionDto.getType(), transactionDto.getAmount(), boardGoalId);
+        proxyToBoard.proxyToUpdateBoardBalance(transactionDto.getType(), transactionDto.getAmount(), boardGoalId);
 
         final var newTx = transactionMapper.transactionDtoToTransaction(transactionDto, new GoalContext(linkedGoal));
         final var response  = transactionDao.createTransaction(newTx);

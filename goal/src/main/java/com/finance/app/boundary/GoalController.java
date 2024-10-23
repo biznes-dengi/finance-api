@@ -61,7 +61,9 @@ public class GoalController {
     }
 
     @DeleteMapping("/{goalId}")
-    public void delete(@PathVariable("goalId") int goalId) {
-        goalProcess.processDelete(goalId);
+    public void delete(
+            @PathVariable("boardGoalId") int boardGoalId,
+            @PathVariable("goalId") int goalId) throws ParentException {
+        goalProcess.processDelete(goalId, boardGoalId);
     }
 }
