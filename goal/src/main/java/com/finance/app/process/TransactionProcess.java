@@ -3,25 +3,32 @@ package com.finance.app.process;
 import com.finance.app.boundary.request.TransactionRequest;
 import com.finance.app.boundary.request.TransactionTransferRequest;
 import com.finance.app.boundary.request.TransactionUpdateRequest;
-import com.finance.app.boundary.response.TransactionAllResponse;
-import com.finance.app.boundary.response.TransactionResponse;
-import com.finance.app.boundary.response.TransactionTransferResponse;
+import com.finance.app.boundary.response.transaction.TransactionAllResponse;
+import com.finance.app.boundary.response.transaction.TransactionNormalResponse;
+import com.finance.app.boundary.response.transaction.TransactionResponse;
+import com.finance.app.boundary.response.transaction.TransactionTransferResponse;
 import com.finance.app.dao.GoalDao;
 import com.finance.app.dao.TransactionDao;
 import com.finance.app.domain.Goal;
 import com.finance.app.domain.Transaction;
 import com.finance.app.domain.dto.base.BaseTransactionDto;
+import com.finance.app.domain.enums.TransactionType;
 import com.finance.app.exception.InternalError;
 import com.finance.app.exception.NotFoundException;
 import com.finance.app.exception.ParentException;
 import com.finance.app.exception.ValidationException;
 import com.finance.app.mapper.TransactionMapper;
 import com.finance.app.mapper.context.GoalContext;
+import com.finance.app.mapper.context.GoalsNameTransferContext;
 import com.finance.app.validation.service.ValidationOnlyConstraintService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
+import java.util.List;
+
+// TODO why here is GoalDao?? must be in proxy?? think about it
 @Service
 @RequiredArgsConstructor
 public class TransactionProcess {
@@ -32,13 +39,13 @@ public class TransactionProcess {
     private final TransactionMapper transactionMapper;
 
     public TransactionAllResponse processGetAll(final int goalId, final int pageNumber, final int boardGoalId)
-            throws NotFoundException {
+            throws ParentException {
         if (!goalDao.existsGoal(goalId, boardGoalId))
             throw new NotFoundException("Entity 'Goal' not found by attribute 'goalId' = " + goalId);
 
         final var foundSliceTransaction = transactionDao.fetchAllTransactions(goalId, pageNumber);
         final var mappedTransactionViewResponse =
-                transactionMapper.transactionListToTransactionViewResponseList(foundSliceTransaction.getContent());
+                customMapperList(foundSliceTransaction.getContent(), boardGoalId);
         return new TransactionAllResponse(mappedTransactionViewResponse, foundSliceTransaction.hasNext());
     }
 
@@ -46,7 +53,7 @@ public class TransactionProcess {
     @Transactional(
             rollbackFor = {Exception.class, Error.class, RuntimeException.class}
     )
-    public TransactionResponse processSave(final TransactionRequest payload, final int goalId, final int boardGoalId)
+    public TransactionNormalResponse processSave(final TransactionRequest payload, final int goalId, final int boardGoalId)
             throws ParentException {
         final var transactionDto = transactionMapper.transactionRequestToTransactionDto(payload);
 
@@ -75,7 +82,12 @@ public class TransactionProcess {
         if (resultOfValidation.notValid())
             throw new ValidationException(resultOfValidation.errorMsg());
 
-        final var linkedGoals = proxyProcess.proxyToUpdateGoalBalancesByTransferTransaction(transactionTransferDto, boardGoalId);
+        final var linkedGoals =
+                proxyProcess.proxyToUpdateGoalBalancesByTransferTransaction(transactionTransferDto, boardGoalId);
+        final var linkedNamesOfGoals = new GoalsNameTransferContext(
+                linkedGoals.get(0).getTitle(),
+                linkedGoals.get(1).getTitle()
+        );
 
         final var newTxFromGoal =
                 transactionMapper.transactionTransferDtoToTransaction(transactionTransferDto, new GoalContext(linkedGoals.get(0)));
@@ -85,13 +97,13 @@ public class TransactionProcess {
                 transactionMapper.transactionTransferDtoToTransaction(transactionTransferDto, new GoalContext(linkedGoals.get(1)));
         transactionDao.createTransaction(newTxToGoal);
 
-        return transactionMapper.transactionToTransactionTransferResponse(response);
+        return transactionMapper.transactionToTransactionTransferResponse(response, linkedNamesOfGoals);
     }
 
     public TransactionResponse processGetById(int depositId, int goalId, int boardGoalId) throws NotFoundException, InternalError {
         final var foundGoal = goalDao.fetchGoalById(goalId, boardGoalId);
         final var foundTransaction = findTransaction(foundGoal, depositId);
-        return transactionMapper.transactionToTransactionResponse(foundTransaction);
+        return customMapper(foundTransaction, boardGoalId);
     }
 
     public TransactionResponse processUpdate(int depositId, int goalId, TransactionUpdateRequest requestToUpdate, int boardGoalId)
@@ -107,7 +119,7 @@ public class TransactionProcess {
         final var transactionToUpdate = this.findTransaction(foundGoal, depositId);
         transactionToUpdate.setDescription(transactionUpdateDto.getDescription());
         final var response = this.transactionDao.createTransaction(transactionToUpdate);
-        return transactionMapper.transactionToTransactionResponse(response);
+        return customMapper(response, boardGoalId);
     }
 
     // TODO critical point. For big data troubles with time of response
@@ -116,5 +128,52 @@ public class TransactionProcess {
                 .filter(deposit -> deposit.getId() == depositId)
                 .findFirst()
                 .orElseThrow(() -> new NotFoundException("Entity 'Transaction' not found by attribute 'id' = " + depositId));
+    }
+
+    private List<TransactionResponse> customMapperList(List<Transaction> transactions, final int boardGoalId) throws NotFoundException, InternalError {
+        final var response = new ArrayList<TransactionResponse>();
+
+        for (var transaction : transactions) {
+            if (transaction.getType() == TransactionType.TRANSFER) {
+                final var linkedNameGoals = List.of(
+                        goalDao.fetchGoalById(transaction.getFromIdGoal(), boardGoalId).getTitle(),
+                        goalDao.fetchGoalById(transaction.getToIdGoal(), boardGoalId).getTitle()
+                );
+                final var transactionTransferResponse = transactionMapper
+                        .transactionToTransactionTransferResponse(transaction,
+                                new GoalsNameTransferContext(
+                                        linkedNameGoals.get(0),
+                                        linkedNameGoals.get(1)
+                                )
+                        );
+                response.add(transactionTransferResponse);
+            } else {
+                final var transactionNormalResponse =
+                        transactionMapper.transactionToTransactionResponse(transaction);
+                response.add(transactionNormalResponse);
+            }
+        }
+        return response;
+    }
+
+    private TransactionResponse customMapper(Transaction transaction, final int boardGoalId) throws NotFoundException, InternalError {
+        if (transaction.getType() == TransactionType.TRANSFER) {
+            final var linkedNameGoals = List.of(
+                    goalDao.fetchGoalById(transaction.getFromIdGoal(), boardGoalId).getTitle(),
+                    goalDao.fetchGoalById(transaction.getToIdGoal(), boardGoalId).getTitle()
+            );
+            final var transactionTransferResponse = transactionMapper
+                    .transactionToTransactionTransferResponse(transaction,
+                            new GoalsNameTransferContext(
+                                    linkedNameGoals.get(0),
+                                    linkedNameGoals.get(1)
+                            )
+                    );
+            return transactionTransferResponse;
+        } else {
+            final var transactionNormalResponse =
+                    transactionMapper.transactionToTransactionResponse(transaction);
+            return transactionNormalResponse;
+        }
     }
 }

@@ -3,14 +3,14 @@ package com.finance.app.mapper;
 import com.finance.app.boundary.request.TransactionRequest;
 import com.finance.app.boundary.request.TransactionTransferRequest;
 import com.finance.app.boundary.request.TransactionUpdateRequest;
-import com.finance.app.boundary.response.TransactionResponse;
-import com.finance.app.boundary.response.TransactionTransferResponse;
-import com.finance.app.boundary.response.TransactionViewResponse;
+import com.finance.app.boundary.response.transaction.TransactionNormalResponse;
+import com.finance.app.boundary.response.transaction.TransactionTransferResponse;
 import com.finance.app.domain.Transaction;
 import com.finance.app.domain.dto.TransactionDto;
 import com.finance.app.domain.dto.TransactionTransferDto;
 import com.finance.app.domain.dto.TransactionUpdateDto;
 import com.finance.app.mapper.context.GoalContext;
+import com.finance.app.mapper.context.GoalsNameTransferContext;
 import org.mapstruct.*;
 
 import java.util.List;
@@ -23,11 +23,7 @@ import java.util.List;
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS
 )
 public interface TransactionMapper {
-    TransactionResponse transactionToTransactionResponse(Transaction source);
-
-    TransactionViewResponse transactionToTransactionViewResponse(Transaction source);
-
-    List<TransactionViewResponse> transactionListToTransactionViewResponseList(List<Transaction> source);
+    TransactionNormalResponse transactionToTransactionResponse(Transaction source);
 
     @Mapping(source = "date", target = "transactionTimestamp")
     TransactionDto transactionRequestToTransactionDto(TransactionRequest source);
@@ -50,5 +46,7 @@ public interface TransactionMapper {
     @Mapping(target = "amount", ignore = true)
     Transaction transactionTransferDtoToTransaction(TransactionTransferDto source, @Context GoalContext linkedGoal);
 
-    TransactionTransferResponse transactionToTransactionTransferResponse(Transaction source);
+    @Mapping(target = "fromGoalName", expression = "java(linkedNamesOfGoals.fromGoalName)")
+    @Mapping(target = "toGoalName", expression = "java(linkedNamesOfGoals.toGoalName)")
+    TransactionTransferResponse transactionToTransactionTransferResponse(Transaction source, @Context GoalsNameTransferContext linkedNamesOfGoals);
 }

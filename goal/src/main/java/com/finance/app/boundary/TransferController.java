@@ -1,7 +1,7 @@
 package com.finance.app.boundary;
 
 import com.finance.app.boundary.request.TransactionTransferRequest;
-import com.finance.app.boundary.response.TransactionTransferResponse;
+import com.finance.app.boundary.response.transaction.TransactionTransferResponse;
 import com.finance.app.exception.ParentException;
 import com.finance.app.process.TransactionProcess;
 import lombok.RequiredArgsConstructor;
