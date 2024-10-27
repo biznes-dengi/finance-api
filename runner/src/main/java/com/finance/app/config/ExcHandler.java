@@ -1,10 +1,11 @@
 package com.finance.app.config;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.finance.app.exception.AuthException;
+import com.finance.app.exception.ParentException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.extern.jackson.Jacksonized;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -15,13 +16,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 import java.time.LocalDateTime;
 
-@Slf4j
-@ControllerAdvice(name = "authExcHandler")
-//TODO: SOLVE WHY THIS EXCEPTION HANDLER DOESN'T HANDLE EXCEPTIONS
+@ControllerAdvice
 public class ExcHandler {
 
     @ExceptionHandler(AuthException.class)
     public ResponseEntity<ErrorMessage> handleExc(final AuthException exc) {
+        return ResponseEntity.status(exc.getStatus())
+                .body(ErrorMessage.builder()
+                        .status(HttpStatus.resolve(exc.getStatus().value()))
+                        .message(exc.getMessage())
+                        .cause(exc.getClass())
+                        .build());
+    }
+
+    @ExceptionHandler(ParentException.class)
+    public ResponseEntity<ErrorMessage> handleExc(final ParentException exc) {
         return ResponseEntity.status(exc.getStatus())
                 .body(ErrorMessage.builder()
                         .status(HttpStatus.resolve(exc.getStatus().value()))
@@ -46,6 +55,7 @@ public class ExcHandler {
     public static class ErrorMessage {
 
         @Builder.Default
+        @JsonFormat(shape = JsonFormat.Shape.STRING)
         private LocalDateTime date = LocalDateTime.now();
         private HttpStatus status;
         private String message;
