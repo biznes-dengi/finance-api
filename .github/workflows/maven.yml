@@ -1,0 +1,30 @@
+name: Java CI with Maven
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Set up JDK 21
+      uses: actions/setup-java@v4
+      with:
+        java-version: '21'
+        distribution: 'temurin'
+        cache: maven
+        
+    - name: Build
+      run: make clean package
+
+    - name: Test
+      run: make test
+      
+    - name: Deploy
+      if: github.ref == 'refs/heads/main'  # Deploy only on main branch
