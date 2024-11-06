@@ -19,7 +19,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping("/board-goals")
 @RequiredArgsConstructor
-public class BoardGoalController {
+public class BoardGoalController implements GoalBoundaryMetadata {
     private final BoardGoalProcess boardGoalProcess;
 
     @GetMapping("/id")

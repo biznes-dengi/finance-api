@@ -28,7 +28,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping("board-goals/{boardGoalId}/goals")
 @RequiredArgsConstructor
-public class GoalController {
+public class GoalController implements GoalBoundaryMetadata {
     private final GoalProcess goalProcess;
 
     @GetMapping

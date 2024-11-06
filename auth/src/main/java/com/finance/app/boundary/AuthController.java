@@ -18,7 +18,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthController {
+public class AuthController implements AuthBoundaryMetadata {
 
     private final AuthService service;
 

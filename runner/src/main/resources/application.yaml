@@ -24,11 +24,15 @@ spring:
         size: 5
 
 springdoc:
-  title: ^project.parent.name^
+  title: Finance Api
   version: ^project.parent.version^
-  description: ^project.parent.description^
   api-docs:
     enabled: true
+  swagger-ui:
+    tags-sorter: alpha
+    operations-sorter: alpha
+    display-request-duration: true
+    doc-expansion: none
 
 goal:
   batch-size: 50

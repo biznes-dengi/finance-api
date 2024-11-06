@@ -15,7 +15,7 @@ import java.math.BigDecimal;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("board-goals/{boardGoalId}/goals/{goalId}/transactions/deposits")
-public class TransactionDepositController {
+public class TransactionDepositController implements GoalBoundaryMetadata {
     private final TransactionDepositProcess transactionDepositProcess;
 
     @GetMapping("/month")

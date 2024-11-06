@@ -3,7 +3,6 @@ package com.finance.app.boundary;
 import com.finance.app.boundary.request.TransactionRequest;
 import com.finance.app.boundary.request.TransactionUpdateRequest;
 import com.finance.app.boundary.response.transaction.TransactionAllResponse;
-import com.finance.app.boundary.response.transaction.TransactionNormalResponse;
 import com.finance.app.boundary.response.transaction.TransactionResponse;
 import com.finance.app.exception.ParentException;
 import com.finance.app.process.TransactionProcess;
@@ -23,7 +22,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("board-goals/{boardGoalId}/goals/{goalId}/transactions")
-public class TransactionController {
+public class TransactionController implements GoalBoundaryMetadata {
     private final TransactionProcess transactionProcess;
 
     @GetMapping

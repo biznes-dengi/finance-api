@@ -14,15 +14,13 @@ public class SwaggerConfig {
 
     @Value("${springdoc.title}")
     private String title;
-    @Value("${springdoc.description}")
-    private String description;
     @Value("${springdoc.version}")
     private String version;
 
     @Bean
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
-                .info(new Info().title(title).description(description).version(version))
+                .info(new Info().title(title).version(version))
                 .addSecurityItem(new SecurityRequirement().addList("bearerAuth"))
                 .components(new Components().addSecuritySchemes("bearerAuth", new SecurityScheme()
                         .name("bearerAuth")
