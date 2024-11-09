@@ -8,15 +8,17 @@ import jakarta.xml.soap.SOAPConnectionFactory;
 import jakarta.xml.soap.SOAPConstants;
 import jakarta.xml.soap.SOAPException;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.client.RestClient;
 
 @Configuration
 @Slf4j
 public class Config {
 
-//    @Value("${context-path.marshaller}")
-//    private String contextPath;
+    @Value("${api-provider.common}")
+    public String baseUrlCommon;
 
 //    @Bean
 //    public Jaxb2Marshaller marshaller(DateXmlAdapter dateXmlAdapter) {
@@ -63,5 +65,12 @@ public class Config {
     @Bean
     public SOAPConnectionFactory soapConnectionFactory() throws SOAPException {
         return SOAPConnectionFactory.newInstance();
+    }
+
+    @Bean
+    public RestClient restClient() {
+       return RestClient.builder()
+                .baseUrl(baseUrlCommon)
+                .build();
     }
 }

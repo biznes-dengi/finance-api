@@ -1,4 +1,4 @@
-package com.finance.app.apiprovider;
+package com.finance.app.apiprovider.belarus;
 
 /**
  * API provider - National Bank of Belarus.

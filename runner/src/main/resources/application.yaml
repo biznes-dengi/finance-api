@@ -39,5 +39,5 @@ transaction:
 #    marshaller: generated
 
 api-provider:
-  common: https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@{date}/{apiVersion}/{endpoint}
+  common: https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@
   national-bank-russia: http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx

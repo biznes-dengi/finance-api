@@ -1,13 +1,12 @@
 package com.finance.app.boundary;
 
+import com.finance.app.apiprovider.CommonClient;
 import com.finance.app.apiprovider.russia.RussiaNationalBankClient;
-import jakarta.xml.bind.JAXBException;
-import jakarta.xml.soap.SOAPException;
-import jakarta.xml.soap.SOAPMessage;
+import com.finance.app.domain.enums.CurrencyCode;
+import com.finance.app.domain.enums.RegionCode;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 @RestController
@@ -15,15 +14,16 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class ExchangeRateController {
     private final RussiaNationalBankClient russiaNationalBankClient;
+    private final CommonClient commonClient;
 
     @GetMapping()
-    public SOAPMessage getExchangeRate(
-            @RequestParam("from") String from,
-            @RequestParam("to") String to,
-            @RequestParam("regionCode") String regionCode,
+    public ExchangeRateResponse getExchangeRate(
+            @RequestParam("from") CurrencyCode from,
+            @RequestParam("to") CurrencyCode to,
+            @RequestParam("regionCode") RegionCode regionCode,
             @RequestParam("date") LocalDate date
-    ) throws SOAPException, JAXBException, IOException {
-        return russiaNationalBankClient.fetchCurrencyRate(LocalDate.of(2024, 9, 9));
+    ) {
+        return commonClient.fetchCurrencyRate(date, from, to);
     }
 }
 
