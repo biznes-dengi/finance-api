@@ -15,6 +15,7 @@
         <module>goal</module>
         <module>runner</module>
         <module>account</module>
+        <module>exchange-rate</module>
     </modules>
 
     <parent>
@@ -27,6 +28,7 @@
     <properties>
         <java.version>21</java.version>
         <spring.boot.version>3.3.2</spring.boot.version>
+        <spring.ws.version>4.0.11</spring.ws.version>
 
         <postgresql.version>42.7.3</postgresql.version>
         <lombok.verstion>1.18.30</lombok.verstion>
@@ -47,8 +49,18 @@
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-web-services</artifactId>
+                <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-data-jpa</artifactId>
                 <version>${spring.boot.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.ws</groupId>
+                <artifactId>spring-ws-core</artifactId>
+                <version>${spring.ws.version}</version>
             </dependency>
             <!-- COMMON -->
             <dependency>

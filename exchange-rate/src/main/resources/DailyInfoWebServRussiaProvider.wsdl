@@ -1,0 +1,67 @@
+<wsdl:definitions xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://web.cbr.ru/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" targetNamespace="http://web.cbr.ru/">
+    <wsdl:types>
+        <s:schema elementFormDefault="qualified" targetNamespace="http://web.cbr.ru/">
+            <s:element name="GetCursOnDateXML">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="1" maxOccurs="1" name="On_date" type="s:dateTime"/>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+            <s:element name="GetCursOnDateXMLResponse">
+                <s:complexType>
+                    <s:sequence>
+                        <s:element minOccurs="0" maxOccurs="1" name="GetCursOnDateXMLResult">
+                            <s:complexType mixed="true">
+                                <s:sequence>
+                                    <s:any/>
+                                </s:sequence>
+                            </s:complexType>
+                        </s:element>
+                    </s:sequence>
+                </s:complexType>
+            </s:element>
+        </s:schema>
+    </wsdl:types>
+    <wsdl:message name="GetCursOnDateXMLSoapIn">
+        <wsdl:part name="parameters" element="tns:GetCursOnDateXML"/>
+    </wsdl:message>
+    <wsdl:message name="GetCursOnDateXMLSoapOut">
+        <wsdl:part name="parameters" element="tns:GetCursOnDateXMLResponse"/>
+    </wsdl:message>
+    <wsdl:portType name="DailyInfoSoap">
+        <wsdl:operation name="GetCursOnDateXML">
+            <wsdl:input message="tns:GetCursOnDateXMLSoapIn"/>
+            <wsdl:output message="tns:GetCursOnDateXMLSoapOut"/>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="DailyInfoSoap" type="tns:DailyInfoSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetCursOnDateXML">
+            <soap:operation soapAction="http://web.cbr.ru/GetCursOnDateXML" style="document"/>
+            <wsdl:input>
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+        <wsdl:operation name="GetCursOnDateXML">
+            <soap12:operation soapAction="http://web.cbr.ru/GetCursOnDateXML" style="document"/>
+            <wsdl:input>
+                <soap12:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output>
+                <soap12:body use="literal"/>
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="DailyInfo">
+        <wsdl:port name="DailyInfoSoap" binding="tns:DailyInfoSoap">
+            <soap:address location="http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx"/>
+        </wsdl:port>
+        <wsdl:port name="DailyInfoSoap12" binding="tns:DailyInfoSoap12">
+            <soap12:address location="http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

@@ -39,6 +39,11 @@
             <artifactId>account</artifactId>
             <version>0.0.1-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>com.maksyank</groupId>
+            <artifactId>exchange-rate</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+        </dependency>
     </dependencies>
 
     <build>
