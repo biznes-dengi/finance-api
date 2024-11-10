@@ -1,4 +1,4 @@
-package com.finance.app.apiprovider;
+package com.finance.app.apiprovider.common;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import lombok.Getter;
@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Getter
 @Setter
-public class CommonResponse {
+public class CommonProviderNativeResponse {
     private LocalDate date;
     private Map<String, Object> data = new HashMap<>();
 

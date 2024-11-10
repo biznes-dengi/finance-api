@@ -1,9 +1,11 @@
 package com.finance.app.apiprovider.russia;
 
-import com.finance.app.boundary.GetCursOnDateXMLResponse;
+import com.finance.app.apiprovider.ApiProvider;
+import com.finance.app.boundary.ExchangeRateResponse;
+import com.finance.app.domain.enums.CurrencyCode;
+import com.finance.app.domain.enums.RegionCode;
 import jakarta.xml.bind.JAXBException;
 import jakarta.xml.soap.*;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -14,20 +16,20 @@ import java.time.LocalDate;
  * API provider - National Bank of Russia.
  */
 @Component
-@RequiredArgsConstructor
-public class RussiaNationalBankClient {
-
-    public final static String regionCode = "RU";
+public class RussiaProviderClient extends ApiProvider {
+    private final SOAPConnectionFactory soapConnectionFactory;
+    private final RussiaNationalBankProcess russiaNationalBankProcess;
 
     @Value("${api-provider.national-bank-russia}")
     public String URL;
 
-    private final SOAPConnectionFactory soapConnectionFactory;
-
-    private final RussiaNationalBankProcess russiaNationalBankProcess;
+    public RussiaProviderClient(SOAPConnectionFactory soapConnectionFactory, RussiaNationalBankProcess russiaNationalBankProcess) {
+        super(RegionCode.RU);
+        this.soapConnectionFactory = soapConnectionFactory;
+        this.russiaNationalBankProcess = russiaNationalBankProcess;
+    }
 
     // TODO add convert to response
-
     // TODO add try catch switch to common + auto close connection
     public SOAPMessage fetchCurrencyRate(LocalDate byDate) throws SOAPException, IOException, JAXBException {
         SOAPConnection newSoapConnection = soapConnectionFactory.createConnection();
@@ -38,4 +40,8 @@ public class RussiaNationalBankClient {
         return soapResponse;
     }
 
+    @Override
+    protected ExchangeRateResponse fetchExchangeRate(LocalDate byDate, CurrencyCode currencyFrom, CurrencyCode currencyTo) {
+        return null;
+    }
 }
