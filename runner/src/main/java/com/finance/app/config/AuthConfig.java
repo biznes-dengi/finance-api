@@ -1,7 +1,7 @@
 package com.finance.app.config;
 
 import com.finance.app.boundary.request.ValidationRequest;
-import com.finance.app.service.AuthService;
+import com.finance.app.process.AuthProcess;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -59,7 +59,7 @@ public class AuthConfig {
                 .toList();
 
         private final SecurityContextHolderStrategy strategy = SecurityContextHolder.getContextHolderStrategy();
-        private final AuthService service;
+        private final AuthProcess service;
 
         @Override
         protected boolean shouldNotFilter(final HttpServletRequest request) {

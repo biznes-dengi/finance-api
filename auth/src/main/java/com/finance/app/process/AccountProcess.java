@@ -1,4 +1,4 @@
-package com.finance.app.service;
+package com.finance.app.process;
 
 import com.finance.app.boundary.request.RegisterRequest;
 import com.finance.app.domain.Account;
@@ -14,7 +14,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AccountProcess {
-
     private final AccountRepository accountRepository;
     private final AccountMapper accountMapper;
     private final PasswordEncoder encoder;

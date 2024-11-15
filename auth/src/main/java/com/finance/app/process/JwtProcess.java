@@ -1,4 +1,4 @@
-package com.finance.app.service;
+package com.finance.app.process;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -15,9 +15,9 @@ import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 @Service
-public class JwtService {
+public class JwtProcess {
 
-    @Value("#{T(com.finance.app.service.JwtService).getSecretKey('${spring.security.jwt.secret-key:undefined}')}")
+    @Value("#{T(com.finance.app.process.JwtProcess).getSecretKey('${spring.security.jwt.secret-key:undefined}')}")
     private Key secretKey;
     @Value("${spring.security.jwt.expiration-time:24}")
     private Long expirationTime;

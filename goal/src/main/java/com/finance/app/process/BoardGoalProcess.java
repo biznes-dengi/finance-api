@@ -3,7 +3,6 @@ package com.finance.app.process;
 import com.finance.app.domain.Account;
 import com.finance.app.domain.enums.TransactionType;
 import com.finance.app.exception.ParentException;
-import com.finance.app.service.AccountProcess;
 import com.finance.app.boundary.request.BoardGoalRequest;
 import com.finance.app.boundary.response.BalanceResponse;
 import com.finance.app.boundary.response.BoardGoalResponse;

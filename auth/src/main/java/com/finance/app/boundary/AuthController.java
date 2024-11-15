@@ -4,7 +4,7 @@ import com.finance.app.boundary.request.LoginRequest;
 import com.finance.app.boundary.request.RegisterRequest;
 import com.finance.app.boundary.request.ValidationRequest;
 import com.finance.app.boundary.response.ValidationResponse;
-import com.finance.app.service.AuthService;
+import com.finance.app.process.AuthProcess;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.CREATED;
 @Tag(name = "Authentication", description = "Contains all endpoints related to the authentication/authorization flow")
 public class AuthController {
 
-    private final AuthService service;
+    private final AuthProcess service;
 
     @PostMapping("/login")
     public String generate(@RequestBody @Validated final LoginRequest request) {
