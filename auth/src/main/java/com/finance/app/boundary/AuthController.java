@@ -5,6 +5,7 @@ import com.finance.app.boundary.request.RegisterRequest;
 import com.finance.app.boundary.request.ValidationRequest;
 import com.finance.app.boundary.response.ValidationResponse;
 import com.finance.app.service.AuthService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,7 +19,8 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-public class AuthController implements AuthBoundaryMetadata {
+@Tag(name = "Authentication", description = "Contains all endpoints related to the authentication/authorization flow")
+public class AuthController {
 
     private final AuthService service;
 

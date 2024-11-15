@@ -23,6 +23,7 @@ public class AuthService {
     public String loginUser(final LoginRequest request) {
         final var account = accountProcess.getByEmailAndPassword(request.email(), request.password());
         return Optional.ofNullable(account)
+                // change to nickname or something like that
                 .map(value -> jwtService.generateToken(value.getEmail()))
                 .orElseThrow(() -> new AuthException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE.formatted("JWT generation")));
     }

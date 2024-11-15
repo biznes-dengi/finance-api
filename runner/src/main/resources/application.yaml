@@ -5,6 +5,10 @@ server:
     include-message: always
 
 spring:
+  task:
+    scheduling:
+      pool:
+        size: 5
   datasource:
     url: "jdbc:postgresql://localhost:5432/finance"
     username: dev
@@ -18,10 +22,6 @@ spring:
         #generate_statistics: true // enable if you try to optimize query to db (customize hibernate)
         dialect: "org.hibernate.dialect.PostgreSQLDialect"
     database-platform: "org.hibernate.dialect.PostgreSQLDialect"
-  task:
-    scheduling:
-      pool:
-        size: 5
 
 springdoc:
   title: Finance Api
@@ -38,3 +38,10 @@ goal:
   batch-size: 50
 transaction:
   batch-size: 50
+
+#context-path:
+#    marshaller: generated
+
+api-provider:
+  common: https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@
+  national-bank-russia: http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx
