@@ -16,6 +16,7 @@
         <module>runner</module>
         <module>auth</module>
         <module>exchange-rate</module>
+        <module>account</module>
     </modules>
 
     <parent>

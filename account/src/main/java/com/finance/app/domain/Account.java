@@ -35,8 +35,8 @@ public class Account extends BaseUser {
     @Column(name = "pass")
     private String password;
 
-    @Column(name = "nickname")
-    private String nickname;
+    @Column(name = "username")
+    private String username;
 
     @Column(name = "gender")
     @Enumerated(EnumType.STRING)
