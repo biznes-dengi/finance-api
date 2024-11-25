@@ -72,7 +72,7 @@ public class AuthConfig {
             Optional.ofNullable(getTokenFromRequest(request))
                     .map(token -> service.validateToken(new ValidationRequest(token)))
                     .ifPresentOrElse(validationResponse -> {
-                        final var auth = new UsernamePasswordAuthenticationToken(validationResponse.email(), null, List.of());
+                        final var auth = new UsernamePasswordAuthenticationToken(validationResponse.username(), null, List.of());
                         strategy.getContext().setAuthentication(auth);
                         doFilter(request, response, filterChain);
                     }, () -> response.setStatus(HttpServletResponse.SC_UNAUTHORIZED));

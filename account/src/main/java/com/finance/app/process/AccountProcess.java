@@ -1,13 +1,12 @@
 package com.finance.app.process;
 
-import com.finance.app.boundary.request.RegisterRequest;
 import com.finance.app.domain.Account;
-import com.finance.app.mapper.AccountMapper;
+import com.finance.app.exception.NotFoundException;
+import com.finance.app.exception.ParentException;
 import com.finance.app.repository.AccountRepository;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.crossstore.ChangeSetPersister;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,27 +14,30 @@ import java.util.List;
 @RequiredArgsConstructor
 public class AccountProcess {
     private final AccountRepository accountRepository;
-    private final AccountMapper accountMapper;
 
-    public Account processGetByUsernameAndPassword(final String username, final String password) {
+    public Account processGetByUsername(final String username) throws ParentException {
         return accountRepository
                 .findByUsername(username)
-                .orElseThrow(new ChangeSetPersister.NotFoundException());
-                //.filter(account -> encoder.matches(password, account.getPassword()))
-                // .orElse(null); /
-        // should return exception not found
+                .orElseThrow(() -> new NotFoundException("Account by username [" + username + "], was not found"));
     }
 
-    public Account getById(final int id) {
-        return accountRepository.findById(id)
-                .orElse(null); // should return exception not found
+    public Account processGetByEmail(final String email) throws ParentException {
+        return accountRepository
+                .findByEmail(email)
+                .orElseThrow(() -> new NotFoundException("Account by email [" + email + "], was not found"));
     }
 
-//    @Transactional
-//    public Account createNewAccount(final RegisterRequest request) {
-//        final var accountToSave = accountMapper.accountRequestToAccount(request, encoder);
-//        return accountRepository.save(accountToSave);
-//    }
+    public Account processGetById(final int id) throws NotFoundException {
+        return accountRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Account by id [" + id + "], was not found"));
+    }
+
+    @Transactional
+    public Account createNewAccount(final String email, final String pass) throws ParentException {
+        final var accountToSave = new Account(email, pass);
+        return accountRepository.save(accountToSave);
+    }
 
     public boolean checkIfNotExists(final int id) {
         return Boolean.FALSE.equals(accountRepository.existsById(id));

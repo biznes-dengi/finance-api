@@ -45,7 +45,7 @@ public class JwtProcess {
         return extractExpiration(token).before(new Date());
     }
 
-    public String extractEmail(final String token) {
+    public String extractUsername(final String token) {
         return extractClaim(token, Claims::getSubject);
     }
 

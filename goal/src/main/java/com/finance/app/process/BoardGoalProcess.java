@@ -34,8 +34,8 @@ public class BoardGoalProcess {
         return balanceMapper.boardGoalToBalanceResponse(response);
     }
 
-    public BoardGoalResponse processCreate(final BoardGoalRequest boardGoalRequest) {
-        final var currentUser = accountProcess.getById(boardGoalRequest.accountId());
+    public BoardGoalResponse processCreate(final BoardGoalRequest boardGoalRequest) throws ParentException {
+        final var currentUser = accountProcess.processGetById(boardGoalRequest.accountId());
         final var response = boardGoalDao.createBoardGoal(initNewBoardGoalToSave(currentUser));
         return boardGoalMapper.boardGoalToBoardGoalResponse(response);
     }

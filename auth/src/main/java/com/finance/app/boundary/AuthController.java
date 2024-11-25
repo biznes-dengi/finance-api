@@ -4,6 +4,7 @@ import com.finance.app.boundary.request.LoginRequest;
 import com.finance.app.boundary.request.RegisterRequest;
 import com.finance.app.boundary.request.ValidationRequest;
 import com.finance.app.boundary.response.ValidationResponse;
+import com.finance.app.exception.ParentException;
 import com.finance.app.process.AuthProcess;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +20,12 @@ import static org.springframework.http.HttpStatus.CREATED;
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
-@Tag(name = "Authentication", description = "Contains all endpoints related to the authentication/authorization flow")
-public class AuthController {
+public class AuthController implements AuthBoundaryMetadata {
 
     private final AuthProcess service;
 
     @PostMapping("/login")
-    public String generate(@RequestBody @Validated final LoginRequest request) {
+    public String generate(@RequestBody @Validated final LoginRequest request) throws ParentException {
         return service.loginUser(request);
     }
 
@@ -36,7 +36,7 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(CREATED)
-    public String save(@RequestBody @Validated final RegisterRequest request) {
+    public String save(@RequestBody @Validated final RegisterRequest request) throws ParentException {
         return service.register(request);
     }
 }

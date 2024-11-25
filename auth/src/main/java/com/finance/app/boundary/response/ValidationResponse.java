@@ -1,4 +1,4 @@
 package com.finance.app.boundary.response;
 
-public record ValidationResponse(String email, boolean isValid) {
+public record ValidationResponse(String username, boolean isValid) {
 }

@@ -13,7 +13,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.Data;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Data
@@ -38,19 +37,16 @@ public class Account extends BaseUser {
     @Column(name = "username")
     private String username;
 
-    @Column(name = "gender")
-    @Enumerated(EnumType.STRING)
-    private AccountGender gender;
-
-    @Column(name = "date_of_birth")
-    private LocalDate dateOfBirth;
-
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
     @Column(name = "created_on")
     private LocalDateTime createdOn;
 
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
+
+    public Account() {}
+
+    public Account(String email, String password) {
+        this.email = email;
+        this.password = password;
+    }
 }

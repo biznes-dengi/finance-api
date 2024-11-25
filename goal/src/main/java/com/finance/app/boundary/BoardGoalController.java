@@ -4,6 +4,7 @@ import com.finance.app.boundary.request.BoardGoalRequest;
 import com.finance.app.boundary.response.BalanceResponse;
 import com.finance.app.boundary.response.BoardGoalResponse;
 import com.finance.app.exception.NotFoundException;
+import com.finance.app.exception.ParentException;
 import com.finance.app.process.BoardGoalProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -34,7 +35,7 @@ public class BoardGoalController implements GoalBoundaryMetadata {
 
     @PostMapping
     @ResponseStatus(CREATED)
-    public BoardGoalResponse create(@RequestBody BoardGoalRequest boardGoalToSave) {
+    public BoardGoalResponse create(@RequestBody BoardGoalRequest boardGoalToSave) throws ParentException {
         return boardGoalProcess.processCreate(boardGoalToSave);
     }
 }
