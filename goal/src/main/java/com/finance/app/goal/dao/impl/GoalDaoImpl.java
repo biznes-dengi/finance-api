@@ -1,11 +1,9 @@
 package com.finance.app.goal.dao.impl;
 
-import com.finance.app.dao.GoalDao;
-import com.finance.app.domain.Goal;
-import com.finance.app.domain.enums.GoalState;
-import com.finance.app.exception.InternalError;
-import com.finance.app.exception.NotFoundException;
-import com.finance.app.repository.GoalRepository;
+import com.finance.app.goal.dao.GoalDao;
+import com.finance.app.goal.domain.Goal;
+import com.finance.app.goal.domain.enums.GoalState;
+import com.finance.app.goal.repository.GoalRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;

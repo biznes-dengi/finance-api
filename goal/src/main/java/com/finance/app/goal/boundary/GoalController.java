@@ -1,9 +1,10 @@
 package com.finance.app.goal.boundary;
 
-import com.finance.app.domain.enums.GoalState;
+import com.finance.app.goal.boundary.request.GoalRequest;
 import com.finance.app.goal.boundary.response.GoalAllResponse;
 import com.finance.app.goal.boundary.response.GoalResponse;
-import com.finance.app.process.GoalProcess;
+import com.finance.app.goal.domain.enums.GoalState;
+import com.finance.app.goal.process.GoalProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;

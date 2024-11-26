@@ -1,12 +1,12 @@
-package com.finance.app.mapper;
+package com.finance.app.goal.mapper;
 
-import com.finance.app.boundary.request.GoalRequest;
-import com.finance.app.boundary.response.GoalResponse;
-import com.finance.app.boundary.response.GoalViewResponse;
-import com.finance.app.domain.ImageGoal;
-import com.finance.app.domain.Goal;
-import com.finance.app.domain.dto.ImageGoalDto;
-import com.finance.app.domain.dto.GoalDto;
+import com.finance.app.goal.boundary.request.GoalRequest;
+import com.finance.app.goal.boundary.response.GoalResponse;
+import com.finance.app.goal.boundary.response.GoalViewResponse;
+import com.finance.app.goal.domain.Goal;
+import com.finance.app.goal.domain.ImageGoal;
+import com.finance.app.goal.domain.dto.GoalDto;
+import com.finance.app.goal.domain.dto.ImageGoalDto;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

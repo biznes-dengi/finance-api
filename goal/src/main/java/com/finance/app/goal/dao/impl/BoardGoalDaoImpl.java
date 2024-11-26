@@ -1,9 +1,8 @@
 package com.finance.app.goal.dao.impl;
 
-import com.finance.app.dao.BoardGoalDao;
-import com.finance.app.domain.BoardGoal;
-import com.finance.app.exception.NotFoundException;
-import com.finance.app.repository.GoalBoardRepository;
+import com.finance.app.goal.dao.BoardGoalDao;
+import com.finance.app.goal.domain.BoardGoal;
+import com.finance.app.goal.repository.GoalBoardRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

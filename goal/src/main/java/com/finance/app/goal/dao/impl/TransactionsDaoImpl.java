@@ -2,7 +2,7 @@ package com.finance.app.goal.dao.impl;
 
 import com.finance.app.goal.dao.TransactionDao;
 import com.finance.app.goal.domain.Transaction;
-import com.finance.app.repository.TransactionRepository;
+import com.finance.app.goal.repository.TransactionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;

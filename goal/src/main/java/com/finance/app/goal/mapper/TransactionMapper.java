@@ -1,19 +1,17 @@
-package com.finance.app.mapper;
+package com.finance.app.goal.mapper;
 
-import com.finance.app.boundary.request.TransactionRequest;
-import com.finance.app.boundary.request.TransactionTransferRequest;
-import com.finance.app.boundary.request.TransactionUpdateRequest;
-import com.finance.app.boundary.response.transaction.TransactionNormalResponse;
-import com.finance.app.boundary.response.transaction.TransactionTransferResponse;
-import com.finance.app.domain.Transaction;
-import com.finance.app.domain.dto.TransactionDto;
-import com.finance.app.domain.dto.TransactionTransferDto;
-import com.finance.app.domain.dto.TransactionUpdateDto;
-import com.finance.app.mapper.context.GoalContext;
-import com.finance.app.mapper.context.GoalsNameTransferContext;
+import com.finance.app.goal.boundary.request.TransactionRequest;
+import com.finance.app.goal.boundary.request.TransactionTransferRequest;
+import com.finance.app.goal.boundary.request.TransactionUpdateRequest;
+import com.finance.app.goal.boundary.response.transaction.TransactionNormalResponse;
+import com.finance.app.goal.boundary.response.transaction.TransactionTransferResponse;
+import com.finance.app.goal.domain.Transaction;
+import com.finance.app.goal.domain.dto.TransactionDto;
+import com.finance.app.goal.domain.dto.TransactionTransferDto;
+import com.finance.app.goal.domain.dto.TransactionUpdateDto;
+import com.finance.app.goal.mapper.context.GoalContext;
+import com.finance.app.goal.mapper.context.GoalsNameTransferContext;
 import org.mapstruct.*;
-
-import java.util.List;
 
 @Mapper(
         componentModel = MappingConstants.ComponentModel.SPRING,

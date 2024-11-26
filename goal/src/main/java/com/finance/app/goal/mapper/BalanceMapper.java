@@ -1,7 +1,7 @@
-package com.finance.app.mapper;
+package com.finance.app.goal.mapper;
 
-import com.finance.app.boundary.response.BalanceResponse;
-import com.finance.app.domain.BoardGoal;
+import com.finance.app.goal.boundary.response.BalanceResponse;
+import com.finance.app.goal.domain.BoardGoal;
 import org.mapstruct.*;
 
 @Mapper(
