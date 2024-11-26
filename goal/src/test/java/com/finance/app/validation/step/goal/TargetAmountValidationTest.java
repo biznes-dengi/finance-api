@@ -1,8 +1,8 @@
-package com.finance.app.validation.step.goal;
+package com.finance.app.goal.validation.step.goal;
 
-import com.finance.app.domain.dto.GoalDto;
-import com.finance.app.validation.step.ValidationStep;
-import com.finance.app.generator.GeneratorDataGoal;
+import com.finance.app.goal.domain.dto.GoalDto;
+import com.finance.app.goal.validation.step.ValidationStep;
+import com.finance.app.goal.generator.GeneratorDataGoal;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

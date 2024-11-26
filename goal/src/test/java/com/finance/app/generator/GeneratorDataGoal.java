@@ -1,13 +1,13 @@
-package com.finance.app.generator;
+package com.finance.app.goal.generator;
 
-import com.finance.app.domain.Goal;
-import com.finance.app.domain.Transaction;
-import com.finance.app.domain.dto.ImageGoalDto;
-import com.finance.app.domain.dto.GoalDto;
-import com.finance.app.domain.enums.CurrencyCode;
-import com.finance.app.domain.enums.ImageType;
-import com.finance.app.domain.enums.RiskProfileType;
-import com.finance.app.domain.enums.GoalState;
+import com.finance.app.goal.domain.Goal;
+import com.finance.app.goal.domain.Transaction;
+import com.finance.app.goal.domain.dto.ImageGoalDto;
+import com.finance.app.goal.domain.dto.GoalDto;
+import com.finance.app.goal.domain.enums.CurrencyCode;
+import com.finance.app.goal.domain.enums.ImageType;
+import com.finance.app.goal.domain.enums.RiskProfileType;
+import com.finance.app.goal.domain.enums.GoalState;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

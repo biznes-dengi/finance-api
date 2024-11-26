@@ -1,12 +1,12 @@
-package com.finance.app.process;
+package com.finance.app.goal.process;
 
-import com.finance.app.boundary.request.DepositAmountRequest;
-import com.finance.app.dao.GoalDao;
-import com.finance.app.exception.NotFoundException;
-import com.finance.app.exception.ParentException;
-import com.finance.app.generator.GeneratorDataTransaction;
-import com.finance.app.validation.ValidationResult;
-import com.finance.app.validation.service.TransactionDepositValidationService;
+import com.finance.app.goal.boundary.request.DepositAmountRequest;
+import com.finance.app.goal.dao.GoalDao;
+import com.finance.app.goal.exception.NotFoundException;
+import com.finance.app.goal.exception.ParentException;
+import com.finance.app.goal.generator.GeneratorDataTransaction;
+import com.finance.app.goal.validation.ValidationResult;
+import com.finance.app.goal.validation.service.TransactionDepositValidationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

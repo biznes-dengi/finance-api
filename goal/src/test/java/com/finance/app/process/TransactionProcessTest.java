@@ -1,15 +1,15 @@
-package com.finance.app.process;
+package com.finance.app.goal.process;
 
-import com.finance.app.boundary.response.transaction.TransactionNormalResponse;
-import com.finance.app.dao.GoalDao;
-import com.finance.app.dao.TransactionDao;
-import com.finance.app.domain.Transaction;
-import com.finance.app.domain.dto.base.BaseTransactionDto;
-import com.finance.app.exception.InternalError;
-import com.finance.app.exception.NotFoundException;
-import com.finance.app.exception.ParentException;
-import com.finance.app.mapper.TransactionMapper;
-import com.finance.app.generator.GeneratorDataTransaction;
+import com.finance.app.goal.boundary.response.transaction.TransactionNormalResponse;
+import com.finance.app.goal.dao.GoalDao;
+import com.finance.app.goal.dao.TransactionDao;
+import com.finance.app.goal.domain.Transaction;
+import com.finance.app.goal.domain.dto.base.BaseTransactionDto;
+import com.finance.app.goal.exception.InternalError;
+import com.finance.app.goal.exception.NotFoundException;
+import com.finance.app.goal.exception.ParentException;
+import com.finance.app.goal.mapper.TransactionMapper;
+import com.finance.app.goal.generator.GeneratorDataTransaction;
 import com.finance.app.mapper.TransactionMapperImpl;
 import com.finance.app.mapper.context.GoalContext;
 import com.finance.app.mapper.context.GoalsNameTransferContext;

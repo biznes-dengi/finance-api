@@ -1,8 +1,8 @@
-package com.finance.app.generator;
+package com.finance.app.goal.goal.generator;
 
-import com.finance.app.domain.Account;
-import com.finance.app.domain.BoardGoal;
-import com.finance.app.domain.enums.CurrencyCode;
+import com.finance.app.goal.domain.Account;
+import com.finance.app.goal.domain.BoardGoal;
+import com.finance.app.goal.domain.enums.CurrencyCode;
 
 import java.math.BigDecimal;
 

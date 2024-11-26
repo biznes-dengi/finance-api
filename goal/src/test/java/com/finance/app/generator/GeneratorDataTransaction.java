@@ -1,10 +1,10 @@
-package com.finance.app.generator;
+package com.finance.app.goal.generator;
 
-import com.finance.app.boundary.request.TransactionRequest;
-import com.finance.app.boundary.request.TransactionTransferRequest;
-import com.finance.app.domain.Goal;
-import com.finance.app.domain.Transaction;
-import com.finance.app.domain.enums.TransactionType;
+import com.finance.app.goal.boundary.request.TransactionRequest;
+import com.finance.app.goal.boundary.request.TransactionTransferRequest;
+import com.finance.app.goal.domain.Goal;
+import com.finance.app.goal.domain.Transaction;
+import com.finance.app.goal.domain.enums.TransactionType;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

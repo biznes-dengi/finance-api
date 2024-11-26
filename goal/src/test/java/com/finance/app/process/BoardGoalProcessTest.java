@@ -1,9 +1,9 @@
-package com.finance.app.process;
+package com.finance.app.goal.process;
 
-import com.finance.app.domain.enums.TransactionType;
-import com.finance.app.exception.ParentException;
-import com.finance.app.generator.GeneratorDataBoardGoal;
-import com.finance.app.dao.BoardGoalDao;
+import com.finance.app.goal.domain.enums.TransactionType;
+import com.finance.app.goal.exception.ParentException;
+import com.finance.app.goal.generator.GeneratorDataBoardGoal;
+import com.finance.app.goal.dao.BoardGoalDao;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
