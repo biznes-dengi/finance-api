@@ -8,8 +8,8 @@ import com.finance.app.goal.dao.BoardGoalDao;
 import com.finance.app.goal.domain.BoardGoal;
 import com.finance.app.goal.domain.enums.CurrencyCode;
 import com.finance.app.goal.domain.enums.TransactionType;
-import com.finance.app.mapper.BalanceMapper;
-import com.finance.app.mapper.BoardGoalMapper;
+import com.finance.app.goal.mapper.BalanceMapper;
+import com.finance.app.goal.mapper.BoardGoalMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

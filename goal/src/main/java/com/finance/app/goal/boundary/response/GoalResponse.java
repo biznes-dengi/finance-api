@@ -1,8 +1,8 @@
 package com.finance.app.goal.boundary.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.finance.app.domain.enums.RiskProfileType;
-import com.finance.app.domain.enums.GoalState;
+import com.finance.app.goal.domain.enums.GoalState;
+import com.finance.app.goal.domain.enums.RiskProfileType;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

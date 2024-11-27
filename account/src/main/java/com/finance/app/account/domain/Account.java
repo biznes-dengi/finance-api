@@ -1,6 +1,7 @@
 package com.finance.app.account.domain;
 
 import com.finance.app.account.domain.base.BaseUser;
+import com.finance.app.account.domain.enums.AppRole;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

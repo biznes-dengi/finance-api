@@ -1,9 +1,9 @@
 package com.finance.app.goal.domain;
 
 import com.finance.app.domain.businessrules.InitRulesGoal;
-import com.finance.app.domain.enums.CurrencyCode;
-import com.finance.app.domain.enums.RiskProfileType;
-import com.finance.app.domain.enums.GoalState;
+import com.finance.app.goal.domain.enums.CurrencyCode;
+import com.finance.app.goal.domain.enums.GoalState;
+import com.finance.app.goal.domain.enums.RiskProfileType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Embedded;
 import jakarta.persistence.Entity;

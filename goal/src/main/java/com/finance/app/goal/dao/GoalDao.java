@@ -24,7 +24,7 @@ public interface GoalDao {
      * @param boardGoalId unique identifier of BoardGoal which Goal belongs
      * @return list of found Goal records
      */
-    Slice<Goal>  fetchGoalsByState(GoalState state, int boardGoalId, int pageNumber) throws NotFoundException;
+    Slice<Goal> fetchGoalsByState(GoalState state, int boardGoalId, int pageNumber) throws NotFoundException;
 
     /**
      * Fetch list of Goal by state which has deadline is not NULL

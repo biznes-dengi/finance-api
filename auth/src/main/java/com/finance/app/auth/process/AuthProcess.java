@@ -50,7 +50,7 @@ public class AuthProcess {
     }
 
     public String register(final RegisterRequest request) throws ParentException {
-        final var account = accountProcess.createNewAccount(request.email(), encoder.encode(request.pass()));
+        final var account = accountProcess.processCreateNewAccount(request.email(), encoder.encode(request.pass()));
         return Optional.ofNullable(account)
                 .map(value -> jwtProcess.generateToken(value.getEmail()))
                 .orElseThrow(() -> new AuthException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE.formatted("account registration")));
