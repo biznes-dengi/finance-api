@@ -32,7 +32,7 @@ import java.util.Optional;
 public class AuthConfig {
 
     private static final String[] AUTH_WHITELIST = {
-            "/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html", "/users"
+            "/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html"
     };
 
     @Autowired
