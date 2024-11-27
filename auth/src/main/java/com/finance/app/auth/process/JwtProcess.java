@@ -22,9 +22,9 @@ public class JwtProcess {
     @Value("${spring.security.jwt.expiration-time:24}")
     private Long expirationTime;
 
-    public String generateToken(final String username) {
+    public String generateToken(final String email) {
         final var claims = new HashMap<String, Object>();
-        return createToken(claims, username);
+        return createToken(claims, email);
     }
 
     private String createToken(final Map<String, Object> claims, final String subject) {
@@ -45,7 +45,7 @@ public class JwtProcess {
         return extractExpiration(token).before(new Date());
     }
 
-    public String extractUsername(final String token) {
+    public String extractEmail(final String token) {
         return extractClaim(token, Claims::getSubject);
     }
 

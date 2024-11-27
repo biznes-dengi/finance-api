@@ -4,7 +4,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 /**
  *
- * @param login Can be an username or a username
+ * @param login Can be an email or a email
  * @param password Password of user
  */
 public record LoginRequest(

@@ -38,21 +38,21 @@ public class AuthProcess {
             currentAccount = accountProcess.processGetByUsername(request.login());
 
         if (encoder.matches(request.password(), currentAccount.getPassword()))
-            return jwtProcess.generateToken(currentAccount.getUsername());
+            return jwtProcess.generateToken(currentAccount.getEmail());
         else
             throw new AuthException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE.formatted("JWT generation"));
     }
 
     public ValidationResponse validateToken(final ValidationRequest request) {
-        final var username = jwtProcess.extractUsername(request.token());
+        final var email = jwtProcess.extractEmail(request.token());
         final var isValid = jwtProcess.validateToken(request.token());
-        return new ValidationResponse(username, isValid);
+        return new ValidationResponse(email, isValid);
     }
 
     public String register(final RegisterRequest request) throws ParentException {
         final var account = accountProcess.processCreateNewAccount(request.email(), encoder.encode(request.pass()));
         return Optional.ofNullable(account)
-                .map(value -> jwtProcess.generateToken(value.getEmail()))
+                .map(value -> jwtProcess.generateToken(value.email()))
                 .orElseThrow(() -> new AuthException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE.formatted("account registration")));
     }
 }
