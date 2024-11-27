@@ -1,7 +1,7 @@
 package com.finance.app.config;
 
-import com.finance.app.boundary.request.ValidationRequest;
-import com.finance.app.service.AuthService;
+import com.finance.app.auth.boundary.request.ValidationRequest;
+import com.finance.app.auth.service.AuthService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;

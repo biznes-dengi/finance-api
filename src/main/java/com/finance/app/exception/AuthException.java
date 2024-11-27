@@ -1,4 +1,4 @@
-package com.finance.app.auth.exception;
+package com.finance.app.exception;
 
 import lombok.Getter;
 import org.springframework.http.HttpStatus;

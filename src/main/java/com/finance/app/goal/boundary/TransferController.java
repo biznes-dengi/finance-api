@@ -2,7 +2,7 @@ package com.finance.app.goal.boundary;
 
 import com.finance.app.goal.boundary.request.TransactionTransferRequest;
 import com.finance.app.goal.boundary.response.transaction.TransactionTransferResponse;
-import com.finance.app.goal.exception.ParentException;
+import com.finance.app.exception.ParentException;
 import com.finance.app.goal.process.TransactionProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PathVariable;

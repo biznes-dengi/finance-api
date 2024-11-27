@@ -3,7 +3,7 @@ package com.finance.app.goal.process;
 import com.finance.app.goal.domain.Goal;
 import com.finance.app.goal.domain.dto.TransactionTransferDto;
 import com.finance.app.goal.domain.enums.TransactionType;
-import com.finance.app.goal.exception.ParentException;
+import com.finance.app.exception.ParentException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,7 @@
 package com.finance.app.goal.dao;
 
 import com.finance.app.goal.domain.Transaction;
-import com.finance.app.goal.exception.NotFoundException;
+import com.finance.app.exception.NotFoundException;
 import org.springframework.data.domain.Slice;
 
 public interface TransactionDao {

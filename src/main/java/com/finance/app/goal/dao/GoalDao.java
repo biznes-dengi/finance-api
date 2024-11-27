@@ -2,8 +2,8 @@ package com.finance.app.goal.dao;
 
 import com.finance.app.goal.domain.Goal;
 import com.finance.app.goal.domain.enums.GoalState;
-import com.finance.app.goal.exception.InternalError;
-import com.finance.app.goal.exception.NotFoundException;
+import com.finance.app.exception.InternalError;
+import com.finance.app.exception.NotFoundException;
 import org.springframework.data.domain.Slice;
 
 import java.util.List;

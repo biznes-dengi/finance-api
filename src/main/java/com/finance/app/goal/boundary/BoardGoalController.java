@@ -3,7 +3,7 @@ package com.finance.app.goal.boundary;
 import com.finance.app.goal.boundary.request.BoardGoalRequest;
 import com.finance.app.goal.boundary.response.BalanceResponse;
 import com.finance.app.goal.boundary.response.BoardGoalResponse;
-import com.finance.app.goal.exception.NotFoundException;
+import com.finance.app.exception.NotFoundException;
 import com.finance.app.goal.process.BoardGoalProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

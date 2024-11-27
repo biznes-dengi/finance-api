@@ -1,7 +1,7 @@
 package com.finance.app.goal.dao;
 
 import com.finance.app.goal.domain.BoardGoal;
-import com.finance.app.goal.exception.NotFoundException;
+import com.finance.app.exception.NotFoundException;
 
 public interface BoardGoalDao {
 

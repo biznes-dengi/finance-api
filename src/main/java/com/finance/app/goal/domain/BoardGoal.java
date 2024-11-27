@@ -1,5 +1,6 @@
 package com.finance.app.goal.domain;
 
+import com.finance.app.auth.domain.Account;
 import com.finance.app.goal.domain.enums.CurrencyCode;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;

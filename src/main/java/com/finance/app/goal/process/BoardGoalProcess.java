@@ -1,16 +1,16 @@
 package com.finance.app.goal.process;
 
-import com.finance.app.domain.Account;
+import com.finance.app.auth.domain.Account;
+import com.finance.app.auth.service.AccountProcess;
 import com.finance.app.goal.domain.enums.TransactionType;
-import com.finance.app.goal.exception.ParentException;
-import com.finance.app.service.AccountProcess;
+import com.finance.app.exception.ParentException;
 import com.finance.app.goal.boundary.request.BoardGoalRequest;
 import com.finance.app.goal.boundary.response.BalanceResponse;
 import com.finance.app.goal.boundary.response.BoardGoalResponse;
 import com.finance.app.goal.dao.BoardGoalDao;
 import com.finance.app.goal.domain.BoardGoal;
 import com.finance.app.goal.domain.enums.CurrencyCode;
-import com.finance.app.goal.exception.NotFoundException;
+import com.finance.app.exception.NotFoundException;
 import com.finance.app.goal.mapper.BalanceMapper;
 import com.finance.app.goal.mapper.BoardGoalMapper;
 import lombok.RequiredArgsConstructor;

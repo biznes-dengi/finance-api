@@ -1,7 +1,7 @@
 package com.finance.app.goal.boundary;
 
 import com.finance.app.goal.boundary.request.DepositAmountRequest;
-import com.finance.app.goal.exception.ParentException;
+import com.finance.app.exception.ParentException;
 import com.finance.app.goal.process.TransactionDepositProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

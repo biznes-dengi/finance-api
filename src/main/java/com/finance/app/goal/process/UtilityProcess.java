@@ -1,6 +1,6 @@
 package com.finance.app.goal.process;
 
-import com.finance.app.service.AccountProcess;
+import com.finance.app.auth.service.AccountProcess;
 import com.finance.app.goal.dao.GoalDao;
 import com.finance.app.goal.domain.enums.GoalState;
 import lombok.RequiredArgsConstructor;

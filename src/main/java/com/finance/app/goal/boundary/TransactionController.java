@@ -4,7 +4,7 @@ import com.finance.app.goal.boundary.request.TransactionRequest;
 import com.finance.app.goal.boundary.request.TransactionUpdateRequest;
 import com.finance.app.goal.boundary.response.transaction.TransactionAllResponse;
 import com.finance.app.goal.boundary.response.transaction.TransactionResponse;
-import com.finance.app.goal.exception.ParentException;
+import com.finance.app.exception.ParentException;
 import com.finance.app.goal.process.TransactionProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;

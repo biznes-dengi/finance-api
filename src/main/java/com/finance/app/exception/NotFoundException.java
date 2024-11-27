@@ -1,4 +1,4 @@
-package com.finance.app.goal.exception;
+package com.finance.app.exception;
 
 import static org.springframework.http.HttpStatus.NOT_FOUND;
 

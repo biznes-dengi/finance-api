@@ -4,7 +4,7 @@ import com.finance.app.auth.boundary.request.LoginRequest;
 import com.finance.app.auth.boundary.request.RegisterRequest;
 import com.finance.app.auth.boundary.request.ValidationRequest;
 import com.finance.app.auth.boundary.response.ValidationResponse;
-import com.finance.app.auth.exception.AuthException;
+import com.finance.app.exception.AuthException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
