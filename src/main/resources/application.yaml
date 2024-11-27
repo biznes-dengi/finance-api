@@ -1,0 +1,47 @@
+server:
+  servlet:
+    context-path: "/api"
+  error:
+    include-message: always
+
+spring:
+  task:
+    scheduling:
+      pool:
+        size: 5
+  datasource:
+    url: "jdbc:postgresql://localhost:5432/finance"
+    username: dev
+    password: dev129
+  jpa:
+    hibernate:
+      ddl-auto: none
+    #show-sql: true // enable if you try to optimize query to db (customize hibernate)
+    properties:
+      hibernate:
+        #generate_statistics: true // enable if you try to optimize query to db (customize hibernate)
+        dialect: "org.hibernate.dialect.PostgreSQLDialect"
+    database-platform: "org.hibernate.dialect.PostgreSQLDialect"
+
+springdoc:
+  title: Finance Api
+  version: ^project.parent.version^
+  api-docs:
+    enabled: true
+  swagger-ui:
+    tags-sorter: alpha
+    operations-sorter: alpha
+    display-request-duration: true
+    doc-expansion: none
+
+goal:
+  batch-size: 50
+transaction:
+  batch-size: 50
+
+#context-path:
+#    marshaller: generated
+
+api-provider:
+  common: https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@
+  national-bank-russia: http://www.cbr.ru/DailyInfoWebServ/DailyInfo.asmx
