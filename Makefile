@@ -4,9 +4,9 @@ CYAN = \033[36m
 GREEN = \033[32m
 RESET = \033[0m
 ## CONFIGURATION PROPERTIES
-PACKAGE_FLAG = runner/target/package.done
-JAR_LOCATION = runner/target/runner-*.jar
-CONFIG = runner/src/main/resources/application.yaml
+PACKAGE_FLAG = target/package.done
+JAR_LOCATION = target/runner-*.jar
+CONFIG = src/main/resources/application.yaml
 ## CLEAN STEP
 clean:
 	@echo "[$(BLUE)MAKEFILE$(RESET)] $(CYAN)CLEANING TARGET...$(RESET)"
