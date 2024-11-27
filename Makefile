@@ -5,7 +5,7 @@ GREEN = \033[32m
 RESET = \033[0m
 ## CONFIGURATION PROPERTIES
 PACKAGE_FLAG = target/package.done
-JAR_LOCATION = target/runner-*.jar
+JAR_LOCATION = target/api-*.jar
 CONFIG = src/main/resources/application.yaml
 ## CLEAN STEP
 clean:
