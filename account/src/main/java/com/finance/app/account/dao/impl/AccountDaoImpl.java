@@ -24,7 +24,7 @@ public class AccountDaoImpl implements AccountDao {
     public Account fetchAccountById(int id) throws ParentException {
         return repository
                 .findById(id)
-                .orElseThrow(() -> new NotFoundException("Account by id [" + id + "], was not found"));;
+                .orElseThrow(() -> new NotFoundException("Account by id [" + id + "], was not found"));
     }
 
     @Override

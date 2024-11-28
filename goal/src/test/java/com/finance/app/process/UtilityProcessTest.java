@@ -1,5 +1,6 @@
 package com.finance.app.goal.process;
 
+import com.finance.app.account.process.AccountProcess;
 import com.finance.app.goal.dao.GoalDao;
 import com.finance.app.goal.domain.enums.GoalState;
 import com.finance.app.goal.generator.GeneratorDataGoal;

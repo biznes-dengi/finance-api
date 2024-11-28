@@ -6,6 +6,7 @@ import com.finance.app.account.dao.AccountDao;
 import com.finance.app.account.domain.Account;
 import com.finance.app.account.exception.ParentException;
 import com.finance.app.account.mapper.AccountMapper;
+import com.finance.app.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +16,10 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AccountProcess {
+
     private final AccountMapper mapper;
     private final AccountDao dao;
+    private final AccountRepository accountRepository;
 
     @Transactional(readOnly = true)
     public AccountResponse processGetByUsername(final String username) throws ParentException {
@@ -52,5 +55,11 @@ public class AccountProcess {
     @Transactional(readOnly = true)
     public List<Integer> getListIdsOfUsers() {
         return accountRepository.findAll().stream().map(Account::getId).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public AccountResponse getByTelegramId(final Long id) {
+        // TODO: To think what to do in this case
+        return new AccountResponse(1, null, null, null, null);
     }
 }

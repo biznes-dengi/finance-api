@@ -14,5 +14,6 @@ public record RegisterRequest(
         AccountGender gender,
         LocalDate dateOfBirth,
         String phoneNumber,
-        LocalDateTime createdOn
+        LocalDateTime createdOn,
+        Long telegramId
 ) { }

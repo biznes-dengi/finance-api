@@ -5,6 +5,9 @@ server:
     include-message: always
 
 spring:
+  security:
+    telegram:
+      token: 7284959458:AAF0TYdB9H7GgzqQlWPZah-lC65hIlK2-9Q
   task:
     scheduling:
       pool:

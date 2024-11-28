@@ -3,6 +3,7 @@ package com.finance.app.auth.boundary;
 import com.finance.app.account.exception.ParentException;
 import com.finance.app.auth.boundary.request.LoginRequest;
 import com.finance.app.auth.boundary.request.RegisterRequest;
+import com.finance.app.auth.boundary.request.TelegramRequest;
 import com.finance.app.auth.boundary.request.ValidationRequest;
 import com.finance.app.auth.boundary.response.ValidationResponse;
 import com.finance.app.auth.process.AuthProcess;
@@ -25,12 +26,17 @@ public class AuthController implements AuthBoundaryMetadata {
 
     @PostMapping("/login")
     public String generate(@RequestBody @Validated final LoginRequest request) throws ParentException {
-        return service.loginUser(request);
+        return service.login(request);
     }
 
     @PostMapping("/validate")
     public ValidationResponse validate(@RequestBody @Validated final ValidationRequest request) {
         return service.validateToken(request);
+    }
+
+    @PostMapping("/telegram")
+    public String loginViaTelegram(@RequestBody final TelegramRequest request) {
+        return service.loginViaTelegram(request);
     }
 
     @PostMapping("/register")

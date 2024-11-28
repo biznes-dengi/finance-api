@@ -42,6 +42,9 @@ public class Account extends BaseUser {
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
 
+    @Column(name = "telegram_id")
+    private Long telegramId;
+
     public Account() {}
 
     public Account(String email, String password) {
