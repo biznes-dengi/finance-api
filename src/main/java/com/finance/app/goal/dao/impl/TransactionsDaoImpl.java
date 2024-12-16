@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Slice;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,7 +28,10 @@ public class TransactionsDaoImpl implements TransactionDao {
     @Transactional(readOnly = true)
     public Slice<Transaction> fetchAllTransactions(int goalId, int pageNumber) throws NotFoundException {
         final var response =
-                this.transactionRepository.findAllByGoal_Id(goalId, PageRequest.of(pageNumber, transactionBatchSize));
+                this.transactionRepository.findAllByGoal_Id(
+                        goalId,
+                        PageRequest.of(pageNumber, transactionBatchSize, Sort.by("transactionTimestamp").descending())
+                );
 
         if (response.getNumberOfElements() == 0) {
             throw new NotFoundException("No 'Transaction' records were found relative to 'goalId' = " +
