@@ -1,7 +1,6 @@
 package com.finance.app.auth.boundary;
 
 import com.finance.app.auth.boundary.response.AccountResponse;
-import com.finance.app.auth.domain.Account;
 import com.finance.app.auth.service.AccountProcess;
 import com.finance.app.exception.NotFoundException;
 import lombok.RequiredArgsConstructor;

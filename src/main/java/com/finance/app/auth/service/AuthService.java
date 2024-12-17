@@ -40,4 +40,8 @@ public class AuthService {
                 .map(value -> jwtService.generateToken(value.getEmail()))
                 .orElseThrow(() -> new AuthException(HttpStatus.UNAUTHORIZED, ERROR_MESSAGE.formatted("account registration")));
     }
+
+    public boolean checkIfUserExist(String email) {
+        return accountProcess.checkIfExistsByEmail(email);
+    }
 }

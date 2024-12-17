@@ -6,17 +6,14 @@ import com.finance.app.auth.domain.Account;
 import com.finance.app.auth.mapper.AccountMapper;
 import com.finance.app.auth.repository.AccountRepository;
 import com.finance.app.exception.NotFoundException;
-import com.finance.app.goal.boundary.request.BoardGoalRequest;
 import com.finance.app.goal.dao.BoardGoalDao;
 import com.finance.app.goal.domain.BoardGoal;
 import com.finance.app.goal.domain.enums.CurrencyCode;
-import com.finance.app.goal.process.BoardGoalProcess;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.security.auth.login.AccountNotFoundException;
 import java.math.BigDecimal;
 import java.util.List;
 
@@ -67,6 +64,11 @@ public class AccountProcess {
 
     public boolean checkIfNotExists(final int id) {
         return Boolean.FALSE.equals(accountRepository.existsById(id));
+    }
+
+    @Transactional(readOnly = true)
+    public boolean checkIfExistsByEmail(final String email) {
+        return accountRepository.existsByEmail(email);
     }
 
     public List<Integer> getListIdsOfUsers() {

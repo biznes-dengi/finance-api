@@ -5,6 +5,7 @@ import com.finance.app.auth.boundary.request.RegisterRequest;
 import com.finance.app.auth.boundary.request.ValidationRequest;
 import com.finance.app.auth.boundary.response.ValidationResponse;
 import com.finance.app.auth.service.AuthService;
+import com.finance.app.exception.DuplicationException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -36,7 +37,10 @@ public class AuthController {
 
     @PostMapping("/register")
     @ResponseStatus(CREATED)
-    public String save(@RequestBody @Validated final RegisterRequest request) {
+    public String save(@RequestBody @Validated final RegisterRequest request) throws DuplicationException {
+        if (service.checkIfUserExist(request.email())) {
+            throw new DuplicationException("User with this email [" + request.email() + "], already exists.");
+        }
         return service.register(request);
     }
 }
