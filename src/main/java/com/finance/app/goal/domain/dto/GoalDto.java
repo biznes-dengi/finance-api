@@ -13,7 +13,7 @@ public record GoalDto(
         @Size(min = 3, max = 25)
         @NotBlank
         String title,
-        @NotNull
+        @NotNull(message = "Currency should not be null.")
         CurrencyCode currency,
         BigDecimal targetAmount,
         LocalDate deadline,

@@ -44,8 +44,7 @@ public class GoalController implements GoalBoundaryMetadata {
 
     @GetMapping("/{goalId}")
     public GoalResponse getById(@PathVariable("goalId") int goalId,
-                                @PathVariable("boardGoalId") int boardGoalId,
-                                Principal principal) throws ParentException {
+                                @PathVariable("boardGoalId") int boardGoalId) throws ParentException {
         return goalProcess.processGetById(goalId, boardGoalId);
     }
 
