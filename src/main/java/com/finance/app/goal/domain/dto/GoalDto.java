@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public record GoalDto(
-        @Size(min = 3, max = 25)
+        @Size(min = 1, max = 25)
         @NotBlank
         String title,
         @NotNull(message = "Currency should not be null.")
