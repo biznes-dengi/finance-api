@@ -39,12 +39,12 @@ public class TransactionProcess {
     private final ValidationOnlyConstraintService<BaseTransactionDto> validator;
     private final TransactionMapper transactionMapper;
 
-    public TransactionAllResponse processGetAll(final int goalId, final int pageNumber, final int boardGoalId)
+    public TransactionAllResponse processGetAll(final int goalId, final int pageNumber, final int boardGoalId, final Integer pageSize)
             throws ParentException {
         if (!goalDao.existsGoal(goalId, boardGoalId))
             throw new NotFoundException("Entity 'Goal' not found by attribute 'goalId' = " + goalId);
 
-        final var foundSliceTransaction = transactionDao.fetchAllTransactions(goalId, pageNumber);
+        final var foundSliceTransaction = transactionDao.fetchAllTransactions(goalId, pageNumber, pageSize);
         final var mappedTransactionViewResponse =
                 customMapperList(foundSliceTransaction.getContent(), boardGoalId);
         return new TransactionAllResponse(mappedTransactionViewResponse, foundSliceTransaction.hasNext());

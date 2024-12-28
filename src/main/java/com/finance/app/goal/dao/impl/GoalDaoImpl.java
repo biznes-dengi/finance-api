@@ -30,12 +30,13 @@ public class GoalDaoImpl implements GoalDao {
 
     @Override
     @Transactional(readOnly = true)
-    public Slice<Goal> fetchGoalsByState(GoalState state, int boardGoalId, int pageNumber) throws NotFoundException {
+    public Slice<Goal> fetchGoalsByState(GoalState state, int boardGoalId, int pageNumber, Integer pageSize) throws NotFoundException {
+        final var currentRequestBatchSize = pageSize == null ? goalBatchSize : pageSize;
         final var response =
                 goalRepository.findByStateAndBoardGoal_Id(
                         state,
                         boardGoalId,
-                        PageRequest.of(pageNumber, goalBatchSize)
+                        PageRequest.of(pageNumber, currentRequestBatchSize)
                 );
 
         if (response.getNumberOfElements() == 0) {
@@ -67,9 +68,10 @@ public class GoalDaoImpl implements GoalDao {
 
     @Override
     @Transactional(readOnly = true)
-    public Slice<Goal> fetchAllGoals(int boardGoalId, int pageNumber) throws NotFoundException {
+    public Slice<Goal> fetchAllGoals(int boardGoalId, int pageNumber, Integer pageSize) throws NotFoundException {
+        final var currentRequestBatchSize = pageSize == null ? goalBatchSize : pageSize;
         final var response =
-                goalRepository.findAllByBoardGoal_Id(boardGoalId, PageRequest.of(pageNumber, goalBatchSize));
+                goalRepository.findAllByBoardGoal_Id(boardGoalId, PageRequest.of(pageNumber, currentRequestBatchSize));
 
         if (response.getNumberOfElements() == 0) {
             throw new NotFoundException("No 'Goal' records were found relative to 'boardGoalId' = "

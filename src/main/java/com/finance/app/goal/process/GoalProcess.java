@@ -40,15 +40,15 @@ public class GoalProcess {
         return goalMapper.goalToGoalResponse(foundGoal);
     }
 
-    public GoalAllResponse processGetByState(GoalState state, int boardGoalId, int pageNumber) throws ParentException {
-        final var foundSliceListGoal = goalDao.fetchGoalsByState(state, boardGoalId, pageNumber);
+    public GoalAllResponse processGetByState(GoalState state, int boardGoalId, int pageNumber, Integer pageSize) throws ParentException {
+        final var foundSliceListGoal = goalDao.fetchGoalsByState(state, boardGoalId, pageNumber, pageSize);
         final var mappedGoalViewResponse =
                 goalMapper.goalListToGoalViewResponseList(foundSliceListGoal.getContent());
         return new GoalAllResponse(mappedGoalViewResponse, foundSliceListGoal.hasNext());
     }
 
-    public GoalAllResponse processGetAll(int boardGoalId, int pageNumber) throws ParentException {
-        final var foundSliceListGoal = goalDao.fetchAllGoals(boardGoalId, pageNumber);
+    public GoalAllResponse processGetAll(int boardGoalId, int pageNumber, Integer pageSize) throws ParentException {
+        final var foundSliceListGoal = goalDao.fetchAllGoals(boardGoalId, pageNumber, pageSize);
         final var mappedGoalViewResponse =
                 goalMapper.goalListToGoalViewResponseList(foundSliceListGoal.getContent());
         return new GoalAllResponse(mappedGoalViewResponse, foundSliceListGoal.hasNext());

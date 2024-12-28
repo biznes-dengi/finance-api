@@ -23,9 +23,11 @@ public interface GoalDao {
      *
      * @param state state of Goal entity
      * @param boardGoalId unique identifier of BoardGoal which Goal belongs
+     * @param pageNumber page number of the received list of items
+     * @param pageSize size the page, how many items the page have
      * @return list of found Goal records
      */
-    Slice<Goal>  fetchGoalsByState(GoalState state, int boardGoalId, int pageNumber) throws NotFoundException;
+    Slice<Goal> fetchGoalsByState(GoalState state, int boardGoalId, int pageNumber, Integer pageSize) throws NotFoundException;
 
     /**
      * Fetch list of Goal by state which has deadline is not NULL
@@ -49,11 +51,12 @@ public interface GoalDao {
      * Fetch Slice of Goals by given boardGoalId
      *
      * @param boardGoalId unique identifier of BoardGoal which Goal belongs
-     * @param pageNumber number of page with Goal
+     * @param pageNumber page number of the received list of items
+     * @param pageSize size the page, how many items the page have
      * @return batch of Goals
      * @throws NotFoundException if Goals wasn't found by given boardGoalId and pageNumber
      */
-    Slice<Goal> fetchAllGoals(int boardGoalId, int pageNumber) throws NotFoundException;
+    Slice<Goal> fetchAllGoals(int boardGoalId, int pageNumber, Integer pageSize) throws NotFoundException;
 
     /**
      * Delete Goal record by given goalId

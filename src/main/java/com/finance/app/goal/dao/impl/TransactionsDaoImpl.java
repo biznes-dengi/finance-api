@@ -26,11 +26,12 @@ public class TransactionsDaoImpl implements TransactionDao {
 
     @Override
     @Transactional(readOnly = true)
-    public Slice<Transaction> fetchAllTransactions(int goalId, int pageNumber) throws NotFoundException {
+    public Slice<Transaction> fetchAllTransactions(int goalId, int pageNumber, Integer pageSize) throws NotFoundException {
+        final int currentBatchSize = pageSize == null ? transactionBatchSize : pageSize;
         final var response =
                 this.transactionRepository.findAllByGoal_Id(
                         goalId,
-                        PageRequest.of(pageNumber, transactionBatchSize, Sort.by("transactionTimestamp").descending())
+                        PageRequest.of(pageNumber, currentBatchSize, Sort.by("transactionTimestamp").descending())
                 );
 
         if (response.getNumberOfElements() == 0) {

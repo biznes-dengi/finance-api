@@ -28,8 +28,9 @@ public class TransactionController implements GoalBoundaryMetadata {
     @GetMapping
     public TransactionAllResponse getAll(@PathVariable("goalId") int goalId,
                                          @RequestParam("pageNumber") int pageNumber,
+                                         @RequestParam(value = "pageSize", required = false) Integer pageSize,
                                          @PathVariable("boardGoalId") int boardGoalId) throws ParentException {
-        return transactionProcess.processGetAll(goalId, pageNumber, boardGoalId);
+        return transactionProcess.processGetAll(goalId, pageNumber, boardGoalId, pageSize);
     }
 
     @PostMapping

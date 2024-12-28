@@ -35,11 +35,12 @@ public class GoalController implements GoalBoundaryMetadata {
     public GoalAllResponse get(
             @PathVariable("boardGoalId") int boardGoalId,
             @RequestParam("pageNumber") int pageNumber,
+            @RequestParam(value = "pageSize", required = false) Integer pageSize,
             @RequestParam(value = "status", required = false) GoalState state) throws ParentException {
         if (state == null)
-            return goalProcess.processGetAll(boardGoalId, pageNumber);
+            return goalProcess.processGetAll(boardGoalId, pageNumber, pageSize);
         else
-            return goalProcess.processGetByState(state, boardGoalId, pageNumber);
+            return goalProcess.processGetByState(state, boardGoalId, pageNumber, pageSize);
     }
 
     @GetMapping("/{goalId}")

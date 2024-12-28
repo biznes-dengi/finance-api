@@ -21,7 +21,7 @@ public interface TransactionDao {
      * @param pageNumber number of page with Transactions
      * @return batch of Transactions
      */
-    Slice<Transaction> fetchAllTransactions(int goalId, int pageNumber) throws NotFoundException;
+    Slice<Transaction> fetchAllTransactions(int goalId, int pageNumber, Integer pageSize) throws NotFoundException;
 
     /**
      * Remove all transaction records by given goalId
