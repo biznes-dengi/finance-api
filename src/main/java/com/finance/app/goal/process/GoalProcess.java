@@ -2,6 +2,7 @@ package com.finance.app.goal.process;
 
 import com.finance.app.goal.boundary.request.GoalRequest;
 import com.finance.app.goal.boundary.response.GoalAllResponse;
+import com.finance.app.goal.boundary.response.GoalInfoResponse;
 import com.finance.app.goal.boundary.response.GoalResponse;
 import com.finance.app.goal.dao.BoardGoalDao;
 import com.finance.app.goal.dao.GoalDao;
@@ -44,14 +45,22 @@ public class GoalProcess {
         final var foundSliceListGoal = goalDao.fetchGoalsByState(state, boardGoalId, pageNumber, pageSize);
         final var mappedGoalViewResponse =
                 goalMapper.goalListToGoalViewResponseList(foundSliceListGoal.getContent());
-        return new GoalAllResponse(mappedGoalViewResponse, foundSliceListGoal.hasNext());
+
+        return new GoalAllResponse(
+                mappedGoalViewResponse,
+                new GoalInfoResponse(foundSliceListGoal.hasNext(), pageNumber, pageSize)
+        );
     }
 
     public GoalAllResponse processGetAll(int boardGoalId, int pageNumber, Integer pageSize) throws ParentException {
         final var foundSliceListGoal = goalDao.fetchAllGoals(boardGoalId, pageNumber, pageSize);
         final var mappedGoalViewResponse =
                 goalMapper.goalListToGoalViewResponseList(foundSliceListGoal.getContent());
-        return new GoalAllResponse(mappedGoalViewResponse, foundSliceListGoal.hasNext());
+
+        return new GoalAllResponse(
+                mappedGoalViewResponse,
+                new GoalInfoResponse(foundSliceListGoal.hasNext(), pageNumber, pageSize)
+        );
     }
 
     public GoalResponse processSave(GoalRequest goalRequest, int boardGoalId) throws ParentException {

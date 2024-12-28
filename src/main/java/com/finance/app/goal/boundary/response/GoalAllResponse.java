@@ -4,5 +4,5 @@ import java.util.List;
 
 public record GoalAllResponse(
         List<GoalViewResponse> items,
-        boolean hasNext
+        GoalInfoResponse info
 ) {}

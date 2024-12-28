@@ -4,6 +4,7 @@ import com.finance.app.goal.boundary.request.TransactionRequest;
 import com.finance.app.goal.boundary.request.TransactionTransferRequest;
 import com.finance.app.goal.boundary.request.TransactionUpdateRequest;
 import com.finance.app.goal.boundary.response.transaction.TransactionAllResponse;
+import com.finance.app.goal.boundary.response.transaction.TransactionInfoResponse;
 import com.finance.app.goal.boundary.response.transaction.TransactionNormalResponse;
 import com.finance.app.goal.boundary.response.transaction.TransactionResponse;
 import com.finance.app.goal.boundary.response.transaction.TransactionTransferResponse;
@@ -47,7 +48,11 @@ public class TransactionProcess {
         final var foundSliceTransaction = transactionDao.fetchAllTransactions(goalId, pageNumber, pageSize);
         final var mappedTransactionViewResponse =
                 customMapperList(foundSliceTransaction.getContent(), boardGoalId);
-        return new TransactionAllResponse(mappedTransactionViewResponse, foundSliceTransaction.hasNext());
+
+        return new TransactionAllResponse(
+                mappedTransactionViewResponse,
+                new TransactionInfoResponse(foundSliceTransaction.hasNext(), pageNumber, pageSize)
+        );
     }
 
     // TODO add validation to transactionTimestamp

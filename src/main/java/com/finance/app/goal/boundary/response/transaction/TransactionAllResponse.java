@@ -4,5 +4,5 @@ import java.util.List;
 
 public record TransactionAllResponse(
         List<TransactionResponse> items,
-        boolean hasNext
+        TransactionInfoResponse info
 ) {}
