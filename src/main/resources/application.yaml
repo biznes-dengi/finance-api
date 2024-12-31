@@ -35,9 +35,9 @@ springdoc:
     doc-expansion: none
 
 goal:
-  batch-size: 50
+  batch-size: 10
 transaction:
-  batch-size: 50
+  batch-size: 10
 
 #context-path:
 #    marshaller: generated
